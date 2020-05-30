@@ -56,5 +56,5 @@ source ~/.config/alias.sh
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
 
-# Start graphical server on tty1 if not already running.
-[ "$(tty)" = "/dev/tty1" ] && ! ps -e | grep -qw Xorg && exec startx
+# Automatically start X server
+[[ "$(tty)" = "dev/tty1" ]] && startx

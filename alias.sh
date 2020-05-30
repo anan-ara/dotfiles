@@ -13,6 +13,9 @@ alias bspwmrc-"vim ~/.config/bspwm/bspwmrc"
 # for convenience
 alias doc="cd ~/Documents"
 
+# fast startx
+alias x="startx"
+
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
 	cp="cp -iv" \
