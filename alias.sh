@@ -6,7 +6,7 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 # easily access files
 alias vimrc="vim ~/.config/vimrc"
 alias zshrc="vim ~/.config/zshrc"
-alias tmuxconf="vim ~/.config/tmux.conf"
+alias tmuxconf="vim ~/.config/tmux/tmux.conf"
 alias aliases="vim ~/.config/alias.sh"
 alias sxhkd="vim ~/.config/sxhkd/sxhkdrc"
 alias bspwmrc-"vim ~/.config/bspwm/bspwmrc"
