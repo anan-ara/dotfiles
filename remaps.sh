@@ -3,7 +3,8 @@
 # This script is called on startup to remap keys.
 # Increase key speed via a rate change
 xset r rate 200 50
-# Map the caps lock key to super...
+# Map the caps lock key to ctrl
 setxkbmap -option caps:ctrl_modifier
+# setxkbmap -option caps:super
 # But when it is pressed only once, treat it as escape.
 killall xcape 2>/dev/null ; xcape -e 'Caps_Lock=Escape'

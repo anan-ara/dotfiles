@@ -57,4 +57,4 @@ source ~/.config/alias.sh
 export KEYTIMEOUT=1
 
 # Automatically start X server
-[[ "$(tty)" = "dev/tty1" ]] && startx
+# [[ "$(tty)" = "dev/tty1" ]] && startx

@@ -45,7 +45,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 
 " For split screen navigation
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 " Plug 'edkolev/tmuxline.vim' " gives vim a nice tmux-like status bar
 
 " For commenting
@@ -63,6 +63,9 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 " see list of commands (:Gwrite, ...)
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+
+" To move around faster
+Plug 'takac/vim-hardtime'
 
 call plug#end()
 
@@ -116,6 +119,8 @@ set noswapfile
 set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
+
+set clipboard=unnamedplus " use clipboard instead of vim's buffer
 
 " --- Tab Settings ---
 " set smarttab
@@ -175,10 +180,11 @@ noremap <silent> g^ ^
 noremap <silent> _ g_
 
 " Make pasting work like in normal editors
-noremap <silent> p gp
-noremap <silent> gp p
-noremap <silent> P gP
-noremap <silent> gP P
+" Actually this was a bad idea I'm gonna turn it off for now
+" noremap <silent> p gp
+" noremap <silent> gp p
+" noremap <silent> P gP
+" noremap <silent> gP P
 
 noremap <silent> gt :bn<CR>
 noremap <silent> gT :bp<CR>
@@ -306,3 +312,7 @@ let g:NERDSpaceDelims = 1
 " + to comment, - to uncomment
 map + <plug>NERDCommenterComment
 map - <plug>NERDCommenterUncomment
+
+" --- vim-hardtime ---
+"  Automatically timeout inefficient keys
+let g:hardtime_default_on = 1
