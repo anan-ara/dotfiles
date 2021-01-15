@@ -1,11 +1,3 @@
-" Automatically get Vim Plug if you don't already have it
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
@@ -16,8 +8,9 @@ Plug 'tpope/vim-sleuth'
 " For colors
 Plug 'arcticicestudio/nord-vim'
 " Plug 'junegunn/seoul256.vim'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'tomasr/molokai'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasr/molokai'
+Plug 'dracula/vim'
 
 " For airline
 Plug 'vim-airline/vim-airline'
@@ -139,7 +132,10 @@ hi clear SignColumn
 "let g:solarized_termcolors=256
 
 " Set the colorscheme
-colorscheme nord
+colorscheme dracula
+
+" Makes transparentcy work idk how but it does
+hi Normal guibg=NONE ctermbg=NONE
 
 " Unified color scheme (default: dark)
 " let g:seoul256_background = 235
@@ -310,8 +306,8 @@ let g:NERDCreateDefaultMappings = 1
 " Create space between the comment mark for prettier commenting
 let g:NERDSpaceDelims = 1
 " + to comment, - to uncomment
-map + <plug>NERDCommenterComment
-map - <plug>NERDCommenterUncomment
+nmap + <plug>NERDCommenterComment
+nmap - <plug>NERDCommenterUncomment
 
 " --- vim-hardtime ---
 "  Automatically timeout inefficient keys
