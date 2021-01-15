@@ -4,7 +4,7 @@
 command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # easily access files
-alias vimrc="vim ~/.config/vimrc"
+alias vimrc="vim ~/.config/nvim/init.vim"
 alias zshrc="vim ~/.config/zshrc"
 alias tmuxconf="vim ~/.config/tmux/tmux.conf"
 alias aliases="vim ~/.config/alias.sh"
