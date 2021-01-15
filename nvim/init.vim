@@ -312,3 +312,6 @@ nmap - <plug>NERDCommenterUncomment
 " --- vim-hardtime ---
 "  Automatically timeout inefficient keys
 let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["h","l"]
+let g:list_of_visual_keys = ["h","l"]
+let g:hardtime_allow_different_key = 1

@@ -30,7 +30,15 @@ XF86MonBrightnessDown
 	xbacklight -dec 15
 XF86MonBrightnessUp
 	xbacklight -inc 15
-#
+
+# Recording
+# Screenshot to clipboard
+Print
+	maim --select | xclip -selection clipboard -target image/png
+# Take a screenshot and save
+shift + Print
+	maim screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png
+
 # bspwm hotkeys
 
 # quit/restart bspwm
