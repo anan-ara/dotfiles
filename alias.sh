@@ -8,7 +8,7 @@ alias vimrc="vim ~/.config/vimrc"
 alias zshrc="vim ~/.config/zshrc"
 alias tmuxconf="vim ~/.config/tmux/tmux.conf"
 alias aliases="vim ~/.config/alias.sh"
-alias sxhkd="vim ~/.config/sxhkd/sxhkdrc"
+alias sxhkdrc="vim ~/.config/sxhkd/sxhkdrc"
 alias bspwmrc-"vim ~/.config/bspwm/bspwmrc"
 # for convenience
 alias doc="cd ~/Documents"
