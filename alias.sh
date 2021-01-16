@@ -16,6 +16,9 @@ alias doc="cd ~/Documents"
 # fast startx
 alias x="startx"
 
+# fast nvim
+alias v="nvim"
+
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
 	cp="cp -iv" \

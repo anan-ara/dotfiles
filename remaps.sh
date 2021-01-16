@@ -7,7 +7,7 @@ xset r rate 200 50
 # Right click with 2 fingers instead
 xinput set-prop 'DLL075B:01 06CB:76AF Touchpad' 329 0 1
 # Increase trackpad sensitivity
-xinput set-prop 'DLL075B:01 06CB:76AF Touchpad' 309 0.2
+# xinput set-prop 'DLL075B:01 06CB:76AF Touchpad' 309 0.2
 
 # Map the caps lock key to ctrl
 setxkbmap -option caps:ctrl_modifier

@@ -13,6 +13,10 @@ super + @space
 # browser
 super + b
 	brave
+#
+# discord
+super + d
+	discord
 
 # make sxhkd reload its configuration files:
 super + Escape
