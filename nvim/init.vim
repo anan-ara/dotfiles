@@ -164,7 +164,8 @@ nnoremap = gg=G<C-o><C-o>
 
 " Most controversial change in this whole vimrc file
 " But it makes sense visually
-inoremap <silent> <Esc> <C-O>:stopinsert<CR>
+" I'll try turning this off for a bit and see how this goes
+" inoremap <silent> <Esc> <C-O>:stopinsert<CR>
 
 " Make navigating wrapped lines the same as normal
 noremap <silent> k gk
