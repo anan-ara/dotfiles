@@ -27,7 +27,8 @@ super + shift + BackSpace
 super + shift + Escape
 	prompt 'Leave Xorg?' 'killall Xorg'
 XF86AudioMute
-	amixer sset Master toggle; pkill -RTMIN+10 blocks
+	pactl set-sink-mute 0 toggle
+	# amixer sset Master toggle; pkill -RTMIN+10 blocks
 XF86Audio{Raise,Lower}Volume
 	amixer sset Master 5%{+,-}; pkill -RTMIN+10 blocks
 XF86MonBrightnessDown
