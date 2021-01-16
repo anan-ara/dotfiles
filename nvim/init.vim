@@ -306,8 +306,8 @@ let g:NERDCreateDefaultMappings = 1
 " Create space between the comment mark for prettier commenting
 let g:NERDSpaceDelims = 1
 " + to comment, - to uncomment
-nmap + <plug>NERDCommenterComment
-nmap - <plug>NERDCommenterUncomment
+map + <plug>NERDCommenterComment
+map - <plug>NERDCommenterUncomment
 
 " --- vim-hardtime ---
 "  Automatically timeout inefficient keys
