@@ -15,3 +15,9 @@ setxkbmap -option caps:ctrl_modifier
 
 # But when it is pressed only once, treat it as escape.
 killall xcape 2>/dev/null ; xcape -e 'Caps_Lock=Escape'
+
+# For the full HHKB experience
+xmodmap -e 'keycode 22 = backslash bar'
+xmodmap -e 'keycode 51 = BackSpace'
+xmodmap -e 'keycode 64 = Super_L'
+xmodmap -e 'keycode 133 = Alt_L Meta_L'
