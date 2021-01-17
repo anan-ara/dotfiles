@@ -8,7 +8,8 @@ super + Return
 
 # program launcher
 super + @space
-	dmenu_run
+	rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/polybar/scripts/rofi/launcher.rasi
+	# dmenu_run
 
 # browser
 super + b
@@ -42,7 +43,7 @@ Print
 	maim --select | xclip -selection clipboard -target image/png
 # Take a screenshot and save
 shift + Print
-	maim screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png
+	maim --select screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png
 
 # bspwm hotkeys
 
