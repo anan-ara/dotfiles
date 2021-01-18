@@ -14,7 +14,7 @@ super + @space
 # browser
 super + b
 	brave
-#
+
 # discord
 super + d
 	discord
@@ -22,16 +22,12 @@ super + d
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
-# From Luke Smith
-super + shift + BackSpace
-	prompt "Reboot computer?" "sudo -A reboot"
-super + shift + Escape
-	prompt 'Leave Xorg?' 'killall Xorg'
 XF86AudioMute
 	pactl set-sink-mute 0 toggle
 	# amixer sset Master toggle; pkill -RTMIN+10 blocks
 XF86Audio{Raise,Lower}Volume
-	amixer sset Master 5%{+,-}; pkill -RTMIN+10 blocks
+	pactl set-sink-volume 0 {+,-}5%
+	# amixer sset Master 5%{+,-}; pkill -RTMIN+10 blocks
 XF86MonBrightnessDown
 	xbacklight -dec 15
 XF86MonBrightnessUp
@@ -59,10 +55,6 @@ super + {_,shift + }q
 super + m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
-
 # swap the current node and the biggest node
 super + g
 	bspc node -s biggest
@@ -72,8 +64,14 @@ super + g
 #
 
 # set the window state
-super + {t,shift + space,space,f}
-	bspc node -t ~{tiled,pseudo_tiled,floating,fullscreen}
+super + t
+	bspc node -t tiled
+
+super + o
+	bspc node focused.tiled -t floating || bspc node focused.floating -t tiled
+
+super + f
+	bspc node focused.!fullscreen -t fullscreen || bspc node -t tiled
 
 # set the node flags
 super + ctrl + {m,x,y,z}
@@ -88,11 +86,11 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+# super + {p,b,comma,period}
+	# bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }c
+super + {_,shift + }Tab
 	bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
@@ -100,14 +98,14 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+# super + {grave,Tab}
+	# bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
+# super + {o,i}
+	# bspc wm -h off; \
+	# bspc node {older,newer} -f; \
+	# bspc wm -h on
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
