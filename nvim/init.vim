@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 
 " For colors
 Plug 'arcticicestudio/nord-vim'
@@ -16,18 +16,13 @@ Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 
-" Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " For more icons
 Plug 'ryanoasis/vim-devicons'
-" Fuzzy Finder
-Plug 'junegunn/fzf'
 
 " ----- Vim as a programmer's text editor -----------------------------
 Plug 'vim-syntastic/syntastic'
-
-" For TeX
-Plug 'lervag/vimtex', { 'for': 'latex' }
 
 " For EasyMotion
 Plug 'easymotion/vim-easymotion'
@@ -59,6 +54,11 @@ Plug 'tpope/vim-fugitive'
 
 " To move around faster
 Plug 'takac/vim-hardtime'
+
+" Language Specific Plugins
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'lervag/vimtex', { 'for': 'latex' }
 
 call plug#end()
 
@@ -115,34 +115,28 @@ set showbreak=↪
 
 set clipboard=unnamedplus " use clipboard instead of vim's buffer
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" we already have airline so this is redundant
+set noshowmode
+
 " --- Tab Settings ---
-" set smarttab
-" set tabstop=4
-" set softtabstop=4
-" set shiftwidth=4
-" set noexpandtab
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
 
-" --- Plugin Specific Settings ---
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column.
-hi clear SignColumn
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
 
-" ----- altercation/vim-colors-solarized settings -----
-" Uncomment the next line if your terminal is not configured for solarized
-"let g:solarized_termcolors=256
-
-" Set the colorscheme
-colorscheme dracula
-
-" Makes transparentcy work idk how but it does
-hi Normal guibg=NONE ctermbg=NONE
-
-" Unified color scheme (default: dark)
-" let g:seoul256_background = 235
-" colo seoul256
-
-" Toggle this to "light" for light colorscheme
-"set background=light
 
 " --- REMAPS ---
 
@@ -192,6 +186,12 @@ noremap <silent> g1 i\begin{align*}<CR>
 " Make <Esc><Esc> clear search highlights in normal mode
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " shortcut to save
 nmap <leader>w :w<cr>
 
@@ -214,6 +214,28 @@ if has("autocmd")
     autocmd BufWritePre * :call CleanExtraSpaces()
 endif
 
+" --- Plugin Specific Settings ---
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column.
+hi clear SignColumn
+
+" ----- altercation/vim-colors-solarized settings -----
+" Uncomment the next line if your terminal is not configured for solarized
+"let g:solarized_termcolors=256
+
+" Set the colorscheme
+colorscheme dracula
+
+" Makes transparentcy work idk how but it does
+hi Normal guibg=NONE ctermbg=NONE
+
+" Unified color scheme (default: dark)
+" let g:seoul256_background = 235
+" colo seoul256
+
+" Toggle this to "light" for light colorscheme
+"set background=light
+"
 " ----- bling/vim-airline settings -----
 " Always show statusbar
 set laststatus=2
@@ -233,8 +255,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
-" we already have airline so this is redundant
-set noshowmode
 
 " --- vimtex settings ---
 let g:vimex_quickfix_latexlog= {
