@@ -5,19 +5,19 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-sleuth'
+" Plug 'tpope/vim-sleuth'
 
 " For colors
 Plug 'arcticicestudio/nord-vim'
 " Plug 'junegunn/seoul256.vim'
-"Plug 'altercation/vim-colors-solarized'
-"Plug 'tomasr/molokai'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasr/molokai'
+Plug 'dracula/vim'
 
 " For airline
 Plug 'vim-airline/vim-airline'
@@ -27,17 +27,12 @@ Plug 'vim-airline/vim-airline'
 
 " For more icons
 Plug 'ryanoasis/vim-devicons'
-" Fuzzy Finder
-Plug 'junegunn/fzf'
 
 " ----- Vim as a programmer's text editor -----------------------------
 Plug 'vim-syntastic/syntastic'
 
-" For TeX
-Plug 'lervag/vimtex', { 'for': 'latex' }
-
 " For EasyMotion
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'unblevable/quick-scope'
 
 " For NerdTree
@@ -66,6 +61,11 @@ Plug 'tpope/vim-fugitive'
 
 " To move around faster
 Plug 'takac/vim-hardtime'
+
+" Language Specific Plugins
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'lervag/vimtex', { 'for': 'latex' }
 
 call plug#end()
 
@@ -114,6 +114,7 @@ set tm=500
 set nobackup
 set nowb
 set noswapfile
+set nowritebackup
 
 " toggle invisible characters
 set list
@@ -122,31 +123,28 @@ set showbreak=↪
 
 set clipboard=unnamedplus " use clipboard instead of vim's buffer
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" we already have airline so this is redundant
+set noshowmode
+
 " --- Tab Settings ---
-" set smarttab
-" set tabstop=4
-" set softtabstop=4
-" set shiftwidth=4
-" set noexpandtab
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
 
-" --- Plugin Specific Settings ---
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column.
-hi clear SignColumn
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
 
-" ----- altercation/vim-colors-solarized settings -----
-" Uncomment the next line if your terminal is not configured for solarized
-"let g:solarized_termcolors=256
-
-" Set the colorscheme
-colorscheme nord
-
-" Unified color scheme (default: dark)
-" let g:seoul256_background = 235
-" colo seoul256
-
-" Toggle this to "light" for light colorscheme
-"set background=light
 
 " --- REMAPS ---
 
@@ -168,7 +166,8 @@ nnoremap = gg=G<C-o><C-o>
 
 " Most controversial change in this whole vimrc file
 " But it makes sense visually
-inoremap <silent> <Esc> <C-O>:stopinsert<CR>
+" I'll try turning this off for a bit and see how this goes
+" inoremap <silent> <Esc> <C-O>:stopinsert<CR>
 
 " Make navigating wrapped lines the same as normal
 noremap <silent> k gk
@@ -195,6 +194,12 @@ noremap <silent> g1 i\begin{align*}<CR>
 " Make <Esc><Esc> clear search highlights in normal mode
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " shortcut to save
 nmap <leader>w :w<cr>
 
@@ -217,6 +222,28 @@ if has("autocmd")
     autocmd BufWritePre * :call CleanExtraSpaces()
 endif
 
+" --- Plugin Specific Settings ---
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column.
+hi clear SignColumn
+
+" ----- altercation/vim-colors-solarized settings -----
+" Uncomment the next line if your terminal is not configured for solarized
+"let g:solarized_termcolors=256
+
+" Set the colorscheme
+colorscheme dracula
+
+" Makes transparentcy work idk how but it does
+hi Normal guibg=NONE ctermbg=NONE
+
+" Unified color scheme (default: dark)
+" let g:seoul256_background = 235
+" colo seoul256
+
+" Toggle this to "light" for light colorscheme
+"set background=light
+"
 " ----- bling/vim-airline settings -----
 " Always show statusbar
 set laststatus=2
@@ -236,8 +263,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
-" we already have airline so this is redundant
-set noshowmode
 
 " --- vimtex settings ---
 let g:vimex_quickfix_latexlog= {
@@ -245,7 +270,7 @@ let g:vimex_quickfix_latexlog= {
 	    \ 'underfull' : 0,
 	    \}
 
-let g:vimtex_view_method='skim'
+let g:vimtex_view_method='zathura'
 "
 " close quickfix window
 noremap <Leader>c :cclose<CR>
@@ -256,14 +281,14 @@ aug QFClose
 aug END
 
 " ----- Raimondi/delimitMate settings -----
-let delimitMate_expand_cr = 1
-augroup mydelimitMate
-    au!
-    au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
-    au FileType tex let b:delimitMate_quotes = ""
-    au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
-    au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-augroup END
+" let delimitMate_expand_cr = 1
+" augroup mydelimitMate
+    " au!
+    " au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
+    " au FileType tex let b:delimitMate_quotes = ""
+    " au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
+    " au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+" augroup END
 
 " ----- Syntastic Settings -----
 let g:syntastic_mode_map = {
@@ -295,14 +320,15 @@ nnoremap <Leader>g :SyntasticToggleMode<CR>
 "  " Open/close NERDTree Tabs with \t
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
+
 " --- EasyMotion ---
 " The only easymotion I use
-map <Leader>s <Plug>(easymotion-s)
+" map <Leader>s <Plug>(easymotion-s)
 " Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_smartcase = 1
 
 " But in case I need to use anything else, only press leader once
-map <Leader> <Plug>(easymotion-prefix)
+" map <Leader> <Plug>(easymotion-prefix)
 
 " --- nerdcommenter ---
 " Turn off default mappings
@@ -316,3 +342,6 @@ map - <plug>NERDCommenterUncomment
 " --- vim-hardtime ---
 "  Automatically timeout inefficient keys
 let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["h","l"]
+let g:list_of_visual_keys = ["h","l"]
+let g:hardtime_allow_different_key = 1

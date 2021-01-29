@@ -10,14 +10,10 @@ alias tmuxconf="vim ~/.config/tmux/tmux.conf"
 alias aliases="vim ~/.config/alias.sh"
 alias sxhkdrc="vim ~/.config/sxhkd/sxhkdrc"
 alias bspwmrc-"vim ~/.config/bspwm/bspwmrc"
-# for convenience
-alias doc="cd ~/Documents"
 
 # fast startx
 alias x="startx"
 
-# fast nvim
-alias v="nvim"
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
