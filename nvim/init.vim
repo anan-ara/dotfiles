@@ -1,3 +1,10 @@
+" Automatically get Vim Plug if you don't already have it
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
@@ -6,7 +13,7 @@ Plug 'tpope/vim-sensible'
 " Plug 'tpope/vim-sleuth'
 
 " For colors
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
@@ -22,7 +29,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
 
 " ----- Vim as a programmer's text editor -----------------------------
-Plug 'vim-syntastic/syntastic'
+Plug 'vim-syntastic/syntastic', { 'on': 'SyntasticToggleMode' }
 
 " For EasyMotion
 " Plug 'easymotion/vim-easymotion'
@@ -141,11 +148,11 @@ au BufNewFile,BufRead *.js, *.html, *.css
 
 " --- REMAPS ---
 
-"Use enter to create new lines w/o entering insert mode
-nnoremap <CR> o<Esc>
-""Below is to fix issues with the ABOVE mappings in quickfix window
-autocmd CmdwinEnter * nnoremap <CR> <CR>
-autocmd BufReadPost quickfix nnoremap <CR> <CR>
+" "Use enter to create new lines w/o entering insert mode
+" nnoremap <CR> o<Esc>
+" ""Below is to fix issues with the ABOVE mappings in quickfix window
+" autocmd CmdwinEnter * nnoremap <CR> <CR>
+" autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Remap leader to be easier to reach
 let mapleader = ' '
@@ -185,7 +192,10 @@ noremap <silent> gT :bp<CR>
 noremap <silent> g1 i\begin{align*}<CR>
 
 " Make <Esc><Esc> clear search highlights in normal mode
-nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+" nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+
+"This unsets the "last search pattern" register by hitting return
+nnoremap <silent> <CR> :noh<CR>
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>

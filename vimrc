@@ -13,7 +13,7 @@ Plug 'tpope/vim-sensible'
 " Plug 'tpope/vim-sleuth'
 
 " For colors
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
@@ -29,7 +29,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
 
 " ----- Vim as a programmer's text editor -----------------------------
-Plug 'vim-syntastic/syntastic'
+Plug 'vim-syntastic/syntastic', { 'on': 'SyntasticToggleMode' }
 
 " For EasyMotion
 " Plug 'easymotion/vim-easymotion'
@@ -58,14 +58,6 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 " see list of commands (:Gwrite, ...)
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-
-" To move around faster
-Plug 'takac/vim-hardtime'
-
-" Language Specific Plugins
-Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'lervag/vimtex', { 'for': 'latex' }
 
 call plug#end()
 
@@ -145,18 +137,17 @@ au BufNewFile,BufRead *.js, *.html, *.css
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
-
 " --- REMAPS ---
 
-"Use enter to create new lines w/o entering insert mode
-nnoremap <CR> o<Esc>
-""Below is to fix issues with the ABOVE mappings in quickfix window
-autocmd CmdwinEnter * nnoremap <CR> <CR>
-autocmd BufReadPost quickfix nnoremap <CR> <CR>
+" "Use enter to create new lines w/o entering insert mode
+" nnoremap <CR> o<Esc>
+" ""Below is to fix issues with the ABOVE mappings in quickfix window
+" autocmd CmdwinEnter * nnoremap <CR> <CR>
+" autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Remap leader to be easier to reach
 let mapleader = ' '
-let maplocalleader = ' '
+" let maplocalleader = ' '
 
 " make Y effect to end of line instead of whole line
 noremap Y y$
@@ -188,11 +179,12 @@ noremap <silent> _ g_
 noremap <silent> gt :bn<CR>
 noremap <silent> gT :bp<CR>
 
-" Save some time when doing LaTeX
-noremap <silent> g1 i\begin{align*}<CR>
-
 " Make <Esc><Esc> clear search highlights in normal mode
-nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+" nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+
+"This unsets the "last search pattern" register by hitting return
+nnoremap <silent> <CR> :noh<CR>
+
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -264,32 +256,6 @@ let g:airline#extensions#tabline#enabled = 1
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
 
-" --- vimtex settings ---
-let g:vimex_quickfix_latexlog= {
-	    \ 'default' : 1,
-	    \ 'underfull' : 0,
-	    \}
-
-let g:vimtex_view_method='zathura'
-"
-" close quickfix window
-noremap <Leader>c :cclose<CR>
-
-aug QFClose
-    au!
-    au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
-aug END
-
-" ----- Raimondi/delimitMate settings -----
-" let delimitMate_expand_cr = 1
-" augroup mydelimitMate
-    " au!
-    " au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
-    " au FileType tex let b:delimitMate_quotes = ""
-    " au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
-    " au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-" augroup END
-
 " ----- Syntastic Settings -----
 let g:syntastic_mode_map = {
 	    \ "mode": "passive",
@@ -321,15 +287,6 @@ nnoremap <Leader>g :SyntasticToggleMode<CR>
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
-" --- EasyMotion ---
-" The only easymotion I use
-" map <Leader>s <Plug>(easymotion-s)
-" Turn on case-insensitive feature
-" let g:EasyMotion_smartcase = 1
-
-" But in case I need to use anything else, only press leader once
-" map <Leader> <Plug>(easymotion-prefix)
-
 " --- nerdcommenter ---
 " Turn off default mappings
 let g:NERDCreateDefaultMappings = 1
@@ -338,10 +295,3 @@ let g:NERDSpaceDelims = 1
 " + to comment, - to uncomment
 map + <plug>NERDCommenterComment
 map - <plug>NERDCommenterUncomment
-
-" --- vim-hardtime ---
-"  Automatically timeout inefficient keys
-let g:hardtime_default_on = 1
-let g:list_of_normal_keys = ["h","l"]
-let g:list_of_visual_keys = ["h","l"]
-let g:hardtime_allow_different_key = 1
