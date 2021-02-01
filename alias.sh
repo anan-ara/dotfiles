@@ -9,7 +9,10 @@ alias zshrc="vim ~/.config/zshrc"
 alias tmuxconf="vim ~/.config/tmux/tmux.conf"
 alias aliases="vim ~/.config/alias.sh"
 alias sxhkdrc="vim ~/.config/sxhkd/sxhkdrc"
-alias bspwmrc-"vim ~/.config/bspwm/bspwmrc"
+alias bspwmrc="vim ~/.config/bspwm/bspwmrc"
+
+# stop weird alacritty incompatibilities when using ssh
+alias ssh='TERM=xterm-color ssh'
 
 # fast startx
 alias x="startx"
