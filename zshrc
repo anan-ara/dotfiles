@@ -48,9 +48,6 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-source ~/.config/alias.sh
 
 # FZF Configurations
 source /usr/share/fzf/key-bindings.zsh
@@ -71,6 +68,9 @@ export FZF_DEFAULT_OPTS="
 --prompt='∼ ' --pointer='▶' --marker='✓'
 --bind '?:toggle-preview'
 "
+
+# Source other config files
+source ~/.config/alias.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
