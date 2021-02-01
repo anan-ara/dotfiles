@@ -5,12 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
 # Theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -21,9 +21,6 @@ HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -41,7 +38,7 @@ plugins=(z zsh-autosuggestions vi-mode history-substring-search zsh-syntax-highl
 source $ZSH/oh-my-zsh.sh
 
 # bindings for plugins
-bindkey '^ ' autosuggest-accept
+# bindkey '^ ' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
@@ -54,6 +51,26 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source ~/.config/alias.sh
+
+# FZF Configurations
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND . $HOME"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d . $HOME"
+
+export FZF_DEFAULT_OPTS="
+--layout=reverse
+--info=inline
+--height=80%
+--multi
+--preview-window=:hidden
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+--color=16
+--prompt='∼ ' --pointer='▶' --marker='✓'
+--bind '?:toggle-preview'
+"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

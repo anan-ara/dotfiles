@@ -503,7 +503,7 @@ mouse:
 key_bindings:
   # (Windows, Linux, and BSD only)
   - { key: V,        mods: Alt, action: Paste            }
-  - { key: C,        mods: Alt, action: Copy             }
+  # - { key: C,        mods: Alt, action: Copy             }
   - { key: U,    mods: Alt,   action: ScrollPageUp,   }
   - { key: D,    mods: Alt,   action: ScrollPageDown,   }
   #- { key: Insert,   mods: Shift,         action: PasteSelection   }

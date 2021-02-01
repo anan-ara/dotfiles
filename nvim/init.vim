@@ -31,13 +31,17 @@ Plug 'ryanoasis/vim-devicons'
 " ----- Vim as a programmer's text editor -----------------------------
 Plug 'vim-syntastic/syntastic', { 'on': 'SyntasticToggleMode' }
 
-" For EasyMotion
+" For Motion
 " Plug 'easymotion/vim-easymotion'
 Plug 'unblevable/quick-scope'
 
 " For NerdTree
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
+
+" For fuzzy finding
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " For split screen navigation
 " Plug 'christoomey/vim-tmux-navigator'
@@ -341,6 +345,14 @@ let g:NERDSpaceDelims = 1
 " + to comment, - to uncomment
 map + <plug>NERDCommenterComment
 map - <plug>NERDCommenterUncomment
+
+" --- FZF ---
+" Search and switch buffers
+nmap <leader>b :Buffers<cr>
+" Find files by name under the current directory
+nmap <leader>f :Files<cr>
+" Find files by name under the home directory
+nmap <leader>h :Files ~/<cr>
 
 " --- vim-hardtime ---
 "  Automatically timeout inefficient keys
