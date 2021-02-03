@@ -177,8 +177,11 @@ noremap <silent> _ g_
 " noremap <silent> gP P
 
 " Cycle through buffers
-noremap <silent> gt :bn<CR>
-noremap <silent> gT :bp<CR>
+noremap <silent> gl :bn<CR>
+noremap <silent> gh :bp<CR>
+
+" Jump to matching element faster, % is hard to reach
+noremap <silent> <Tab> %
 
 " Jump to buffers
 noremap <silent> <Leader>b :ls<CR>:b<space>
