@@ -176,8 +176,12 @@ noremap <silent> _ g_
 " noremap <silent> P gP
 " noremap <silent> gP P
 
+" Cycle through buffers
 noremap <silent> gt :bn<CR>
 noremap <silent> gT :bp<CR>
+
+" Jump to buffers
+noremap <silent> <Leader>b :ls<CR>:b<space>
 
 " Make <Esc><Esc> clear search highlights in normal mode
 " nnoremap <silent> <Esc><Esc> :nohlsearch<CR>

@@ -67,9 +67,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'takac/vim-hardtime'
 
 " Language Specific Plugins
-Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/indentpython.vim'
+" Python
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+" LaTeX
 Plug 'lervag/vimtex', { 'for': 'latex' }
+" WebDev
+Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
+Plug 'gko/vim-coloresque', { 'for': ['html', 'css'] }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 call plug#end()
 
@@ -144,7 +150,7 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js, *.html, *.css
+au BufNewFile,BufRead *.js,*.html,*.css
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
@@ -189,8 +195,12 @@ noremap <silent> _ g_
 " noremap <silent> P gP
 " noremap <silent> gP P
 
-noremap <silent> gt :bn<CR>
-noremap <silent> gT :bp<CR>
+" Cycle through buffers
+noremap <silent> gl :bn<CR>
+noremap <silent> gh :bp<CR>
+
+" Jump to matching element faster, % is hard to reach
+noremap <silent> <Tab> %
 
 " Save some time when doing LaTeX
 noremap <silent> g1 i\begin{align*}<CR>
@@ -327,6 +337,9 @@ nnoremap <Leader>g :SyntasticToggleMode<CR>
 "  " Open/close NERDTree Tabs with \t
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
+
+" --- Emmet ---
+let g:user_emmet_leader_key='<C-E>'
 
 " --- EasyMotion ---
 " The only easymotion I use
