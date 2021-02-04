@@ -38,7 +38,7 @@ plugins=(z zsh-autosuggestions vi-mode history-substring-search zsh-syntax-highl
 source $ZSH/oh-my-zsh.sh
 
 # bindings for plugins
-# bindkey '^ ' autosuggest-accept
+bindkey '^A' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
