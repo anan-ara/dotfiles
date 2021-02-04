@@ -54,7 +54,7 @@ alias \
 alias \
 	g="git" \
 	ga="git add" \
-	gc="git commit -m" \
+	gcm="git commit -m" \
 	gp="git push" \
 	gu="git pull" \
 	gco="git checkout" \
