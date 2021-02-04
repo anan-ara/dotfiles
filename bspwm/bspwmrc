@@ -12,9 +12,10 @@ feh --recursive --randomize --bg-fill ~/.config/wallpapers
 $HOME/.config/polybar/launch.sh
 
 sxhkd &
-picom -b
+picom -b &
 dunst &
 unclutter &
+fcitx -d &
 
 # We look for a non-laptop monitor to use for default, but use the laptop
 # screen (LVDS) if there's nothing else. This is because I assume that if you
