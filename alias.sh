@@ -1,23 +1,19 @@
 #!/bin/sh
 
 # Use neovim for vim if present.
-command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+# command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # easily access files
-alias vimrc="vim ~/.config/vimrc"
-alias nvimrc="vim ~/.config/nvim/init.vim"
-alias zshrc="vim ~/.config/zshrc"
-alias tmuxconf="vim ~/.config/tmux/tmux.conf"
-alias aliases="vim ~/.config/alias.sh"
-alias sxhkdrc="vim ~/.config/sxhkd/sxhkdrc"
-alias bspwmrc="vim ~/.config/bspwm/bspwmrc"
+alias vimrc="nvim ~/.config/vimrc"
+alias nvimrc="nvim ~/.config/nvim/init.vim"
+alias zshrc="nvim ~/.config/zshrc"
+alias tmuxconf="nvim ~/.config/tmux/tmux.conf"
+alias aliases="nvim ~/.config/alias.sh"
+alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
+alias bspwmrc="nvim ~/.config/bspwm/bspwmrc"
 
 # stop weird alacritty incompatibilities when using ssh
 alias ssh='TERM=xterm-256color ssh'
-
-# fast startx
-alias x="startx"
-
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
@@ -42,9 +38,9 @@ alias \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
-	f="$FILE" \
-	e="$EDITOR" \
-	v="$EDITOR" \
+	# f="$FILE" \
+	# e="$EDITOR" \
+	# v="$EDITOR" \
 	p="sudo pacman" \
 	xi="sudo xbps-install" \
 	xr="sudo xbps-remove -R" \
