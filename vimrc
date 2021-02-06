@@ -21,15 +21,12 @@ Plug 'dracula/vim'
 
 " For airline
 Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-
-" Plug 'Raimondi/delimitMate'
 
 " For more icons
 Plug 'ryanoasis/vim-devicons'
 
 " ----- Vim as a programmer's text editor -----------------------------
-Plug 'vim-syntastic/syntastic', { 'on': 'SyntasticToggleMode' }
+Plug 'vim-syntastic/syntastic'
 
 " For EasyMotion
 " Plug 'easymotion/vim-easymotion'
@@ -139,12 +136,6 @@ au BufNewFile,BufRead *.js, *.html, *.css
 
 " --- REMAPS ---
 
-" "Use enter to create new lines w/o entering insert mode
-" nnoremap <CR> o<Esc>
-" ""Below is to fix issues with the ABOVE mappings in quickfix window
-" autocmd CmdwinEnter * nnoremap <CR> <CR>
-" autocmd BufReadPost quickfix nnoremap <CR> <CR>
-
 " Remap leader to be easier to reach
 let mapleader = ' '
 " let maplocalleader = ' '
@@ -166,8 +157,9 @@ noremap <silent> j gj
 noremap <silent> gk k
 noremap <silent> gj j
 noremap <silent> ^ g^
-noremap <silent> g^ ^
 noremap <silent> _ g_
+noremap <silent> g^ ^
+noremap <silent> g_ _
 
 " Make pasting work like in normal editors
 " Actually this was a bad idea I'm gonna turn it off for now
@@ -180,14 +172,8 @@ noremap <silent> _ g_
 noremap <silent> gl :bn<CR>
 noremap <silent> gh :bp<CR>
 
-" Jump to matching element faster, % is hard to reach
-noremap <silent> <Tab> %
-
 " Jump to buffers
 noremap <silent> <Leader>b :ls<CR>:b<space>
-
-" Make <Esc><Esc> clear search highlights in normal mode
-" nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
@@ -260,6 +246,9 @@ let g:airline_detect_paste=1
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
 
+" Show airline for Syntastic
+let g:airline#extensions#syntastic#enabled = 1
+
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
 
@@ -272,22 +261,14 @@ let g:syntastic_mode_map = {
 let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_cpp_compiler = 'g++-9'
-let g:syntastic_cpp_compiler_options = ' -std=c++17'
-
 " close location list with :lclose
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 " press \g to automatically check for errors
-" nnoremap <Leader>g :SyntasticCheck<CR>
-nnoremap <Leader>g :SyntasticToggleMode<CR>
+nnoremap <Leader>g :SyntasticCheck<CR>
 
 " ----- NerdTree -----
 "  " Open/close NERDTree Tabs with \t
