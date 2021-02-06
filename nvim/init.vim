@@ -126,6 +126,9 @@ set nowb
 set noswapfile
 set nowritebackup
 
+" stop netrwhist from getting generated
+let g:netrw_dirhistmax=0
+
 " toggle invisible characters
 set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
