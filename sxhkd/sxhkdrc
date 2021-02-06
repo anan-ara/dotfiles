@@ -51,10 +51,6 @@ shift + Print
 
 # quit/restart bspwm
 super + alt + {q,r}
-Xft.autohint: 0
-Xft.autohint: 0
-Xft.autohint: 0
-Xft.autohint: 0
 	bspc {quit,wm -r}
 
 # close and kill
