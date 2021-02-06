@@ -1,6 +1,7 @@
 [[ -f ~/.config/Xresources ]] && xrdb -merge ~/.config/Xresources
 
-xrandr --dpi 120
+source ~/.config/xps.sh
+source ~/.config/remaps.sh
 
 # Default programs:
 export EDITOR="nvim"

@@ -36,6 +36,8 @@ XF86MonBrightnessDown
 	xbacklight -dec 15
 XF86MonBrightnessUp
 	xbacklight -inc 15
+XF86Search
+	pactl set-source-mute 1 toggle
 
 # Recording
 # Screenshot to clipboard
@@ -49,6 +51,10 @@ shift + Print
 
 # quit/restart bspwm
 super + alt + {q,r}
+Xft.autohint: 0
+Xft.autohint: 0
+Xft.autohint: 0
+Xft.autohint: 0
 	bspc {quit,wm -r}
 
 # close and kill
@@ -113,7 +119,7 @@ super + Tab
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d -f} '^{1-9,10}'
+	bspc {desktop -f,node -d} '^{1-9,10}'
 #
 # move/resize
 #

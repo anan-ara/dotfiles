@@ -3,9 +3,6 @@
 # If refreshing bspwm, remove all previous rules to prevnt doubling up.
 bscp rule -r "*"
 
-$HOME/.config/remaps.sh
-
-xbacklight -set 50
 # feh --recursive --randomize --bg-fill ~/.config/wallpapers
 feh --bg-fill ~/.config/wallpapers/catwall.jpg
 
