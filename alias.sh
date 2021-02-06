@@ -35,16 +35,11 @@ alias \
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall" \
-	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
-	# f="$FILE" \
-	# e="$EDITOR" \
-	# v="$EDITOR" \
+	e="$EDITOR" \
+	v="$EDITOR" \
 	p="sudo pacman" \
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
 
 # Git commands
 alias \
