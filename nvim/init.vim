@@ -25,10 +25,7 @@ Plug 'vim-airline/vim-airline'
 
 " Plug 'Raimondi/delimitMate'
 
-" For more icons
-Plug 'ryanoasis/vim-devicons'
-
-" ----- Vim as a programmer's text editor -----------------------------
+" Vim as a programmer's text editor
 Plug 'vim-syntastic/syntastic'
 
 " For Motion
@@ -61,7 +58,7 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 " shows signs next to changes
 " see list of commands (:Gwrite, ...)
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 
 " To move around faster
 Plug 'takac/vim-hardtime'
@@ -75,6 +72,9 @@ Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
 Plug 'gko/vim-coloresque', { 'for': ['html', 'css'] }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+" For more icons
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -121,7 +121,6 @@ set tm=500
 
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
-set nowb
 set noswapfile
 set nowritebackup
 
@@ -168,7 +167,7 @@ let maplocalleader = ' '
 noremap Y y$
 
 " Auto Indent the entire file with =
-nnoremap = gg=G<C-o><C-o>
+" nnoremap = gg=G<C-o><C-o>
 
 " Most controversial change in this whole vimrc file
 " But it makes sense visually
@@ -234,19 +233,19 @@ if has("autocmd")
 endif
 
 " --- Plugin Specific Settings ---
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column.
-hi clear SignColumn
-
-" ----- altercation/vim-colors-solarized settings -----
-" Uncomment the next line if your terminal is not configured for solarized
-"let g:solarized_termcolors=256
+"
+" ----- Vim-GitGutter -----
+" highlight clear SignColumn
+" Make things update faster
+set updatetime=100
+" Highlight the SignColumn
+highlight! link SignColumn LineNr
 
 " Set the colorscheme
 colorscheme dracula
 
 " Makes transparentcy work idk how but it does
-hi Normal guibg=NONE ctermbg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
 
 " Unified color scheme (default: dark)
 " let g:seoul256_background = 235
