@@ -54,3 +54,4 @@ alias \
 	gr='git reset' \
 	grs='git reset --soft' \
 	grh='git reset --hard' \
+	gst='git status' \
