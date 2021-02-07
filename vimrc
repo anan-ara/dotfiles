@@ -22,11 +22,9 @@ Plug 'dracula/vim'
 " For airline
 Plug 'vim-airline/vim-airline'
 
-" For more icons
-Plug 'ryanoasis/vim-devicons'
-
-" ----- Vim as a programmer's text editor -----------------------------
-Plug 'vim-syntastic/syntastic'
+" Vim as a programmer's text editor
+" Plug 'vim-syntastic/syntastic'
+Plug 'dense-analysis/ale'
 
 " For EasyMotion
 " Plug 'easymotion/vim-easymotion'
@@ -54,7 +52,10 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 " shows signs next to changes
 " see list of commands (:Gwrite, ...)
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
+
+" For more icons
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -77,6 +78,7 @@ set mouse=a
 set hidden " make buffers work normally
 set scrolloff=2
 set linebreak
+set encoding=utf-8
 
 " autocompletion
 set wildignorecase
@@ -101,7 +103,6 @@ set tm=500
 
 " Turn backup off, since most stuff is in SVN, git etc. anyway...
 set nobackup
-set nowb
 set noswapfile
 set nowritebackup
 
@@ -109,8 +110,6 @@ set nowritebackup
 set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
-
-set clipboard=unnamedplus " use clipboard instead of vim's buffer
 
 " Enable folding
 set foldmethod=indent
@@ -144,7 +143,7 @@ let mapleader = ' '
 noremap Y y$
 
 " Auto Indent the entire file with =
-nnoremap = gg=G<C-o><C-o>
+" nnoremap = gg=G<C-o><C-o>
 
 " Most controversial change in this whole vimrc file
 " But it makes sense visually
@@ -208,19 +207,19 @@ if has("autocmd")
 endif
 
 " --- Plugin Specific Settings ---
-" We need this for plugins like Syntastic and vim-gitgutter which put symbols
-" in the sign column.
-hi clear SignColumn
-
-" ----- altercation/vim-colors-solarized settings -----
-" Uncomment the next line if your terminal is not configured for solarized
-"let g:solarized_termcolors=256
+"
+" ----- Vim-GitGutter -----
+" highlight clear SignColumn
+" Make things update faster
+set updatetime=100
+" Highlight the SignColumn
+highlight! link SignColumn LineNr
 
 " Set the colorscheme
 colorscheme dracula
 
 " Makes transparentcy work idk how but it does
-hi Normal guibg=NONE ctermbg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
 
 " Unified color scheme (default: dark)
 " let g:seoul256_background = 235
@@ -238,7 +237,9 @@ set laststatus=2
 "     https://github.com/abertsch/Menlo-for-Powerline
 " download all the .ttf files, double-click on them and click "Install"
 " Finally, uncomment the next line
-let g:airline_powerline_fonts = 1
+
+" Currently turned off to make vimrc more portable
+" let g:airline_powerline_fonts = 1
 
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
@@ -247,28 +248,35 @@ let g:airline_detect_paste=1
 let g:airline#extensions#tabline#enabled = 1
 
 " Show airline for Syntastic
-let g:airline#extensions#syntastic#enabled = 1
+" let g:airline#extensions#syntastic#enabled = 1
 
+" Show airline for ALE
+let g:airline#extensions#ale#enabled = 1
+"
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
 
 " ----- Syntastic Settings -----
-let g:syntastic_mode_map = {
-	    \ "mode": "passive",
-	    \ "active_filetypes": [],
-	    \ "passive_filetypes": [] }
+" let g:syntastic_mode_map = { \ "mode": "passive",
+	    " \ "active_filetypes": [],
+	    " \ "passive_filetypes": [] }
 
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+" " close location list with :lclose
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
 
-" close location list with :lclose
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
+" " press \g to automatically check for errors
+" nnoremap <Leader>g :SyntasticCheck<CR>
+"
+" ----- ALE -----
+let g:ale_linters = { 'python': ['flake8'] }
+let g:ale_fixers = { 'python': ['black'] }
+let g:ale_fix_on_save = 0
 
-" press \g to automatically check for errors
-nnoremap <Leader>g :SyntasticCheck<CR>
+" Fix!
+nnoremap <Leader>g :ALEFix<CR>
 
 " ----- NerdTree -----
 "  " Open/close NERDTree Tabs with \t
