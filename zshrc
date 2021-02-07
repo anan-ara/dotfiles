@@ -77,5 +77,5 @@ export KEYTIMEOUT=1
 
 # Automatically start X server
 if [[ "$(tty)" = "/dev/tty1" ]]; then
-	exec startx
+	startx
 fi

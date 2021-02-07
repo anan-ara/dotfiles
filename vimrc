@@ -106,6 +106,8 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+" cleaning home folder
+set viminfo+=n~/.vim/viminfo
 " toggle invisible characters
 set list
 set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮

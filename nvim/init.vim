@@ -41,7 +41,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " For split screen navigation
-" Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 " Plug 'edkolev/tmuxline.vim' " gives vim a nice tmux-like status bar
 
 " For commenting
@@ -70,7 +70,7 @@ Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 Plug 'lervag/vimtex', { 'for': 'latex' }
 " WebDev
 Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
-Plug 'gko/vim-coloresque', { 'for': ['html', 'css'] }
+Plug 'ap/vim-css-color'
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " For more icons
@@ -204,11 +204,11 @@ noremap <silent> g1 i\begin{align*}<CR>
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" "split navigations
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " shortcut to save
 nmap <leader>w :w<cr>
