@@ -55,7 +55,7 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'tpope/vim-fugitive'
 
 " For more icons
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
