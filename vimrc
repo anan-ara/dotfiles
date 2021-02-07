@@ -35,7 +35,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 
 " For split screen navigation
-" Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 " Plug 'edkolev/tmuxline.vim' " gives vim a nice tmux-like status bar
 
 " For commenting
@@ -176,13 +176,6 @@ noremap <silent> <Leader>b :ls<CR>:b<space>
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
-
-
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " shortcut to save
 nmap <leader>w :w<cr>
