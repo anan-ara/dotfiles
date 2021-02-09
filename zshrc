@@ -75,6 +75,9 @@ source ~/.config/alias.sh
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
 
+# Add my scripts!
+export PATH="$HOME/.local/bin:$PATH"
+
 # Automatically start X server
 if [[ "$(tty)" = "/dev/tty1" ]]; then
 	startx
