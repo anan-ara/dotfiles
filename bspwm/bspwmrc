@@ -16,6 +16,9 @@ dunst &
 unclutter &
 fcitx -d &
 
+killall bspswallow
+pidof bspswallow | bspswallow &
+
 # We look for a non-laptop monitor to use for default, but use the laptop
 # screen (LVDS) if there's nothing else. This is because I assume that if you
 # have an extra screen attached to a laptop, you want to use that.
@@ -40,7 +43,9 @@ bspc config pointer_action2 resize_side
 
 # bspc rule -a Brave-browser:brave-browser desktop='^2'
 # bspc rule -a discord desktop='^3'
-bspc rule -a Zathura:org.pwmt.zathura state=tiled
+bspc rule -a Zathura state=tiled
+# bspc rule -a Zathura:org.pwmt.zathura state=tiled
+bspc rule -a mpv state=fullscreen
 
 # Dracula colors for borders
 bspc config normal_border_color "#4B4C90"
