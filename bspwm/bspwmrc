@@ -17,7 +17,7 @@ unclutter &
 fcitx -d &
 
 killall bspswallow
-pidof bspswallow | bspswallow &
+pidof bspswallow || bspswallow &
 
 # We look for a non-laptop monitor to use for default, but use the laptop
 # screen (LVDS) if there's nothing else. This is because I assume that if you
