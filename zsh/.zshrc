@@ -5,10 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-
 # FZF Configurations
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
@@ -38,9 +34,6 @@ source ~/.config/alias.sh
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
 
-# Add my scripts
-export PATH="$HOME/.local/bin:$PATH"
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -62,7 +55,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(z zsh-autosuggestions vi-mode history-substring-search zsh-syntax-highlighting)
+plugins=(z zsh-autosuggestions colored-man-pages vi-mode history-substring-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 

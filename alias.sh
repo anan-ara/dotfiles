@@ -6,7 +6,7 @@
 # easily access files
 alias vimrc="nvim ~/.config/vimrc"
 alias nvimrc="nvim ~/.config/nvim/init.vim"
-alias zshrc="nvim ~/.config/zshrc"
+alias zshrc="nvim ~/.config/zsh/.zshrc"
 alias tmuxconf="nvim ~/.config/tmux/tmux.conf"
 alias aliases="nvim ~/.config/alias.sh"
 alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
