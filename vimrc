@@ -120,6 +120,13 @@ set foldlevel=99
 " we already have airline so this is redundant
 set noshowmode
 
+" Make sure cursor shape is always correct
+" This is a problem on some terminals
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+
 " --- Tab Settings ---
 au BufNewFile,BufRead *.py
     \ set tabstop=4 |

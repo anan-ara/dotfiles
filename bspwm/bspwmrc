@@ -4,7 +4,7 @@
 bscp rule -r "*"
 
 # feh --recursive --randomize --bg-fill ~/.config/wallpapers
-feh --bg-fill ~/.config/wallpapers/catwall.jpg
+feh --no-fehbg --bg-fill ~/.config/wallpapers/catwall.jpg
 
 # Polybar
 $HOME/.config/polybar/launch.sh
@@ -17,7 +17,7 @@ unclutter &
 fcitx -d &
 
 killall bspswallow
-pidof bspswallow || bspswallow &
+pidof bspswallow || ~/.config/bspwm/bspswallow &
 
 # We look for a non-laptop monitor to use for default, but use the laptop
 # screen (LVDS) if there's nothing else. This is because I assume that if you
