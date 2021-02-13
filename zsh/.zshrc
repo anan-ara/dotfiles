@@ -5,31 +5,20 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# FZF Configurations
+# Get fzf shortcuts
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
-export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND . $HOME"
-export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d . $HOME"
-
-export FZF_DEFAULT_OPTS="
---layout=reverse
---info=inline
---height=80%
---multi
---preview-window=:hidden
---preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
---color=16
---prompt='∼ ' --pointer='▶' --marker='✓'
---bind '?:toggle-preview'
-"
+LFCD="/usr/share/lf/lfcd.sh"
+if [ -f "$LFCD" ]; then
+  source "$LFCD"
+fi
 
 # Source other config files
 source ~/.config/alias.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
@@ -74,8 +63,8 @@ bindkey -v '^?' backward-delete-char
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
     case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
+	vicmd) echo -ne '\e[1 q';;      # block
+	viins|main) echo -ne '\e[5 q';; # beam
     esac
 }
 zle -N zle-keymap-select

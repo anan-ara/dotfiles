@@ -11,6 +11,7 @@ alias tmuxconf="nvim ~/.config/tmux/tmux.conf"
 alias aliases="nvim ~/.config/alias.sh"
 alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
 alias bspwmrc="nvim ~/.config/bspwm/bspwmrc"
+alias lfrc="nvim ~/.config/lf/lfrc"
 
 # stop weird alacritty incompatibilities when using ssh
 alias ssh='TERM=xterm-256color ssh'

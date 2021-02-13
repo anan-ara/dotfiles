@@ -20,6 +20,23 @@ export XMODIFIERS='@im=fcitx'
 # Disable files
 export LESSHISTFILE=-
 
+# FZF Configurations
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND . $HOME"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d . $HOME"
+
+export FZF_DEFAULT_OPTS="
+--layout=reverse
+--info=inline
+--height=80%
+--multi
+--preview-window=:hidden
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+--color=16
+--prompt='∼ ' --pointer='▶' --marker='✓'
+--bind '?:toggle-preview'
+"
+
 # Other XDG paths
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
@@ -32,6 +49,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
 export ZDOTDIR=$HOME/.config/zsh
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
+# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
 
 # Scaling
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
