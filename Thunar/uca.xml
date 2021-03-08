@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Alacritty Here</name>
+	<unique-id>1614453815602015-1</unique-id>
+	<command>alacritty --working-directory %f</command>
+	<description>Open Alacritty in this directory</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+</actions>

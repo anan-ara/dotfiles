@@ -1,0 +1,14 @@
+{
+	"workbench.colorTheme": "Dracula",
+	"editor.wordWrap": "on",
+	"keyboard.dispatch": "keyCode",
+	"vim.useSystemClipboard": true,
+	"vim.incsearch": true,
+	"vim.hlsearch": true,
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": ["Y"],
+			"after": ["y", "$"]
+		}
+	]
+}

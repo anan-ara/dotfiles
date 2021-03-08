@@ -753,8 +753,8 @@ key_bindings:
   #- { key: Return, mods: Shift,   mode: Search|~Vi, action: SearchFocusPrevious   }
 
   # (Windows, Linux, and BSD only)
-  - { key: V,              mods: Alt,                             action: Paste            }
-  - { key: C,              mods: Alt|Control,                     action: Copy             }
+  - { key: V,              mods: Super,                                     action: Paste            }
+  - { key: C,              mods: Super,                                     action: Copy             }
   #- { key: F,              mods: Control|Shift, mode: ~Search,    action: SearchForward    }
   #- { key: B,              mods: Control|Shift, mode: ~Search,    action: SearchBackward   }
   #- { key: C,              mods: Control|Shift, mode: Vi|~Search, action: ClearSelection   }
