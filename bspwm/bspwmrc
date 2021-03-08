@@ -15,9 +15,10 @@ picom -b &
 dunst &
 unclutter &
 fcitx -d &
+thunar --daemon &
 
-killall bspswallow
-pidof bspswallow || ~/.config/bspwm/bspswallow &
+# killall bspswallow
+# pidof bspswallow || ~/.config/bspwm/bspswallow &
 
 # We look for a non-laptop monitor to use for default, but use the laptop
 # screen (LVDS) if there's nothing else. This is because I assume that if you

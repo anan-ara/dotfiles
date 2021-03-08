@@ -19,6 +19,18 @@ super + b
 super + d
 	discord
 
+# thunar file manager
+super + f
+	thunar
+
+# google chrome
+super + g
+	google-chrome-stable
+
+# thunar file manager
+super + shift + f
+	alacritty -e lf
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -62,8 +74,8 @@ super + m
 	bspc desktop -l next
 
 # swap the current node and the biggest node
-super + g
-	bspc node -s biggest.local
+# super + g
+	# bspc node -s biggest.local
 
 #
 # state/flags
@@ -71,13 +83,10 @@ super + g
 
 # set the window state
 super + t
-	bspc node -t tiled
+	bspc node focused.!fullscreen -t fullscreen || bspc node -t tiled
 
 super + o
 	bspc node focused.tiled -t floating || bspc node focused.floating -t tiled
-
-super + f
-	bspc node focused.!fullscreen -t fullscreen || bspc node -t tiled
 
 # set the node flags
 # super + ctrl + {m,x,y,z}
