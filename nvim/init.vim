@@ -93,7 +93,7 @@ set splitright
 set splitbelow
 set ignorecase " case insensitive searching (specify lower with \c)
 set smartcase " if upper case in string, case sensitive
-" set mouse=a
+set mouse=a
 set hidden " make buffers work normally
 set scrolloff=2
 set linebreak
