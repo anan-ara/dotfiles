@@ -67,7 +67,7 @@ autocmd VimEnter *
 
 " --- General settings ---
 set number                     " Show current line number
-set relativenumber             " Show relative line number
+" set relativenumber             " Show relative line number
 set showcmd
 set hlsearch
 set splitright
@@ -216,6 +216,20 @@ endif
 set updatetime=100
 " Highlight the SignColumn
 highlight! link SignColumn LineNr
+
+" Toggle signcolumn. Works only on vim>=8.0 or NeoVim
+" https://stackoverflow.com/questions/18319284/vim-sign-column-toggle/18322752#18322752
+function! ToggleSignColumn()
+    if !exists("b:signcolumn_on") || b:signcolumn_on
+        set signcolumn=no
+        let b:signcolumn_on=0
+    else
+        set signcolumn=auto
+        let b:signcolumn_on=1
+    endif
+endfunction
+
+noremap <Leader>k :call ToggleSignColumn()<CR>
 
 " Set the colorscheme
 colorscheme dracula
