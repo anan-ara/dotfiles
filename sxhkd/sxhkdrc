@@ -8,7 +8,9 @@ super + Return
 
 # program launcher
 super + @space
-	rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/polybar/scripts/rofi/launcher.rasi
+	# rofi
+	rofi -no-lazy-grab -show drun -modi drun
+	# rofi -no-config -no-lazy-grab -show drun -modi drun -theme ~/.config/polybar/scripts/rofi/launcher.rasi
 	# dmenu_run
 
 # browser
