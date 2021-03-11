@@ -12,13 +12,11 @@
 * {
   al:    #00000000;
   bg:    #13111cD9;
-  /* bg:    #13111cFF; */
   bg1:   #4B4C90FF;
   bg2:   #9C5A75FF;
   bg3:   #4B4C90FF;
   fg:    #e6e0e6FF;
 }
-
 
 window {
 	transparency: "real";
@@ -49,7 +47,7 @@ entry {
 	horizontal-align: 0;
 	placeholder: "Search...";
 	padding: 10px;
-	border-radius: 0px12px12px0px;
+	border-radius: 0px 12px 12px 0px;
 	blink: true;
 }
 
@@ -66,7 +64,7 @@ inputbar {
 
 listview {
 	background-color: @al;
-	padding: 10px10px10px10px;
+	padding: 10px 10px 10px 10px;
 	columns: 1;
 	lines: 10;
 	spacing: 5px;
@@ -85,7 +83,7 @@ mainbox {
 	padding: 0px;
 }
 
-element{
+element {
 	background-color: @al;
 	text-color: @fg;
 	orientation: horizontal;
@@ -93,22 +91,22 @@ element{
 	padding: 6px;
 }
 
-element-icon{
+element-icon {
 	size: 24px;
 	border: 0px;
 }
 
-element-text{
+element-text {
 	expand: true;
 	horizontal-align: 0;
 	vertical-align: 0.5;
-	margin: 0px2.5px0px2.5px;
+	margin: 0px 2.5px 0px 2.5px;
 }
 
-elementselected{
+element selected {
 	background-color: @bg3;
 	text-color: @bg;
-	border: 0px0px0px0px;
+	border: 0px 0px 0px 0px;
 	border-radius: 12px;
 	border-color: @bg1;
 }
