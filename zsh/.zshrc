@@ -12,6 +12,7 @@ source /usr/share/fzf/completion.zsh
 LFCD="/usr/share/lf/lfcd.sh"
 if [ -f "$LFCD" ]; then
   source "$LFCD"
+  bindkey -s '^o' 'lfcd\n'  # zsh
 fi
 
 # Source other config files

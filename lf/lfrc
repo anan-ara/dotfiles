@@ -100,7 +100,7 @@ map v
 
 # General Commands
 
-# map <enter> open
+map <enter> open
 map mf mkfile
 map md mkdir
 # map ch chmod
