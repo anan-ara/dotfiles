@@ -103,6 +103,7 @@ map v
 map <enter> open
 map mf mkfile
 map md mkdir
+map <esc> quit
 # map ch chmod
 map v $$EDITOR "$f"
 map I set hidden!
