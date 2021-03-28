@@ -9,8 +9,11 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
-Plug 'tpope/vim-sensible'
-" Plug 'tpope/vim-sleuth'
+
+" Plug 'tpope/vim-sensible'
+
+" This includes vim-sensible
+Plug 'sheerun/vim-polyglot'
 
 " For colors
 " Plug 'arcticicestudio/nord-vim'
@@ -23,10 +26,11 @@ Plug 'dracula/vim'
 Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 
-" Plug 'Raimondi/delimitMate'
+" Auto insert closing brackets
+Plug 'jiangmiao/auto-pairs'
 
-" Vim as a programmer's text editor
-Plug 'vim-syntastic/syntastic'
+" Real time syntax checking
+Plug 'dense-analysis/ale'
 
 " For Motion
 " Plug 'easymotion/vim-easymotion'
@@ -60,18 +64,9 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 Plug 'airblade/vim-gitgutter'
 " Plug 'tpope/vim-fugitive'
 
-" To move around faster
-" Plug 'takac/vim-hardtime'
-
 " Language Specific Plugins
-" Python
-Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 " LaTeX
 Plug 'lervag/vimtex', { 'for': 'latex' }
-" WebDev
-Plug 'mattn/emmet-vim', { 'for': ['html', 'css'] }
-Plug 'ap/vim-css-color'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " For more icons
 Plug 'ryanoasis/vim-devicons'
@@ -100,7 +95,7 @@ set linebreak
 
 " autocompletion
 set wildignorecase
-" set wildmode=list:longest,full
+set wildmode=list:longest,full
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -128,9 +123,8 @@ set nowritebackup
 let g:netrw_dirhistmax=0
 
 " toggle invisible characters
+set showbreak=\\
 set list
-set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-set showbreak=↪
 
 set clipboard=unnamedplus " use clipboard instead of vim's buffer
 
@@ -140,22 +134,6 @@ set foldlevel=99
 
 " we already have airline so this is redundant
 set noshowmode
-
-" --- Tab Settings ---
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
-
-au BufNewFile,BufRead *.js,*.html,*.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
-
 
 " --- REMAPS ---
 
@@ -203,12 +181,6 @@ noremap <silent> g1 i\begin{align*}<CR>
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
-
-" "split navigations
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
 
 " shortcut to save
 nmap <leader>w :w<cr>
@@ -272,24 +244,17 @@ highlight Normal guibg=NONE ctermbg=NONE
 " Always show statusbar
 set laststatus=2
 
-" Fancy arrow symbols, requires a patched font
-" To install a patched font, run over to
-"     https://github.com/abertsch/Menlo-for-Powerline
-" download all the .ttf files, double-click on them and click "Install"
-" Finally, uncomment the next line
-let g:airline_powerline_fonts = 1
-
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
 
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
 
-" Show airline for Syntastic
-let g:airline#extensions#syntastic#enabled = 1
-
 " Use theme for the Airline status bar
 " let g:airline_theme='nord'
+
+" Show airline for ALE
+let g:airline#extensions#ale#enabled = 1
 
 " --- vimtex settings ---
 let g:vimex_quickfix_latexlog= {
@@ -307,42 +272,34 @@ aug QFClose
     au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
 aug END
 
-" ----- Raimondi/delimitMate settings -----
-" let delimitMate_expand_cr = 1
-" augroup mydelimitMate
-    " au!
-    " au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
-    " au FileType tex let b:delimitMate_quotes = ""
-    " au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
-    " au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-" augroup END
+" " ----- Syntastic Settings -----
+" let g:syntastic_mode_map = {
+    " \ "mode": "passive",
+    " \ "active_filetypes": [],
+    " \ "passive_filetypes": [] }
 
-" ----- Syntastic Settings -----
-let g:syntastic_mode_map = {
-    \ "mode": "passive",
-    \ "active_filetypes": [],
-    \ "passive_filetypes": [] }
+" let g:syntastic_error_symbol = '✘'
+" let g:syntastic_warning_symbol = "▲"
 
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+" " close location list with :lclose
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
 
-" close location list with :lclose
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-" press \g to automatically check for errors
-nnoremap <Leader>g :SyntasticCheck<CR>
-" nnoremap <Leader>g :SyntasticToggleMode<CR>
+" " press \g to automatically check for errors
+" nnoremap <Leader>g :SyntasticCheck<CR>
+" " nnoremap <Leader>g :SyntasticToggleMode<CR>
 
 " ----- NerdTree -----
 "  " Open/close NERDTree Tabs with \t
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
-" --- Emmet ---
-let g:user_emmet_leader_key='<C-E>'
+" ----- ALE -----
+let g:ale_linters = { 'python': ['flake8'] }
+let g:ale_fixers = { 'python': ['black'] }
+let g:ale_fix_on_save = 0
 
 " --- EasyMotion ---
 " The only easymotion I use
@@ -370,9 +327,13 @@ nmap <leader>f :Files<cr>
 " Find files by name under the home directory
 nmap <leader>h :Files ~/<cr>
 
-" --- vim-hardtime ---
-"  Automatically timeout inefficient keys
-let g:hardtime_default_on = 1
-let g:list_of_normal_keys = ["h","l"]
-let g:list_of_visual_keys = ["h","l"]
-let g:hardtime_allow_different_key = 1
+
+" Fancy arrow symbols, requires a patched font
+" To install a patched font, run over to
+"     https://github.com/abertsch/Menlo-for-Powerline
+" download all the .ttf files, double-click on them and click "Install"
+" Finally, uncomment the next line
+let g:airline_powerline_fonts = 1
+
+set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
+set showbreak=↪\
