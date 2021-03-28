@@ -10,9 +10,9 @@ call plug#begin('~/.vim/plugged')
 
 " Declare the list of plugins.
 
-" Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
 
-" This includes vim-sensible
+" Language Support
 Plug 'sheerun/vim-polyglot'
 
 " For colors
@@ -84,6 +84,7 @@ set number                     " Show current line number
 " set relativenumber             " Show relative line number
 set showcmd
 set hlsearch
+set incsearch
 set splitright
 set splitbelow
 set ignorecase " case insensitive searching (specify lower with \c)
@@ -327,12 +328,23 @@ nmap <leader>f :Files<cr>
 " Find files by name under the home directory
 nmap <leader>h :Files ~/<cr>
 
+" Make sure cursor shape is always correct
+" This is a problem on some terminals
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
 
 " Fancy arrow symbols, requires a patched font
 " To install a patched font, run over to
 "     https://github.com/abertsch/Menlo-for-Powerline
 " download all the .ttf files, double-click on them and click "Install"
-" Finally, uncomment the next line
+
+" If you prefer using your current font,
+" Uncomment the following line
+" let g:webdevicons_enable = 0
+
+" Comment the following lines
 let g:airline_powerline_fonts = 1
 
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
