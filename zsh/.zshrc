@@ -6,14 +6,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Get fzf shortcuts
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+# source /usr/share/fzf/key-bindings.zsh
+# source /usr/share/fzf/completion.zsh
 
-LFCD="/usr/share/lf/lfcd.sh"
-if [ -f "$LFCD" ]; then
-  source "$LFCD"
-  bindkey -s '^o' 'lfcd\n'  # zsh
-fi
+# LFCD="/usr/share/lf/lfcd.sh"
+# if [ -f "$LFCD" ]; then
+  # source "$LFCD"
+  # bindkey -s '^o' 'lfcd\n'  # zsh
+# fi
 
 # Source other config files
 source ~/.config/alias.sh
@@ -23,38 +23,44 @@ source ~/.config/alias.sh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
-# VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
-# VI_MODE_SET_CURSOR=true
 
-source ~/.zplug/init.zsh
-
-# Make sure to use double quotes
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "rupa/z"
-zplug "jeffreytse/zsh-vi-mode"
-
-# Supports oh-my-zsh plugins and the like
-zplug "plugins/colored-man-pages",   from:oh-my-zsh
-zplug "plugins/vi-mode",   from:oh-my-zsh
-
-# Set the priority when loading
-# e.g., zsh-syntax-highlighting must be loaded
-# after executing compinit command and sourcing other plugins
-# (If the defer tag is given 2 or above, run after compinit command)
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-# Load theme file
-zplug "romkatv/powerlevel10k," as:theme, depth:1
-# zplug 'dracula/zsh', as:theme
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check; then
-    zplug install
+### Added by Zinit's installer
+if [[ ! -f $HOME/.config/zsh/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.config/zsh/.zinit" && command chmod g-rwX "$HOME/.config/zsh/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.config/zsh/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-# Then, source plugins and add commands to $PATH
-zplug load
+source "$HOME/.config/zsh/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+zinit light zsh-users/zsh-autosuggestions
+zinit light rupa/z
+zinit light zsh-users/zsh-history-substring-search
+zinit light jeffreytse/zsh-vi-mode
+
+zinit snippet /usr/share/fzf/key-bindings.zsh
+zinit snippet /usr/share/fzf/completion.zsh
+zinit snippet /usr/share/lf/lfcd.sh
+
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
+
+zinit ice depth=2
+zinit light zsh-users/zsh-syntax-highlighting
 
 # bindings for plugins
 bindkey '^A' autosuggest-accept
@@ -72,6 +78,9 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+
+# LFCD
+bindkey -s '^o' 'lfcd\n'  # zsh
 
 ## History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$CACHE/zsh/.zsh_history"
@@ -101,3 +110,4 @@ setopt share_history          # share command history data
 if [[ "$(tty)" = "/dev/tty1" ]]; then
 	startx -- -dpi 192
 fi
+
