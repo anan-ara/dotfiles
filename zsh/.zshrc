@@ -1,9 +1,9 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  # source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 # Get fzf shortcuts
 source /usr/share/fzf/key-bindings.zsh
@@ -23,52 +23,49 @@ source ~/.config/alias.sh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
+# VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+# VI_MODE_SET_CURSOR=true
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+source ~/.zplug/init.zsh
 
-# Theme
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Make sure to use double quotes
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "rupa/z"
+zplug "jeffreytse/zsh-vi-mode"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS="true"
+# Supports oh-my-zsh plugins and the like
+zplug "plugins/colored-man-pages",   from:oh-my-zsh
+zplug "plugins/vi-mode",   from:oh-my-zsh
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
+# Set the priority when loading
+# e.g., zsh-syntax-highlighting must be loaded
+# after executing compinit command and sourcing other plugins
+# (If the defer tag is given 2 or above, run after compinit command)
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(z zsh-autosuggestions colored-man-pages vi-mode history-substring-search zsh-syntax-highlighting)
+# Load theme file
+zplug 'dracula/zsh', as:theme
 
-source $ZSH/oh-my-zsh.sh
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/anan/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/anan/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/anan/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/anan/anaconda3/bin:$PATH"
-    fi
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+    zplug install
 fi
-unset __conda_setup
-# <<< conda initialize <<<
+
+# Then, source plugins and add commands to $PATH
+zplug load
 
 # bindings for plugins
 bindkey '^A' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+zstyle ':completion:*' menu select
+# Color completion for some things.
+# http://linuxshellaccount.blogspot.com/2008/12/color-completion-using-zsh-modules-on.html
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zmodload zsh/complist
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -76,23 +73,29 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# Change cursor shape for different vi modes.
-function zle-keymap-select () {
-    case $KEYMAP in
-	vicmd) echo -ne '\e[1 q';;      # block
-	viins|main) echo -ne '\e[5 q';; # beam
-    esac
-}
-zle -N zle-keymap-select
+## History file configuration
+[ -z "$HISTFILE" ] && HISTFILE="$CACHE/zsh/.zsh_history"
+[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=50000
+[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=10000
 
-# zle-line-init() {
-    # zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    # echo -ne "\e[5 q"
-# }
-# zle -N zle-line-init
+# setopts from omz
+unsetopt menu_complete   # do not autoselect the first completion entry
+# unsetopt flowcontrol
+setopt auto_menu         # show completion menu on successive tab press
+setopt auto_cd
+setopt complete_in_word
+setopt always_to_end
 
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_minus
+
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+# setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
 
 # Automatically start X server
 if [[ "$(tty)" = "/dev/tty1" ]]; then
