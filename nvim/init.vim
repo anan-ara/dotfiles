@@ -348,4 +348,4 @@ let &t_te.="\e[0 q"
 let g:airline_powerline_fonts = 1
 
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
-set showbreak=↪\
+set showbreak=↪

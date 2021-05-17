@@ -348,4 +348,4 @@ let g:webdevicons_enable = 0
 " let g:airline_powerline_fonts = 1
 
 " set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
-" set showbreak=↪\
+" set showbreak=↪
