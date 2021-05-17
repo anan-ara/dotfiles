@@ -1,11 +1,15 @@
 ant-dracula-gtk-theme 2.0-1
 brave-bin 1:1.20.103-1
 dracula-gtk-theme v2.0-1
+font-manager 0.8.4-1
+fonts-tlwg 0.7.2-2
 google-chrome 88.0.4324.150-1
 lf 20-1
 nodejs-browser-sync 2.26.7-1
+otf-source-han-code-jp 2.012-1
 polybar 3.5.4-1
 ttf-mac-fonts 20100902.134-1
 ttf-meslo-nerd-font-powerlevel10k 1.000-3
+ttf-mplus TESTFLIGHT_063a-1
 yay 10.1.2-2
 zoom 5.5.2-1
