@@ -63,7 +63,7 @@ zinit ice depth=2
 zinit light zsh-users/zsh-syntax-highlighting
 
 # bindings for plugins
-bindkey '^A' autosuggest-accept
+bindkey '^ ' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
