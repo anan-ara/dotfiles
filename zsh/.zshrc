@@ -84,11 +84,6 @@ bindkey -v '^?' backward-delete-char
 # LFCD
 bindkey -s '^o' 'lfcd\n'  # zsh
 
-## History file configuration
-HISTFILE="$CACHE/zsh/.zsh_history"
-HISTSIZE=1000000
-SAVEHIST=1000000
-
 # setopts from omz
 unsetopt menu_complete   # do not autoselect the first completion entry
 # unsetopt flowcontrol
