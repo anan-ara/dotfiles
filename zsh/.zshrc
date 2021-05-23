@@ -67,9 +67,11 @@ bindkey '^A' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 # Color completion for some things.
 # http://linuxshellaccount.blogspot.com/2008/12/color-completion-using-zsh-modules-on.html
+autoload -U colors && colors
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zmodload zsh/complist
 # Use vim keys in tab complete menu:
@@ -83,9 +85,9 @@ bindkey -v '^?' backward-delete-char
 bindkey -s '^o' 'lfcd\n'  # zsh
 
 ## History file configuration
-[ -z "$HISTFILE" ] && HISTFILE="$CACHE/zsh/.zsh_history"
-[ "$HISTSIZE" -lt 50000 ] && HISTSIZE=50000
-[ "$SAVEHIST" -lt 10000 ] && SAVEHIST=10000
+HISTFILE="$CACHE/zsh/.zsh_history"
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 # setopts from omz
 unsetopt menu_complete   # do not autoselect the first completion entry
@@ -107,7 +109,7 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt share_history          # share command history data
 
 # Automatically start X server
-if [[ "$(tty)" = "/dev/tty1" ]]; then
-	startx -- -dpi 192
-fi
+# if [[ "$(tty)" = "/dev/tty1" ]]; then
+	# startx -- -dpi 192
+# fi
 
