@@ -52,9 +52,9 @@ zinit light rupa/z
 zinit light zsh-users/zsh-history-substring-search
 zinit light jeffreytse/zsh-vi-mode
 
-zinit snippet /usr/share/fzf/key-bindings.zsh
-zinit snippet /usr/share/fzf/completion.zsh
-zinit snippet /usr/share/lf/lfcd.sh
+# zinit snippet /usr/share/fzf/key-bindings.zsh
+# zinit snippet /usr/share/fzf/completion.zsh
+# zinit snippet /usr/share/lf/lfcd.sh
 
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
