@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # Start at 50% brightness
 xbacklight -set 50
