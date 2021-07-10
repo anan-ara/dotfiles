@@ -1,6 +1,6 @@
 [[ -f ~/.config/Xresources ]] && xrdb -merge ~/.config/Xresources
 
-source ~/.config/xps.sh
-source ~/.config/remaps.sh
+source ~/.config/startup/xps.sh
+source ~/.config/startup/remaps.sh
 
 exec bspwm

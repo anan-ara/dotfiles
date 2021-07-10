@@ -9,7 +9,7 @@ export IMAGE="sxiv"
 export COLORTERM="truecolor"
 export OPENER="xdg-open"
 export PAGER="less"
-export WM="bspwm"
+# export WM="bspwm"
 
 # Language
 export GTK_IM_MODULE='fcitx'
