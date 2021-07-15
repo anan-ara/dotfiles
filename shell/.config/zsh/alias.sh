@@ -51,7 +51,6 @@ alias \
 	gu="git pull" \
 	gco="git checkout" \
 	gb="git branch" \
-	gb="git branch" \
 	gr='git reset' \
 	grs='git reset --soft' \
 	grh='git reset --hard' \
