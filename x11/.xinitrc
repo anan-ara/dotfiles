@@ -3,4 +3,5 @@
 source ~/.config/startup/xps.sh
 source ~/.config/startup/remaps.sh
 
-exec bspwm
+/* exec bspwm */
+exec awesome

@@ -6,14 +6,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Get fzf shortcuts
-# source /usr/share/fzf/key-bindings.zsh
-# source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
-# LFCD="/usr/share/lf/lfcd.sh"
-# if [ -f "$LFCD" ]; then
-  # source "$LFCD"
-  # bindkey -s '^o' 'lfcd\n'  # zsh
-# fi
+LFCD="/usr/share/lf/lfcd.sh"
+if [ -f "$LFCD" ]; then
+  source "$LFCD"
+  bindkey -s '^o' 'lfcd\n'  # zsh
+fi
 
 # Source other config files
 source ~/.config/zsh/alias.sh
@@ -84,6 +84,9 @@ bindkey -v '^?' backward-delete-char
 # LFCD
 bindkey -s '^o' 'lfcd\n'  # zsh
 
+# set location of zcompdump file
+compinit -d $ZSH_COMPDUMP
+
 # setopts from omz
 unsetopt menu_complete   # do not autoselect the first completion entry
 # unsetopt flowcontrol
@@ -96,12 +99,17 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushd_minus
 
+setopt append_history       # add to history instead of deleting it
+setopt inc_append_history        # Write to the history file immediately, not when the shell exits.
+setopt share_history             # Share history between all sessions.
 setopt extended_history       # record timestamp of command in HISTFILE
+
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 # setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-setopt share_history          # share command history data
+setopt globdots               # autocomplete hidden files
+setopt hist_reduce_blanks        # Remove superfluous blanks before recording entry.
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
