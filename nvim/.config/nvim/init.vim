@@ -62,7 +62,7 @@ Plug 'tpope/vim-repeat' "use dot on surround commands
 " shows signs next to changes
 " see list of commands (:Gwrite, ...)
 Plug 'airblade/vim-gitgutter'
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " Language Specific Plugins
 " LaTeX
@@ -345,7 +345,5 @@ let &t_te.="\e[0 q"
 " let g:webdevicons_enable = 0
 
 " Comment the following lines
-let g:airline_powerline_fonts = 1
-
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
 set showbreak=↪
