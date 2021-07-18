@@ -67,7 +67,7 @@ bindkey '^ ' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -d $ZSH_COMPDUMP
 zstyle ':completion:*' menu select
 # Color completion for some things.
 # http://linuxshellaccount.blogspot.com/2008/12/color-completion-using-zsh-modules-on.html
@@ -83,9 +83,6 @@ bindkey -v '^?' backward-delete-char
 
 # LFCD
 bindkey -s '^o' 'lfcd\n'  # zsh
-
-# set location of zcompdump file
-compinit -d $ZSH_COMPDUMP
 
 # setopts from omz
 unsetopt menu_complete   # do not autoselect the first completion entry
