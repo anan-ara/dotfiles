@@ -44,6 +44,9 @@ Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+" More keybinds
+Plug 'tpope/vim-unimpaired'
+
 " For split screen navigation
 Plug 'christoomey/vim-tmux-navigator'
 " Plug 'edkolev/tmuxline.vim' " gives vim a nice tmux-like status bar
@@ -256,6 +259,9 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Show airline for ALE
 let g:airline#extensions#ale#enabled = 1
+
+" git integration
+let g:airline#extensions#branch#enabled = 1
 
 " --- vimtex settings ---
 let g:vimex_quickfix_latexlog= {
