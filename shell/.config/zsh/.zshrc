@@ -99,11 +99,12 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushd_minus
 
-setopt append_history       # add to history instead of deleting it
-setopt inc_append_history        # Write to the history file immediately, not when the shell exits.
+# setopt append_history       # add to history instead of deleting it
+# setopt inc_append_history        # Write to the history file immediately, not when the shell exits.
 setopt share_history             # Share history between all sessions.
 setopt extended_history       # record timestamp of command in HISTFILE
 
+setopt hist_find_no_dups     # do not show duplicates when pressing up in history
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 # setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space

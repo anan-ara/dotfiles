@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init("~/.config/awesome/theme2.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -61,8 +61,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
@@ -210,7 +210,6 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -502,7 +501,9 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     { rule = { class = "Brave" },
       properties = { screen = 1, tag = "2" } },
-}
+    { rule = { class = "Brave" },
+      propertie2 = { screen = 1, tag = "3" } },
+},
 -- }}}
 
 -- {{{ Signals
@@ -568,3 +569,18 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- Spawn new windows as slaves instead of master
+client.connect_signal(
+    "manage",
+    function(c)
+        if not awesome.startup then
+            awful.client.setslave(c)
+        end
+    end
+)
+
+-- Autostart
+awful.spawn.with_shell("picom")
+awful.spawn.with_shell("sxhkd")
+awful.spawn.with_shell("~/dotfiles/x11/.config/startup/remaps.sh")
