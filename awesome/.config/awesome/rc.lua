@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("~/.config/awesome/theme2.lua")
+beautiful.init("~/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
@@ -327,11 +327,11 @@ globalkeys = gears.table.join(
     -- awful.key({ modkey }, "p", function() menubar.show() end,
               -- {description = "show the menubar", group = "launcher"}),
     -- Browser
-    awful.key({ modkey }, "b", function () awful.util.spawn("brave") end,
-              {description = "run brave", group = "applications"}),
+    awful.key({ modkey }, "b", function () awful.util.spawn("google-chrome") end,
+              {description = "Google Chrome", group = "applications"}),
     -- Discord
     awful.key({ modkey }, "d", function () awful.util.spawn("discord") end,
-              {description = "run discord", group = "applications"})
+              {description = "Discord", group = "applications"})
 )
 
 clientkeys = gears.table.join(
@@ -499,9 +499,9 @@ awful.rules.rules = {
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
-    { rule = { class = "Brave" },
+    { rule = { class = "Google-chrome" },
       properties = { screen = 1, tag = "2" } },
-    { rule = { class = "Brave" },
+    { rule = { class = "Discord" },
       propertie2 = { screen = 1, tag = "3" } },
 },
 -- }}}
@@ -583,4 +583,5 @@ client.connect_signal(
 -- Autostart
 awful.spawn.with_shell("picom")
 awful.spawn.with_shell("sxhkd")
+awful.spawn.with_shell("nm-applet")
 awful.spawn.with_shell("~/dotfiles/x11/.config/startup/remaps.sh")
