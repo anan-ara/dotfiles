@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "monospace 8"
+theme.font          = "Play-Regular 8"
 
 theme.bg_normal     = "#44475a"
 theme.bg_focus      = "#6272a4"
@@ -30,6 +30,14 @@ theme.border_normal = "#4B4C90"
 theme.border_focus  = "#ff79c6"
 theme.border_marked = "#9C5A75"
 
+theme.taglist_fg_focus    = "#ff79c6"
+theme.taglist_fg_occupied = "#bd93f9"
+theme.taglist_fg_urgent   = "#ED7572"
+theme.taglist_fg_empty    = "#828282"
+theme.taglist_spacing     = 2
+theme.taglist_font = "awesomewm-font 13"
+theme.taglist_bg_focus     = "#44475a"
+
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -44,13 +52,13 @@ theme.border_marked = "#9C5A75"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- local taglist_square_size = dpi(4)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+    -- taglist_square_size, theme.fg_normal
+-- )
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+    -- taglist_square_size, theme.fg_normal
+-- )
 
 -- Variables set for theming notifications:
 -- notification_font

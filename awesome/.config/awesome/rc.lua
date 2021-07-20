@@ -14,6 +14,10 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- Widget libraries
+local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -70,9 +74,9 @@ awful.layout.layouts = {
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
+    -- awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -95,8 +99,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                   }
                         })
 
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+-- mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     -- menu = mymainmenu })
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -169,7 +173,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "A", "W", "E", "S", "O", "M", "E", "W", "M" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -210,6 +214,20 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            spacing = 3,
+            brightness_widget{
+                program = 'xbacklight',
+            },
+            spacing = 3,
+            batteryarc_widget{
+                show_current_level = true,
+                tooltip = false,
+            },
+            spacing = 3,
+            volume_widget{
+                widget_type = 'arc'
+            },
+            spacing = 3,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -327,11 +345,19 @@ globalkeys = gears.table.join(
     -- awful.key({ modkey }, "p", function() menubar.show() end,
               -- {description = "show the menubar", group = "launcher"}),
     -- Browser
-    awful.key({ modkey }, "b", function () awful.util.spawn("google-chrome") end,
+    awful.key({ modkey }, "b", function () awful.util.spawn("google-chrome-stable") end,
               {description = "Google Chrome", group = "applications"}),
     -- Discord
     awful.key({ modkey }, "d", function () awful.util.spawn("discord") end,
-              {description = "Discord", group = "applications"})
+              {description = "Discord", group = "applications"}),
+
+    -- Controls
+    awful.key({ modkey         }, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
+    awful.key({ modkey, "Shift"}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
+    awful.key({ modkey }, "XF86AudioRaiseVolume", function() volume_widget:inc() end, {description = "increase volume", group = "custom"}),
+    awful.key({ modkey }, "XF86AudioLowerVolume", function() volume_widget:dec() end, {description = "decrease volume", group = "custom"}),
+    awful.key({ modkey }, "XF86AudioMute", function() volume_widget:toggle() end, {description = "toggle mute", group = "custom"})
+
 )
 
 clientkeys = gears.table.join(
@@ -501,8 +527,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     { rule = { class = "Google-chrome" },
       properties = { screen = 1, tag = "2" } },
-    { rule = { class = "Discord" },
-      propertie2 = { screen = 1, tag = "3" } },
+    { rule = { class = "discord" },
+      properties = { screen = 1, tag = "3" } },
 },
 -- }}}
 

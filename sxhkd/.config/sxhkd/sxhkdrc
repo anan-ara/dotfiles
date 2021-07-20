@@ -36,22 +36,22 @@
 super + shift + r
 	pkill -USR1 -x sxhkd
 
-XF86AudioMute
-	pactl set-sink-mute 0 toggle
+# XF86AudioMute
+	# pactl set-sink-mute 0 toggle
 	# amixer sset Master toggle; pkill -RTMIN+10 blocks
 # XF86Audio{Raise,Lower}Volume
 	# pactl set-sink-volume 0 {+,-}5%
 	# amixer sset Master 5%{+,-}; pkill -RTMIN+10 blocks
-XF86AudioRaiseVolume
-	sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%"
-XF86AudioLowerVolume
-	sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -5%"
-XF86MonBrightnessDown
-	xbacklight -dec 15
-XF86MonBrightnessUp
-	xbacklight -inc 15
-XF86Search
-	pactl set-source-mute 1 toggle
+# XF86AudioRaiseVolume
+	# sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 +5%"
+# XF86AudioLowerVolume
+	# sh -c "pactl set-sink-mute 0 false ; pactl set-sink-volume 0 -5%"
+# XF86MonBrightnessDown
+	# xbacklight -dec 15
+# XF86MonBrightnessUp
+	# xbacklight -inc 15
+# XF86Search
+	# pactl set-source-mute 1 toggle
 
 # Recording
 # Screenshot to clipboard
