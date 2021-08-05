@@ -16,7 +16,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Widget libraries
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
-local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -214,18 +214,22 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            spacing = 3,
             brightness_widget{
                 program = 'xbacklight',
+                type = 'icon_and_text',
+                step = 10,
+                font = 'Play 10',
             },
             spacing = 3,
-            batteryarc_widget{
+            battery_widget{
                 show_current_level = true,
+                font = 'Play 10',
                 tooltip = false,
             },
             spacing = 3,
             volume_widget{
-                widget_type = 'arc'
+                widget_type = 'icon_and_text',
+                font = 'Play 10',
             },
             spacing = 3,
             wibox.widget.systray(),
@@ -237,11 +241,11 @@ end)
 -- }}}
 
 -- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
-))
+-- root.buttons(gears.table.join(
+    -- awful.button({ }, 3, function () mymainmenu:toggle() end),
+    -- awful.button({ }, 4, awful.tag.viewnext),
+    -- awful.button({ }, 5, awful.tag.viewprev)
+-- ))
 -- }}}
 
 -- {{{ Key bindings
@@ -295,7 +299,7 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "c", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -310,10 +314,10 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    awful.key({ modkey, "Control" }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-              {description = "select previous", group = "layout"}),
+    -- awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+              -- {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -352,11 +356,11 @@ globalkeys = gears.table.join(
               {description = "Discord", group = "applications"}),
 
     -- Controls
-    awful.key({ modkey         }, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
-    awful.key({ modkey, "Shift"}, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
-    awful.key({ modkey }, "XF86AudioRaiseVolume", function() volume_widget:inc() end, {description = "increase volume", group = "custom"}),
-    awful.key({ modkey }, "XF86AudioLowerVolume", function() volume_widget:dec() end, {description = "decrease volume", group = "custom"}),
-    awful.key({ modkey }, "XF86AudioMute", function() volume_widget:toggle() end, {description = "toggle mute", group = "custom"})
+    awful.key({  }, "XF86MonBrightnessUp", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
+    awful.key({  }, "XF86MonBrightnessDown", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
+    awful.key({ }, "XF86AudioRaiseVolume", function() volume_widget:inc() end, {description = "increase volume", group = "custom"}),
+    awful.key({ }, "XF86AudioLowerVolume", function() volume_widget:dec() end, {description = "decrease volume", group = "custom"}),
+    awful.key({ }, "XF86AudioMute", function() volume_widget:toggle() end, {description = "toggle mute", group = "custom"})
 
 )
 
@@ -368,8 +372,15 @@ clientkeys = gears.table.join(
         end,
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,           }, "q",      function (c) c:kill()                         end,
-              {description = "close", group = "client"}),
+              {description = "close window", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
+    awful.key({ modkey, "Shift"   }, "q",
+        function (c)
+            if c.pid then
+                awful.spawn("kill -9 " .. c.pid)
+            end
+        end,
+              {description = "kill window", group = "client"}),
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),

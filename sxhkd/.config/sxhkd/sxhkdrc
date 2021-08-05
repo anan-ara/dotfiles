@@ -59,4 +59,4 @@ Print
 	maim --select screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png | xclip -selection clipboard -target image/png
 # Take a screenshot and save
 shift + Print
-	maim screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png
+	maim screenshots/screenshot-$(date '+%y.%m.%d-%H.%M-%S').png | xclip -selection clipboard -target image/png
