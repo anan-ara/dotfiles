@@ -6,7 +6,7 @@ configuration {
 	kb-row-down:  "Down,Control+j";
 	matching:  "fuzzy";
 
-	font: "Source Code Pro 10";
+	font: "Play 12";
 	show-icons: true;
 	icon-theme: "Papirus";
 	display-drun: "";

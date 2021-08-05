@@ -11,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Play-Regular 8"
+theme.font          = "Play 10"
 
 theme.bg_normal     = "#44475a"
 theme.bg_focus      = "#6272a4"

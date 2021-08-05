@@ -36,7 +36,6 @@ prompt {
 	padding: 10px 15px 10px 15px;
 	background-color: @bg1;
 	text-color: #FFFFFF;
-	font: "Source Code Pro 10";
 }
 
 entry {
