@@ -1,6 +1,6 @@
 [Hotkey]
 # Trigger Input Method
-#TriggerKey=CTRL_SPACE
+TriggerKey=ALT_SUPER_RALT
 # Use extra trigger key only after using it to inactivate
 # Available Value:
 # True False
@@ -27,7 +27,7 @@
 # Super+Right Ctrl
 # Disabled
 # Custom
-# SwitchKey=Disabled
+#SwitchKey=L_SHIFT
 # Custom switch key
 #CustomSwitchKey=
 # Activate input method
@@ -37,7 +37,7 @@
 # Enable Hotkey to scroll Between Input Method
 # Available Value:
 # True False
-# IMSwitchKey=False
+#IMSwitchKey=True
 # Include Inactivate when scrolling between Input Method
 # Available Value:
 # True False
