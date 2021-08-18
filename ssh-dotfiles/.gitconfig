@@ -1,0 +1,65 @@
+[user]
+	email = anan.ara2001@gmail.com
+	name = Anan A.
+[alias]
+    a = add
+    ap = add -p
+    b = branch
+    ce = commit --amend --no-edit
+    cm = commit
+    cv = commit -v
+    co = checkout
+    d = difftool
+    f = fetch
+    o = open
+    prb = pull --rebase
+    rb = rebase
+    rbi = rebase -i
+    st = status
+    today = log --since=midnight --oneline
+    me = log --author=Anan
+    ll = log --pretty=oneline
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    timeline = log --oneline --graph --decorate
+    type = cat-file -t
+    dump = cat-file -p
+    rev = merge --no-ff --no-commit
+    # Show files ignored by git:
+    ign = ls-files -o -i --exclude-standard
+    sm = show-merges
+    lb = !git branch -vv | cut -c 3- | awk '$3 !~/\\[/ { print $1 }'
+[core]
+    excludesfile = ~/.config/git/ignore
+    editor = nvim
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    ;autocrlf = input
+    ;safecrlf = true
+[difftool]
+    tool = vimdiff
+    prompt = false
+[push]
+    default = current
+    followTags = true
+[color]
+    ui = true
+[commit]
+    verbose = true
+[color "diff"]
+    whitespace = red reverse
+    old = red bold
+    new = green bold
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 175
+    newNormal = green bold
+    newHighlight = green bold 118
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[init]
+    defaultBranch = main
