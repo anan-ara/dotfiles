@@ -33,28 +33,29 @@
 [core]
     excludesfile = ~/.config/git/ignore
     editor = nvim
-    pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = diff-so-fancy | less --tabs=4 -RFX
     ;autocrlf = input
     ;safecrlf = true
 [push]
     default = current
     followTags = true
 [color]
-    ui = true
+	ui = true
 [commit]
     verbose = true
 [color "diff"]
-    whitespace = red reverse
-    old = red bold
-    new = green bold
-    meta = yellow
-    frag = magenta bold
-    commit = yellow bold
+	whitespace = red reverse
+	old = red bold
+	new = green bold
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	func = 146 bold
 [color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 175
-    newNormal = green bold
-    newHighlight = green bold 118
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -70,3 +71,5 @@
 	tool = nvimdiff3
 [mergetool "nvimdiff3"]
 	path = nvim
+[interactive]
+	diffFilter = diff-so-fancy --patch
