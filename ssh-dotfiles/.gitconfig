@@ -1,6 +1,6 @@
 [user]
 	email = anan.ara2001@gmail.com
-	name = Anan A.
+	name = Anan A
 [alias]
     a = add
     ap = add -p
@@ -12,7 +12,9 @@
     d = difftool
     f = fetch
     o = open
+    p = push
     prb = pull --rebase
+    r = reset
     rb = rebase
     rbi = rebase -i
     st = status
@@ -34,9 +36,6 @@
     pager = diff-so-fancy | less --tabs=4 -RFX
     ;autocrlf = input
     ;safecrlf = true
-[difftool]
-    tool = vimdiff
-    prompt = false
 [push]
     default = current
     followTags = true
@@ -63,3 +62,11 @@
     required = true
 [init]
     defaultBranch = main
+[diff]
+	tool = nvimdiff3
+[difftool "nvimdiff3"]
+	path = nvim
+[merge]
+	tool = nvimdiff3
+[mergetool "nvimdiff3"]
+	path = nvim
