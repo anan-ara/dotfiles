@@ -51,6 +51,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light rupa/z
 zinit light zsh-users/zsh-history-substring-search
 zinit light jeffreytse/zsh-vi-mode
+zinit light wfxr/forgit
 
 # zinit snippet /usr/share/fzf/key-bindings.zsh
 # zinit snippet /usr/share/fzf/completion.zsh
