@@ -19,6 +19,7 @@ alias ssh='TERM=xterm-256color ssh'
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
 	cp="cp -iv" \
+	g="git" \
 	mv="mv -iv" \
 	rm="rm -vI" \
 	mkd="mkdir -pv" \
@@ -42,16 +43,3 @@ alias \
 	v="$EDITOR" \
 	p="sudo pacman" \
 
-# Git commands
-alias \
-	g="git" \
-	ga="git add" \
-	gcm="git commit -m" \
-	gp="git push" \
-	gu="git pull" \
-	gco="git checkout" \
-	gb="git branch" \
-	gr='git reset' \
-	grs='git reset --soft' \
-	grh='git reset --hard' \
-	gst='git status' \
