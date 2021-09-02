@@ -43,3 +43,14 @@ alias \
 	v="$EDITOR" \
 	p="sudo pacman" \
 
+# If you do a lot of C compiling, this saves finger wear
+# (Note that only one filename may be specified.)
+# alias     C='gcc -o \!* \!*.c '
+# alias     C++='g++ -o \!* \!*.[Cc]*[^~] '
+
+# alias     mkdir='nocorrect mkdir'     # running on any of the arguments passed to the command.
+# alias     man='nocorrect man'
+
+alias     ll='ls -lA'
+alias     la='ls -A'
+alias     sizeof='du -sh'     # Useful for checking the size of directories and regular files
