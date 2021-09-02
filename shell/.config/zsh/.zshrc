@@ -5,10 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Get fzf shortcuts
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-
 LFCD="/usr/share/lf/lfcd.sh"
 if [ -f "$LFCD" ]; then
   source "$LFCD"
@@ -19,7 +15,9 @@ fi
 source ~/.config/zsh/alias.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
+
+[ -f ~/.config/zsh/fzf.zsh ] && source ~/.config/zsh/fzf.zsh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
@@ -68,7 +66,8 @@ bindkey '^ ' autosuggest-accept
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-autoload -Uz compinit && compinit -d $ZSH_COMPDUMP
+autoload -U compinit
+compinit -d ~/.cache/zcompdump
 zstyle ':completion:*' menu select
 # Color completion for some things.
 # http://linuxshellaccount.blogspot.com/2008/12/color-completion-using-zsh-modules-on.html
@@ -110,11 +109,8 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt globdots               # autocomplete hidden files
 setopt hist_reduce_blanks        # Remove superfluous blanks before recording entry.
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Automatically start X server
 # if [[ "$(tty)" = "/dev/tty1" ]]; then
 	# startx -- -dpi 192
 # fi
-
