@@ -4,11 +4,11 @@
 # command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # easily access files
-alias vimrc="nvim ~/.config/vimrc"
+alias vimrc="nvim ~/.vimrc"
+alias tmuxconf="nvim ~/.tmux.conf"
 alias nvimrc="nvim ~/.config/nvim/init.vim"
 alias zshrc="nvim ~/.config/zsh/.zshrc"
-alias tmuxconf="nvim ~/.config/tmux/tmux.conf"
-alias aliases="nvim ~/.config/alias.sh"
+alias aliases="nvim ~/.config/zsh/alias.sh"
 alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
 alias bspwmrc="nvim ~/.config/bspwm/bspwmrc"
 alias lfrc="nvim ~/.config/lf/lfrc"
@@ -20,6 +20,7 @@ alias ssh='TERM=xterm-256color ssh'
 alias \
 	cp="cp -iv" \
 	g="git" \
+	t="tmux" \
 	mv="mv -iv" \
 	rm="rm -vI" \
 	mkd="mkdir -pv" \
