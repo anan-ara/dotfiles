@@ -33,7 +33,7 @@
 [core]
     excludesfile = ~/.config/git/ignore
     editor = nvim
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	; pager = diff-so-fancy | less --tabs=4 -RFX
     ;autocrlf = input
     ;safecrlf = true
 [push]
@@ -71,5 +71,5 @@
 	tool = nvimdiff3
 [mergetool "nvimdiff3"]
 	path = nvim
-[interactive]
-	diffFilter = diff-so-fancy --patch
+; [interactive]
+	; diffFilter = diff-so-fancy --patch

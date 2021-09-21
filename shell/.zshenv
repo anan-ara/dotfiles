@@ -58,7 +58,6 @@ export ZDOTDIR=$HOME/.config/zsh
 export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"
 export HISTSIZE=100000
 export SAVEHIST=100000
-export ZSH_COMPDUMP="${XDG_CACHE_HOME}/.zcompdump"
 # export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
 # export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
 
