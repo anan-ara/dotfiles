@@ -151,19 +151,3 @@ setopt hist_reduce_blanks        # Remove superfluous blanks before recording en
 # if [[ "$(tty)" = "/dev/tty1" ]]; then
 	# startx -- -dpi 192
 # fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/anan.aramthanapon/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/anan.aramthanapon/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/anan.aramthanapon/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/anan.aramthanapon/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
