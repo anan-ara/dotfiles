@@ -82,8 +82,7 @@ zinit light romkatv/powerlevel10k
 zinit ice depth=2
 zinit light zsh-users/zsh-syntax-highlighting
 
-
-zinit light zdharma-continuum/fast-syntax-highlighting
+# zinit light zdharma-continuum/fast-syntax-highlighting
 
 # bindings for plugins
 bindkey '^ ' autosuggest-accept
