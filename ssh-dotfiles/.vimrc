@@ -308,6 +308,8 @@ let g:ale_linters = { 'python': ['flake8'] }
 let g:ale_fixers = { 'python': ['black'] }
 let g:ale_fix_on_save = 0
 
+nnoremap <Leader>g :ALEToggle<CR>
+
 " --- EasyMotion ---
 " The only easymotion I use
 " map <Leader>s <Plug>(easymotion-s)

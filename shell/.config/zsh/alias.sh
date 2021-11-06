@@ -15,6 +15,7 @@ alias lfrc="nvim ~/.config/lf/lfrc"
 
 # stop weird alacritty incompatibilities when using ssh
 alias ssh='TERM=xterm-256color ssh'
+alias k='TERM=xterm-256color ssh knuth'
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
