@@ -33,7 +33,10 @@ export LS_COLORS
 
 OS=$(uname)
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ $OS == "darwin"* ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+fi
 
 # Source other config files
 source ~/.config/zsh/alias.sh
@@ -94,7 +97,7 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 autoload -U compinit
-compinit -d ~/.cache/zcompdump
+compinit -d ~/.zcompdump_`uname -s`
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
 
@@ -149,27 +152,4 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt globdots               # autocomplete hidden files
 setopt hist_reduce_blanks        # Remove superfluous blanks before recording entry.
-
-
-# Automatically start X server
-# if [[ "$(tty)" = "/dev/tty1" ]]; then
-	# startx -- -dpi 192
-# fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 

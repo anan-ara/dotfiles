@@ -1,1 +1,1 @@
-/Users/anan/dotfiles/ssh-dotfiles/.vimrc
+../../../ssh-dotfiles/.vimrc
