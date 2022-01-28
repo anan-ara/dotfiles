@@ -27,7 +27,10 @@ Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 
 " Auto insert closing brackets
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+
+" Colorize bracket pairs
+Plug 'junegunn/rainbow_parentheses.vim'
 
 " Real time syntax checking
 Plug 'dense-analysis/ale'
@@ -310,6 +313,13 @@ let g:ale_fix_on_save = 0
 
 nnoremap <Leader>g :ALEToggle<CR>
 
+" ----- AutoPairs -----
+" let g:AutoPairsOnlyAtEOL = 1
+let g:AutoPairsMultilineClose = 0
+
+" ----- Rainbow -----
+autocmd VimEnter * RainbowParentheses
+
 " --- EasyMotion ---
 " The only easymotion I use
 " map <Leader>s <Plug>(easymotion-s)
@@ -353,5 +363,5 @@ let &t_te.="\e[0 q"
 " let g:webdevicons_enable = 0
 
 " Comment the following lines
-set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:❯,precedes:❮
+set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:·,extends:❯,precedes:❮
 set showbreak=↪
