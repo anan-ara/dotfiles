@@ -11,9 +11,13 @@ export VISUAL="nvim"
 # Disable history files
 export LESSHISTFILE=-
 
-export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"
+export HISTFILE="${HOME}/.cache/.zsh_history"
 export HISTSIZE=100000
 export SAVEHIST=100000
+
+export FZF_DEFAULT_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND . $HOME"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d . $HOME"
 
 export FZF_DEFAULT_OPTS="
 --layout=reverse
@@ -153,3 +157,20 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt globdots               # autocomplete hidden files
 setopt hist_reduce_blanks        # Remove superfluous blanks before recording entry.
 
+# Manually activate conda
+export CONDA_AUTO_ACTIVATE_BASE=false
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/anan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/anan/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/anan/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/anan/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
