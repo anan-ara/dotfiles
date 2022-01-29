@@ -37,7 +37,7 @@ export LS_COLORS
 
 OS=$(uname)
 
-if [[ $OS == "darwin"* ]]; then
+if [[ $OS == "Darwin"* ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 fi
