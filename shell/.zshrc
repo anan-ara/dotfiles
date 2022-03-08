@@ -23,27 +23,27 @@ if [[ $OS == "Darwin"* ]]; then
 fi
 
 # Source other config files
-[[ ! -f ~/.config/zsh/alias.sh ]] || source ~/.config/zsh/alias.sh
-[[ ! -f ~/.config/zsh/variables.sh ]] || source ~/.config/zsh/variables.sh
+[[ ! -f ~/zsh/alias.sh ]] || source ~/zsh/alias.sh
+[[ ! -f ~/zsh/variables.sh ]] || source ~/zsh/variables.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
+[[ ! -f ~/zsh/p10k.zsh ]] || source ~/zsh/p10k.zsh
 
-[[ ! -f ~/.config/zsh/fzf.zsh ]] || source ~/.config/zsh/fzf.zsh
+[[ ! -f ~/zsh/fzf.zsh ]] || source ~/zsh/fzf.zsh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
 
 ### Added by Zinit's installer
-if [[ ! -f $HOME/.config/zsh/.zinit/bin/zinit.zsh ]]; then
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.config/zsh/.zinit" && command chmod g-rwX "$HOME/.config/zsh/.zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.config/zsh/.zinit/bin" && \
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.config/zsh/.zinit/bin/zinit.zsh"
+source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -139,3 +139,4 @@ setopt hist_reduce_blanks        # Remove superfluous blanks before recording en
 
 # Manually activate conda
 export CONDA_AUTO_ACTIVATE_BASE=false
+

@@ -133,7 +133,11 @@ let g:netrw_dirhistmax=0
 set showbreak=\\
 set list
 
-set clipboard=unnamedplus " use clipboard instead of vim's buffer
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 
 " Enable folding
 set foldmethod=indent

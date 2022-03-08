@@ -28,12 +28,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Fixing Paths
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
-export ZDOTDIR=$HOME/.config/zsh
-export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"
-export HISTSIZE=100000
-export SAVEHIST=100000
-# export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+# export ZDOTDIR=$HOME/.config/zsh
 
 # Scaling
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
