@@ -31,7 +31,7 @@
     sm = show-merges
     lb = !git branch -vv | cut -c 3- | awk '$3 !~/\\[/ { print $1 }'
 [core]
-    excludesfile = ~/.config/git/ignore
+	excludesfile = /Users/anan/.gitignore_global
     editor = nvim
 	; pager = diff-so-fancy | less --tabs=4 -RFX
     ;autocrlf = input
@@ -43,6 +43,7 @@
 	ui = true
 [commit]
     verbose = true
+	template = /Users/anan/.stCommitMsg
 [color "diff"]
 	whitespace = red reverse
 	old = red bold
@@ -73,3 +74,9 @@
 	path = nvim
 ; [interactive]
 	; diffFilter = diff-so-fancy --patch
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
