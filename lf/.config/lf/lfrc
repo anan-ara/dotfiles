@@ -87,7 +87,7 @@ cmd zip ${{
 # text files and a file opener for the rest.
 cmd open ${{
     case $(file --mime-type $f -b) in
-        text/*) $EDITOR $fx;;
+        text/*) $$EDITOR $f;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
@@ -113,6 +113,10 @@ map L bottom
 # map r rename
 
 # Movement commands
-map gc cd ~/.config
+map gc cd ~/dotfiles
+map gC cd ~/.config
+map gt cd ~/TeX-Files
+map gd cd ~/Downloads
+map gg cd ~
 map gUs cd /usr/share
 map gs cd ~/.local/bin
