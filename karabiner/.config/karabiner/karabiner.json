@@ -41,7 +41,7 @@
                         ]
                     },
                     {
-                        "description": "Post Control if Caps is tapped, Esc if held.",
+                        "description": "Post Esc if Caps is tapped, Control if held.",
                         "manipulators": [
                             {
                                 "from": {

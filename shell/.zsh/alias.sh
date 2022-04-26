@@ -1,16 +1,15 @@
 #!/bin/sh
 
 # Use neovim for vim if present.
-# command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # easily access files
 alias vimrc="nvim ~/.vimrc"
 alias tmuxconf="nvim ~/.tmux.conf"
-alias nvimrc="nvim ~/.config/nvim/init.vim"
-alias zshrc="nvim ~/.config/zsh/.zshrc"
-alias aliases="nvim ~/.config/zsh/alias.sh"
-alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
-alias bspwmrc="nvim ~/.config/bspwm/bspwmrc"
+alias zshrc="nvim ~/.zshrc"
+alias aliases="nvim ~/zsh/alias.sh"
+# alias sxhkdrc="nvim ~/.config/sxhkd/sxhkdrc"
+# alias bspwmrc="nvim ~/.config/bspwm/bspwmrc"
 alias lfrc="nvim ~/.config/lf/lfrc"
 
 # stop weird alacritty incompatibilities when using ssh

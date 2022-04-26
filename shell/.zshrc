@@ -23,13 +23,13 @@ if [[ $OS == "Darwin"* ]]; then
 fi
 
 # Source other config files
-[[ ! -f ~/zsh/alias.sh ]] || source ~/zsh/alias.sh
-[[ ! -f ~/zsh/variables.sh ]] || source ~/zsh/variables.sh
+[[ ! -f ~/.zsh/alias.sh ]] || source ~/.zsh/alias.sh
+[[ ! -f ~/.zsh/variables.sh ]] || source ~/.zsh/variables.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/zsh/p10k.zsh ]] || source ~/zsh/p10k.zsh
+[[ ! -f ~/.zsh/p10k.zsh ]] || source ~/.zsh/p10k.zsh
 
-[[ ! -f ~/zsh/fzf.zsh ]] || source ~/zsh/fzf.zsh
+[[ ! -f ~/.zsh/fzf.zsh ]] || source ~/.zsh/fzf.zsh
 
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
 export KEYTIMEOUT=1
@@ -137,6 +137,4 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt globdots               # autocomplete hidden files
 setopt hist_reduce_blanks        # Remove superfluous blanks before recording entry.
 
-# Manually activate conda
-export CONDA_AUTO_ACTIVATE_BASE=false
-
+[[ ! -f ~/.zsh/conda.zsh ]] || source ~/.zsh/conda.zsh

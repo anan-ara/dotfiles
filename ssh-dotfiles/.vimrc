@@ -46,6 +46,7 @@ Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 " For fuzzy finding
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
 
 " More keybinds
 Plug 'tpope/vim-unimpaired'
@@ -97,8 +98,12 @@ set ignorecase " case insensitive searching (specify lower with \c)
 set smartcase " if upper case in string, case sensitive
 " set mouse=a
 set hidden " make buffers work normally
-set scrolloff=2
+set scrolloff=7
 set linebreak
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * checktime
 
 " autocompletion
 set wildignorecase
@@ -125,6 +130,7 @@ set tm=500
 set nobackup
 set noswapfile
 set nowritebackup
+set viminfofile="$HOME/.cache/.viminfo"
 
 " stop netrwhist from getting generated
 let g:netrw_dirhistmax=0
