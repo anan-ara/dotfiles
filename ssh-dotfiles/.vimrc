@@ -73,7 +73,7 @@ Plug 'tpope/vim-fugitive'
 
 " Language Specific Plugins
 " LaTeX
-Plug 'lervag/vimtex', { 'for': 'latex' }
+" Plug 'lervag/vimtex'
 
 " For more icons
 Plug 'ryanoasis/vim-devicons'
