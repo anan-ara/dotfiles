@@ -507,22 +507,53 @@ key_bindings:
   #- { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"            }
   #- { key: K,              mods: Command, mode: ~Vi|~Search, action: ClearHistory     }
   #- { key: Key0,           mods: Command,                    action: ResetFontSize    }
-  - { key: Equals,         mods: Command,                    action: IncreaseFontSize }
-  - { key: Plus,           mods: Command,                    action: IncreaseFontSize }
-  - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize }
-  - { key: Minus,          mods: Command,                    action: DecreaseFontSize }
-  - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize }
+  # - { key: Equals,         mods: Command,                    action: IncreaseFontSize }
+  # - { key: Plus,           mods: Command,                    action: IncreaseFontSize }
+  # - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize }
+  # - { key: Minus,          mods: Command,                    action: DecreaseFontSize }
+  # - { key: NumpadSubtract, mods: Command,                    action: DecreaseFontSize }
   #- { key: V,              mods: Command,                    action: Paste            }
   #- { key: C,              mods: Command,                    action: Copy             }
   #- { key: C,              mods: Command, mode: Vi|~Search,  action: ClearSelection   }
   #- { key: H,              mods: Command,                    action: Hide             }
   #- { key: M,              mods: Command,                    action: Minimize         }
-  - { key: Q,              mods: Command,                    action: Quit             }
+  # - { key: Q,              mods: Command,                    action: Quit             }
   #- { key: W,              mods: Command,                    action: Quit             }
   #- { key: N,              mods: Command,                    action: SpawnNewInstance }
   #- { key: F,              mods: Command|Control,            action: ToggleFullscreen }
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward    }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward   }
+  #
+  - { key: Comma, mods: Command, chars: "\x02," }
+  # - { key: D, mods: Command, chars: "\x02K" }
+  # - { key: F, mods: Command, chars: "lfcd\n" }
+  # - { key: P, mods: Command, chars: ":GitFiles\n" }
+  # - { key: P, mods: Command|Shift, chars: ":Commands\n" }
+  - { key: G, mods: Command, chars: "\x02g" }
+  - { key: K, mods: Command, chars: "\x02s" }
+  - { key: Key1, mods: Command, chars: "\x021" }
+  - { key: Key2, mods: Command, chars: "\x022" }
+  - { key: Key3, mods: Command, chars: "\x023" }
+  - { key: Key4, mods: Command, chars: "\x024" }
+  - { key: Key5, mods: Command, chars: "\x025" }
+  - { key: Key6, mods: Command, chars: "\x026" }
+  - { key: Key7, mods: Command, chars: "\x027" }
+  - { key: Key8, mods: Command, chars: "\x028" }
+  - { key: Key9, mods: Command, chars: "\x029" }
+  - { key: L, mods: Command, chars: "\x02l" }
+  - { key: LBracket, mods: Command, chars: "\x02[" }
+  - { key: LBracket, mods: Command|Shift, chars: "\x02p" }
+  - { key: D, mods: Command, chars: "\x02%" }
+  - { key: D, mods: Command|Shift, chars: "\x02\"" }
+  # - { key: Q, mods: Command, chars: ":q\n" }
+  - { key: RBracket, mods: Command|Shift, chars: "\x02n" }
+  # - { key: S, mods: Command, chars: ":w\n" }
+  # - { key: S, mods: Command|Shift, chars: ":wa\n" }
+  - { key: Semicolon, mods: Command, chars: "\x02:" }
+  - { key: T, mods: Command, chars: "\x02c" }
+  - { key: J, mods: Command, chars: "\x02\x54" }
+  - { key: W, mods: Command, chars: "\x02x" }
+  - { key: Z, mods: Command, chars: "\x02z" }
 
 #debug:
   # Display the time it takes to redraw each frame.
