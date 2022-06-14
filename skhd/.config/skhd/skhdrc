@@ -86,16 +86,16 @@ meh + cmd - 0x32 : yabai -m window --focus prev || yabai -m window --focus last
 meh - 0x32 : yabai -m window --focus next || yabai -m window --focus first
 
 # launch apps
-meh - q : open -a /Applications/Discord.app
-meh - w : open -a /Applications/Messages.app
+meh - q : open -a /Applications/Mail.app
+# meh - w : open -a /Applications/Messages.app
 meh - e : open -a /Applications/Messenger.app
-meh - r : open -a /Applications/Mail.app
+meh - r : open -a /Applications/Discord.app
 meh - a : open -an /Applications/Finder.app
 meh - s : open -a /Applications/Alacritty.app
 meh - d : open -a /Applications/Visual\ Studio\ Code.app
 meh - f : open -a /Applications/Google\ Chrome.app
-# meh - z : open -a /Applications/.app
-# meh - x : open -a /Applications/.app
+meh - z : open -a /Applications/Spotify.app
+meh - x : open -a /Applications/Notion.app
 meh - c : open -a /Applications/Calendar.app
 meh - v : open -a /Applications/Todoist.app
 
