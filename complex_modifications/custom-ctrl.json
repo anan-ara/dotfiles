@@ -1,0 +1,30 @@
+{
+  "title": "Almost Hyper Key (⌃⌥⇧)",
+  "rules": [
+    {
+      "description": "Left Ctrl Key → Almost Hyper Key (⌃⌥⇧)",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_control",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_shift",
+              "modifiers": [
+                "left_control",
+                "left_option"
+              ]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}

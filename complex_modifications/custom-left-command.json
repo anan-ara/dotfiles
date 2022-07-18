@@ -1,0 +1,37 @@
+{
+  "title": "Left Command to { if tapped",
+  "rules": [
+    {
+      "description": "Left Command Key → { if tapped.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_command",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_command",
+              "modifiers": [
+                "any"
+              ]
+            }
+          ],
+          "to_if_alone": [
+            {
+              "modifiers": [
+                "left_shift"
+              ],
+              "key_code": "open_bracket"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

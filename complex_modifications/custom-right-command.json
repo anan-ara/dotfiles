@@ -1,0 +1,38 @@
+{
+  "title": "Right Command Almost Hyper Key (⌃⌥⇧)",
+  "rules": [
+    {
+      "description": "Right Command Key → Almost Hyper Key (⌃⌥⇧) if held, } if tapped.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "right_command",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_shift",
+              "modifiers": [
+                "left_control",
+                "left_option"
+              ]
+            }
+          ],
+          "to_if_alone": [
+            {
+              "modifiers": [
+                "left_shift"
+              ],
+              "key_code": "close_bracket"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
