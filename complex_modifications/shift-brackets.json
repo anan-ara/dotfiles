@@ -1,0 +1,48 @@
+{
+  "title": "Tap left shift to open and right to close brackets",
+  "rules": [
+    {
+      "description": "Shift_L tap -> '[', Shift_R tap -> ']'",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_shift",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": {
+            "key_code": "left_shift"
+          },
+          "to_if_alone": [
+            {
+              "key_code": "open_bracket"
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "right_shift",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": {
+            "key_code": "right_shift"
+          },
+          "to_if_alone": [
+            {
+              "key_code": "close_bracket"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
