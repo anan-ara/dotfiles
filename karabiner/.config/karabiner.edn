@@ -33,10 +33,10 @@
 
  ;; layers are modifier keys
  :simlayers {
-             :f-mode {:key :f}    ; delimeters    ( ) [ ] { } and other symbols ~ $ &
-             :d-mode {:key :d}    ; arithmetic    + - * / = % < > #
-             :s-mode {:key :s}    ; punctuation   ? ! : ; ' " ` ~
-             :a-mode {:key :a}    ; navigation hjkl + tab + enter + page down/up
+             :f-mode {:key :f}    ; delimeters    ( ) [ ] and other symbols ! ` #
+             :d-mode {:key :d}    ; arithmetic and quotes    + - * ~ = % # ' "
+             :s-mode {:key :s}    ; dragon ^ | \ _ / ? and @ & $
+             :a-mode {:key :a}    ; navigation hjkl + page down/up
              ;
              :q-mode {:key :q}    ; General shortcuts (browser etc.) - not settled
              :w-mode {:key :w}    ; Selection left and right (letter, word, line)
@@ -49,6 +49,9 @@
              :c-mode {:key :c}    ; Slashes and lines  ^ | \ _ @
              :x-mode {:key :x}    ; Some multi-character shortcuts like <= (not implemented)
              }
+
+ ; the default value is 250
+ :simlayer-threshold 1000
 
  ;; with tos you can predefine 'to' keypresses to easily parse them
  :tos {
@@ -103,6 +106,16 @@
                  ]
          }
         {
+         :des "Change Right Option to Caps Lock"
+         :rules [
+                 [
+                  :##right_option
+                  :caps_lock
+                  nil
+                  ]
+                 ]
+         }
+        {
          :des "Change Shifts to parentheses."
          :rules [
                  [
@@ -113,9 +126,9 @@
                   ]
                  [
                   :##right_shift
-                  :!S0
+                  :right_shift
                   nil
-                  {:alone :right_shift}
+                  {:alone :!S0}
                   ]
                  ]
          }
