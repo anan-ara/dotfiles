@@ -1,3 +1,4 @@
 shell/.config/zsh/.zinit
+shell/.config/zsh/conda.zsh
 fcitx/*
 .zcompdump*
