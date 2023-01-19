@@ -32,8 +32,8 @@ alias \
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
-	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi"
+	# diff="diff --color=auto" \
 
 # These common commands are just too long! Abbreviate them.
 alias \
