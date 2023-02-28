@@ -29,7 +29,7 @@
              :open-app "open -a \"%s\""
              } ;; templates
 
- :modifiers {:meh [:left_control :left_option :left_shift]}
+ ; :modifiers {:meh [:left_control :left_option :left_shift]}
 
  ;; layers are modifier keys
  :simlayers {
@@ -37,7 +37,7 @@
              ; :d-mode {:key :d}    ; arithmetic and quotes    + - * ~ = % # ' "
              ; :s-mode {:key :s}    ; dragon ^ | \ _ / ? and @ & $
              ; :a-mode {:key :a}    ; navigation hjkl + page down/up
-             :space-mode {:key :spacebar}
+             ; :space-mode {:key :spacebar}
              ;
              ; :q-mode {:key :q}    ; General shortcuts (browser etc.) - not settled
              ; :w-mode {:key :w}    ; Selection left and right (letter, word, line)
@@ -54,6 +54,10 @@
  ; the default value is 250
  :simlayer-threshold 1000
 
+ :froms {
+       :mouse_upper {:pkey :button5}
+       :mouse_lower {:pkey :button4}
+       }
  ;; with tos you can predefine 'to' keypresses to easily parse them
  :tos {
        ;; in order for OSX to register a caps lock press, it has to be held for a little under 100ms
@@ -74,6 +78,26 @@
                  ]
          }
         {
+         :des "Change Upper Mouse Button to Meh."
+         :rules [
+                 [
+                  :mouse_upper
+                  :!TOleft_shift
+                  nil                    ;; with no conditionals
+                  ]
+                 ]
+         }
+        {
+         :des "Change Lower Mouse Button to Meh."
+         :rules [
+                 [
+                  :mouse_lower
+                  :!TOleft_shift
+                  nil                    ;; with no conditionals
+                  ]
+                 ]
+         }
+        {
          :des "Change Tab to Tab when tapped and Option when held."
          :rules [
                  [
@@ -81,6 +105,16 @@
                   :left_option
                   nil
                   {:alone :tab}
+                  ]
+                 ]
+         }
+        {
+         :des "Ctrl + Backspace to Option + Backspace."
+         :rules [
+                 [
+                  :!Tdelete_or_backspace
+                  :!Odelete_or_backspace
+                  nil
                   ]
                  ]
          }
@@ -188,45 +222,55 @@
                 ; ]
          ; }
 
-        {:des "space-mode for [], `, \\, hjkl movement and PageDn/Up"
-         :rules [:space-mode
-                  [:##d :open_bracket]
-                  [:##f :close_bracket]
-                  [:##u :!Oleft_arrow]
-                  [:##i :!Oright_arrow]
-                  [:##o :backslash]
-                  [:##p :grave_accent_and_tilde]
-                  [:##h :left_arrow]
-                  [:##j :down_arrow]
-                  [:##k :up_arrow]
-                  [:##l :right_arrow]
-                  [:##m :page_down]
-                  [:comma :page_up]
-                ]
-         }
-        {:des "nav-layer on right command."
+        ; {:des "space-mode for [], `, \\, hjkl movement and PageDn/Up"
+         ; :rules [:space-mode
+                  ; [:##d :open_bracket]
+                  ; [:##f :close_bracket]
+                  ; [:##u :!Oleft_arrow]
+                  ; [:##i :!Oright_arrow]
+                  ; [:##o :backslash]
+                  ; [:##p :grave_accent_and_tilde]
+                  ; [:##h :left_arrow]
+                  ; [:##j :down_arrow]
+                  ; [:##k :up_arrow]
+                  ; [:##l :right_arrow]
+                  ; [:##m :page_down]
+                  ; [:comma :page_up]
+                ; ]
+         ; }
+        ; {:des "nav-layer on right command."
+         ; :rules [
+                  ; [:!TOSd :open_bracket]
+                  ; [:!TOSf :close_bracket]
+                  ; [:!TOSi :left_arrow]
+                  ; [:!TOSo :right_arrow]
+                  ; [:!TOSh :left_arrow]
+                  ; [:!TOSj :down_arrow]
+                  ; [:!TOSk :up_arrow]
+                  ; [:!TOSl :right_arrow]
+                  ; [:!TOSm :page_down]
+                  ; [:!TOScomma :page_up]
+                  ; ]
+         ; }
+        {:des "Right Shift to Nav Mode"
          :rules [
-                  [:!TOSd :open_bracket]
-                  [:!TOSf :close_bracket]
-                  [:!TOSi :left_arrow]
-                  [:!TOSo :right_arrow]
-                  [:!TOSh :left_arrow]
-                  [:!TOSj :down_arrow]
-                  [:!TOSk :up_arrow]
-                  [:!TOSl :right_arrow]
-                  [:!TOSm :page_down]
-                  [:!TOScomma :page_up]
-                ]
+                 [:!Rk :left_arrow]
+                 [:!Rl :down_arrow]
+                 [:!Rsemicolon :up_arrow]
+                 [:!Rcomma :open_bracket]
+                 [:!Rperiod :close_bracket]
+                 [:!Rslash :page_down]
+                 [:!Rquote :page_up]
+                 ]
          }
-
-        {:des "paren + backspace training wheels "
-         :rules [
-                  [:##open_bracket :delete_or_backspace]
-                  [:##close_bracket :delete_forward]
-                  [:!S9 :vk_none]
-                  [:!S0 :vk_none]
-                ]
-         }
+        ; {:des "paren + backspace training wheels "
+         ; :rules [
+                  ; [:##open_bracket :delete_or_backspace]
+                  ; [:##close_bracket :delete_forward]
+                  ; [:!S9 :vk_none]
+                  ; [:!S0 :vk_none]
+                ; ]
+         ; }
 
         ; {:des "a-mode for hjkl movement and ,. PageDn/Up"
          ; :rules [:a-mode
