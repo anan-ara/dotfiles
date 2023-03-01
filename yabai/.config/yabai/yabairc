@@ -25,7 +25,7 @@ yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
 yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.90
-yabai -m config window_border                on
+yabai -m config window_border                off
 yabai -m config window_border_width          3
 yabai -m config active_window_border_color   0xffff79c6
 yabai -m config normal_window_border_color   0xffbd93f9
@@ -40,11 +40,15 @@ yabai -m config mouse_drop_action            swap
 # general space settings
 yabai -m config layout                       bsp
 yabai -m config --space 3 layout             stack
+yabai -m config --space 5 layout             float
 yabai -m config --space 6 layout             float
 yabai -m config top_padding                  06
 yabai -m config bottom_padding               06
 yabai -m config left_padding                 06
 yabai -m config right_padding                06
 yabai -m config window_gap                   06
+
+# specific window rules
+yabai -m rule --add app="^System Preferences$" manage=off
 
 echo "yabai configuration loaded.."

@@ -903,6 +903,9 @@ key_bindings:
   - { key: J, mods: Command, chars: "\x02\x54" }
   - { key: W, mods: Command, chars: "\x02x" }
   - { key: Z, mods: Command, chars: "\x02z" }
+  # Fix for ^6
+  # https://github.com/alacritty/alacritty/issues/1108
+  - { key: Key6,        mods: Control, chars: "\x1e" }
 
 #debug:
   # Display the time it takes to redraw each frame.

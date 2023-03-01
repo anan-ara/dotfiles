@@ -82,22 +82,22 @@ meh - j : yabai -m window --focus south
 meh - k : yabai -m window --focus north
 meh - l : yabai -m window --focus east
 # cycle through tiled windows (fn + cmd - ` AND fn - `)
-meh + cmd - 0x32 : yabai -m window --focus prev || yabai -m window --focus last
-meh - 0x32 : yabai -m window --focus next || yabai -m window --focus first
+# meh + cmd - 0x32 : yabai -m window --focus prev || yabai -m window --focus last
+# meh - 0x32 : yabai -m window --focus next || yabai -m window --focus first
 
 # launch apps
-meh - q : open -a /Applications/Mail.app
+# meh - q : open -a /Applications/Mail.app
 # meh - w : open -a /Applications/Messages.app
-meh - e : open -a /Applications/Messenger.app
-meh - r : open -a /Applications/Discord.app
-meh - a : open -an /Applications/Finder.app
-meh - s : open -a /Applications/Alacritty.app
-meh - d : open -a /Applications/Visual\ Studio\ Code.app
-meh - f : open -a /Applications/Google\ Chrome.app
-meh - z : open -a /Applications/Spotify.app
-meh - x : open -a /Applications/Notion.app
-meh - c : open -a /Applications/Calendar.app
-meh - v : open -a /Applications/Todoist.app
+# meh - e : open -a /Applications/Messenger.app
+# meh - r : open -a /Applications/Discord.app
+# meh - a : open -an /Applications/Finder.app
+# meh - s : open -a /Applications/Alacritty.app
+# meh - d : open -a /Applications/Visual\ Studio\ Code.app
+# meh - f : open -a /Applications/Google\ Chrome.app
+# meh - z : open -a /Applications/Spotify.app
+# meh - x : open -a /Applications/Notion.app
+# meh - c : open -a /Applications/Calendar.app
+# meh - v : open -a /Applications/Todoist.app
 
 # cycle through all windows in current space
 # https://github.com/koekeishiya/yabai/issues/113
@@ -113,13 +113,13 @@ hyper - k : yabai -m window --swap north
 hyper - l : yabai -m window --swap east
 
 # move managed window
-ctrl + fn - h : yabai -m window --warp west
-ctrl + fn - j : yabai -m window --warp south
-ctrl + fn - k : yabai -m window --warp north
-ctrl + fn - l : yabai -m window --warp east
+# ctrl + fn - h : yabai -m window --warp west
+# ctrl + fn - j : yabai -m window --warp south
+# ctrl + fn - k : yabai -m window --warp north
+# ctrl + fn - l : yabai -m window --warp east
 
-# balance size of windows
-meh - 0 : yabai -m space --balance
+# balance size of windows (meh + ')
+meh - 0x27 : yabai -m space --balance
 
 # make floating window fill screen
 # meh - m       : yabai -m window --grid 1:1:0:0:1:1
@@ -134,7 +134,7 @@ meh - 0 : yabai -m space --balance
 #                   yabai -m space --focus "${index}"
 
 # fast focus desktop
-meh - 0x2A : yabai -m space --focus recent
+alt - tab : yabai -m space --focus recent
 
 # create desktop and focus that one
 # shift + alt - n : yabai -m space --create && \
@@ -216,18 +216,22 @@ meh - 6 : yabai -m space --focus 6
 # toggle window zoom
 # meh - z : yabai -m window --toggle zoom-parent
 meh - m : yabai -m window --toggle zoom-fullscreen
+
 # toggle window native fullscreen
 hyper - m : yabai -m window --toggle native-fullscreen
 
-# toggle window split type (meh + .)
-meh - 0x2F : yabai -m window --toggle split
+# toggle window split type (meh + ,)
+meh - 0x2B : yabai -m window --toggle split
 
-# float / unfloat window and center on screen (meh + ,)
-meh - 0x2B : yabai -m window --toggle float;\
+# float / unfloat window and center on screen (meh + .)
+meh - 0x2F : yabai -m window --toggle float;\
           yabai -m window --grid 4:4:1:1:2:2
 
+# toggle gap (meh + ;)
+meh - 0x29 : yabai -m space --toggle gap
+
 # toggle window border
-meh - b : yabai -m window --toggle border
+# meh - b : yabai -m window --toggle border
 
 # resize float window and put in center of the screen
 # shift + alt - c : yabai -m window --grid 4:4:1:1:2:2
