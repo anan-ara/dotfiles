@@ -219,10 +219,10 @@ meh - 6 : yabai -m space --focus 6
 
 # toggle window zoom
 # meh - z : yabai -m window --toggle zoom-parent
-meh - m : yabai -m window --toggle zoom-fullscreen
+# meh - m : yabai -m window --toggle zoom-fullscreen
 
 # toggle window native fullscreen
-hyper - m : yabai -m window --toggle native-fullscreen
+meh - m : yabai -m window --toggle native-fullscreen
 
 # toggle window split type (meh + .)
 meh - 0x2F : yabai -m window --toggle split
