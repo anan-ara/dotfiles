@@ -32,4 +32,4 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Fixing Paths
 export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
-export ZDOTDIR=$HOME/.config/zsh
+# export ZDOTDIR=$HOME/.config/zsh

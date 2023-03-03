@@ -328,8 +328,13 @@ nmap <leader>m :Marks<cr>
 nmap <leader>m :Marks<cr>
 
 let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
-let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6 } }
-let g:fzf_preview_window = ['right,50%', '?']
+" let g:fzf_preview_window = ['right,50%', '?']
+" See `man fzf-tmux` for available options
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': '-p90%,60%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+endif
 
 " Make sure cursor shape is always correct
 " This is a problem on some terminals
