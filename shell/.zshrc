@@ -22,6 +22,8 @@ if [[ $OS == "Darwin"* ]]; then
     PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
+export PATH=/Users/anan/.local/bin:$PATH
+
 # Source other config files
 [[ ! -f ~/.zsh/alias.sh ]] || source ~/.zsh/alias.sh
 [[ ! -f ~/.zsh/variables.sh ]] || source ~/.zsh/variables.sh
