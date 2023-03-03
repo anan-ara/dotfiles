@@ -321,7 +321,7 @@ nmap <leader>b :Buffers<cr>
 " Find files by name under the current directory
 nmap <leader>f :Files<cr>
 " Rg search through all files
-nmap <leader>F :Rg<cr>
+nmap <leader>g :Rg<cr>
 " Find marks
 nmap <leader>m :Marks<cr>
 " Find marks
