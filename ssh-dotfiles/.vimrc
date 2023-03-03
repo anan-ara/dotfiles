@@ -32,12 +32,10 @@ Plug 'vim-airline/vim-airline'
 " Colorize bracket pairs
 Plug 'junegunn/rainbow_parentheses.vim'
 
-" Real time syntax checking
-Plug 'dense-analysis/ale'
-
 " For Motion
 " Plug 'easymotion/vim-easymotion'
 Plug 'unblevable/quick-scope'
+Plug 'justinmk/vim-sneak'
 
 " For NerdTree
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeTabsToggle' }
@@ -193,8 +191,12 @@ noremap <silent> gh :bp<CR>
 " Jump to matching element faster, % is hard to reach
 noremap <silent> <Tab> %
 
-" Save some time when doing LaTeX
-noremap <silent> g1 i\begin{align*}<CR>
+" Ctrl + S to switch to last buffer
+noremap <silent> <C-S> <C-6>
+
+" leader paste to paste without populating register
+" vnoremap <silent> <leader>p "_p
+" vnoremap <silent> <leader>P "_P
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>
@@ -221,7 +223,27 @@ if has("autocmd")
     autocmd BufWritePre * :call CleanExtraSpaces()
 endif
 
+" Set the colorscheme
+colorscheme dracula
+
+" Makes transparentcy work idk how but it does
+highlight Normal guibg=NONE ctermbg=NONE
+
+" Unified color scheme (default: dark)
+" let g:seoul256_background = 235
+" colo seoul256
+
+" Toggle this to "light" for light colorscheme
+"set background=light
+"
 " --- Plugin Specific Settings ---
+"
+" ----- QuickScope -----
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+"
+"
+" ----- Vim-Sneak -----
+" let g:sneak#label = 1
 "
 " ----- Vim-GitGutter -----
 " highlight clear SignColumn
@@ -244,19 +266,6 @@ endfunction
 
 noremap <Leader>k :call ToggleSignColumn()<CR>
 
-" Set the colorscheme
-colorscheme dracula
-
-" Makes transparentcy work idk how but it does
-highlight Normal guibg=NONE ctermbg=NONE
-
-" Unified color scheme (default: dark)
-" let g:seoul256_background = 235
-" colo seoul256
-
-" Toggle this to "light" for light colorscheme
-"set background=light
-"
 " ----- bling/vim-airline settings -----
 " Always show statusbar
 set laststatus=2
@@ -271,57 +280,15 @@ let g:airline#extensions#tabline#enabled = 1
 " let g:airline_theme='nord'
 
 " Show airline for ALE
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 
 " git integration
 let g:airline#extensions#branch#enabled = 1
-
-" --- vimtex settings ---
-let g:vimex_quickfix_latexlog= {
-	    \ 'default' : 1,
-	    \ 'underfull' : 0,
-	    \}
-
-let g:vimtex_view_method='skim'
-
-" close quickfix window
-noremap <Leader>c :cclose<CR>
-
-aug QFClose
-    au!
-    au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
-aug END
-
-" " ----- Syntastic Settings -----
-" let g:syntastic_mode_map = {
-    " \ "mode": "passive",
-    " \ "active_filetypes": [],
-    " \ "passive_filetypes": [] }
-
-" let g:syntastic_error_symbol = '✘'
-" let g:syntastic_warning_symbol = "▲"
-
-" " close location list with :lclose
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 0
-
-" " press \g to automatically check for errors
-" nnoremap <Leader>g :SyntasticCheck<CR>
-" " nnoremap <Leader>g :SyntasticToggleMode<CR>
 
 " ----- NerdTree -----
 "  " Open/close NERDTree Tabs with \t
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
-
-" ----- ALE -----
-let g:ale_linters = { 'python': ['flake8'] }
-let g:ale_fixers = { 'python': ['black'] }
-let g:ale_fix_on_save = 0
-
-nnoremap <Leader>g :ALEToggle<CR>
 
 " ----- AutoPairs -----
 " let g:AutoPairsOnlyAtEOL = 1
@@ -353,8 +320,15 @@ map - <plug>NERDCommenterUncomment
 nmap <leader>b :Buffers<cr>
 " Find files by name under the current directory
 nmap <leader>f :Files<cr>
-" Find files by name under the home directory
-nmap <leader>h :Files ~/<cr>
+" Rg search through all files
+nmap <leader>F :Rg<cr>
+" Find marks
+nmap <leader>m :Marks<cr>
+" Find marks
+nmap <leader>m :Marks<cr>
+
+let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+" let g:fzf_preview_window = ['right,50%', '?']
 
 " Make sure cursor shape is always correct
 " This is a problem on some terminals
@@ -369,9 +343,10 @@ let &t_te.="\e[0 q"
 " download all the .ttf files, double-click on them and click "Install"
 
 " If you prefer using your current font,
-" Uncomment the following line
+
+" Uncomment the following line (disable vim-devicons)
 " let g:webdevicons_enable = 0
 
-" Comment the following lines
+" Comment the following lines (disable special symbols)
 set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:·,extends:❯,precedes:❮
 set showbreak=↪

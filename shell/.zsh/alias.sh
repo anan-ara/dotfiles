@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Use neovim for vim if present.
-command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+# command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+command -v nvim >/dev/null && vimdiff="nvim -d"
 
 # easily access files
 alias vimrc="nvim ~/.vimrc"

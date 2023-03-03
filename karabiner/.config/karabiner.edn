@@ -57,11 +57,13 @@
  :froms {
        :mouse_upper {:pkey :button5}
        :mouse_lower {:pkey :button4}
+       ; :lock {:ckey :al_terminal_lock_or_screensaver}
        }
  ;; with tos you can predefine 'to' keypresses to easily parse them
  :tos {
        ;; in order for OSX to register a caps lock press, it has to be held for a little under 100ms
        :toggle_caps {:key :caps_lock :hold_down_ms 100}
+       ; :sleep {:ckey :eject :modi [:left_gui :left_alt]}
        }
  ;; This is where you define the modifications
  :main [
@@ -77,6 +79,16 @@
                   ]
                  ]
          }
+        ; {
+         ; :des "Change Lock to Sleep"
+         ; :rules [
+                 ; [
+                  ; :lock
+                  ; :sleep
+                  ; nil                    ;; with no conditionals
+                  ; ]
+                 ; ]
+         ; }
         {
          :des "Change Upper Mouse Button to Meh."
          :rules [
