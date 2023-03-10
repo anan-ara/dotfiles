@@ -2,3 +2,4 @@ shell/.config/zsh/.zinit
 *conda.zsh
 fcitx/*
 .zcompdump*
+fish_variables
