@@ -1,5 +1,5 @@
 # Basic Settings
-set previewer ~/.config/lf/preview
+set previewer ~/.config/lf/preview.sh
 set preview true
 set hidden true
 set drawbox true
@@ -90,6 +90,16 @@ cmd open ${{
         text/*) $$EDITOR $f;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
+}}
+
+cmd z %{{
+	result="$(zoxide query --exclude $PWD $@)"
+	lf -remote "send $id cd $result"
+}}
+
+cmd zi ${{
+	result="$(zoxide query -i)"
+	lf -remote "send $id cd $result"
 }}
 
 # Remove mappings
