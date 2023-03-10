@@ -9,16 +9,16 @@
 # https://fishshell.com
 # cSpell:words ajeetdsouza cppflags ldflags pkgconfig pnpm nvim Nord gopath nvimpager ripgreprc ripgrep zoxide joshmedeski sharkdp neovim lucc
 
-# set -gx fish_greeting # disable fish greeting
+set -gx fish_greeting # disable fish greeting
 set -Ux BAT_THEME Dracula # 'sharkdp/bat' cat clone
 set -Ux EDITOR nvim # 'neovim/neovim' text editor
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
-set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --pointer='▶' --marker='✓'' \
---ansi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6' --multi"
+set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --pointer='▶' --marker='✓' \
+--ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
-set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --pointer='▶' --marker='✓'' \
---ansi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6' --multi"
+set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --pointer='▶' --marker='✓' \
+--ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
 set -Ux FZF_CTRL_R_OPTS "--border-label=' History ' --prompt=' '"
 
@@ -42,6 +42,7 @@ set -Ux VISUAL nvim
 fish_add_path /opt/homebrew/bin # https://brew.sh/
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+fish_add_path $HOME/.vim/plugged/fzf/bin
 fish_add_path $HOME/.local/bin
 # fish_add_path $HOME/.config/tmux/plugins/tmux-nvr/bin
 # fish_add_path $HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin
@@ -50,6 +51,5 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 		starship init fish | source # https://starship.rs/
 		# zoxide init fish | source # 'ajeetdsouza/zoxide'
-		fish_vi_key_bindings
 end
 
