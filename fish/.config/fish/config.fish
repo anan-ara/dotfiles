@@ -12,6 +12,7 @@
 set -gx fish_greeting # disable fish greeting
 set -Ux BAT_THEME Dracula # 'sharkdp/bat' cat clone
 set -Ux EDITOR nvim # 'neovim/neovim' text editor
+set -Ux VISUAL nvim
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
 set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --prompt='❯ ' --pointer='▶' --marker='✓' \
@@ -22,21 +23,20 @@ set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --prompt='❯ ' --pointer='▶' --
 
 set -Ux FZF_CTRL_R_OPTS "--border-label=' History ' --prompt='❯ '"
 
-# export FZF_DEFAULT_OPTS="
-# --layout=reverse
-# --info=inline
-# --height=80%
-# --multi
-# --color=16
-# --prompt='∼ ' --pointer='▶' --marker='✓'
-# "
-
 set -Ux LANG en_US.UTF-8
 set -Ux LC_ALL en_US.UTF-8
 # set -Ux NODE_PATH "~/.nvm/versions/node/v16.19.0/bin/node" # 'nvm-sh/nvm'
 # set -Ux PAGER ~/.local/bin/nvimpager # 'lucc/nvimpager'
 # set -Ux RIPGREP_CONFIG_PATH "$HOME/.config/rg/ripgreprc"
-set -Ux VISUAL nvim
+# Emulates vim's cursor shape behavior
+# Set the normal and visual mode cursors to a block
+set -Ux fish_cursor_default block
+# Set the insert mode cursor to a line
+set -Ux fish_cursor_insert line
+# Set the replace mode cursor to an underscore
+set -Ux fish_cursor_replace_one underscore
+# Make the cursor work in tmux
+set -Ux fish_vi_force_cursor
 
 # ordered by priority - bottom up
 fish_add_path /opt/homebrew/bin # https://brew.sh/
@@ -49,6 +49,6 @@ fish_add_path $HOME/.local/bin
 if status is-interactive
     # Commands to run in interactive sessions can go here
 		starship init fish | source # https://starship.rs/
-		# zoxide init fish | source # 'ajeetdsouza/zoxide'
+    zoxide init fish | source # 'ajeetdsouza/zoxide'
 end
 
