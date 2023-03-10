@@ -14,13 +14,13 @@ set -Ux BAT_THEME Dracula # 'sharkdp/bat' cat clone
 set -Ux EDITOR nvim # 'neovim/neovim' text editor
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
-set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --pointer='▶' --marker='✓' \
+set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --prompt='❯ ' --pointer='▶' --marker='✓' \
  --ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
-set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --pointer='▶' --marker='✓' \
+set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --prompt='❯ ' --pointer='▶' --marker='✓' \
  --ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
-set -Ux FZF_CTRL_R_OPTS "--border-label=' History ' --prompt=' '"
+set -Ux FZF_CTRL_R_OPTS "--border-label=' History ' --prompt='❯ '"
 
 # export FZF_DEFAULT_OPTS="
 # --layout=reverse
