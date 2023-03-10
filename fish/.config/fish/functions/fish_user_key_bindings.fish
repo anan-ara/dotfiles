@@ -7,6 +7,7 @@ function fish_user_key_bindings
     # resetting all bindings.
     # The argument specifies the initial mode (insert, "default" or visual).
     fish_vi_key_bindings --no-erase insert
+    fzf_key_bindings
     for mode in default insert paste replace replace_one visual
         bind -M $mode -m insert \cO "lfcd"
     end

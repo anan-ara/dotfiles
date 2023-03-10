@@ -15,10 +15,10 @@ set -Ux EDITOR nvim # 'neovim/neovim' text editor
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
 set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --pointer='▶' --marker='✓' \
---ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
+ --ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
 set -Ux FZF_TMUX_OPTS "-p --reverse --no-info --pointer='▶' --marker='✓' \
---ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
+ --ansi --multi --color='16,bg+:-1,gutter:-1,prompt:4,pointer:5,marker:6'"
 
 set -Ux FZF_CTRL_R_OPTS "--border-label=' History ' --prompt=' '"
 
@@ -42,7 +42,6 @@ set -Ux VISUAL nvim
 fish_add_path /opt/homebrew/bin # https://brew.sh/
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
-fish_add_path $HOME/.vim/plugged/fzf/bin
 fish_add_path $HOME/.local/bin
 # fish_add_path $HOME/.config/tmux/plugins/tmux-nvr/bin
 # fish_add_path $HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin
