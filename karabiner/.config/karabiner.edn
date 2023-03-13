@@ -195,6 +195,21 @@
                  ]
          }
         {
+         :des "Ctrl/Option + ; to Delete Line"
+         :rules [
+                 [
+                  :!Tsemicolon
+                  :!Cdelete_or_backspace
+                  nil
+                  ]
+                 [
+                  :!Osemicolon
+                  :!Cdelete_forward
+                  nil
+                  ]
+                 ]
+         }
+        {
          :des "Shift/Option + Space to [ and ]."
          :rules [
                  [
