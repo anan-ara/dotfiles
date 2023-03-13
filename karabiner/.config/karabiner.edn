@@ -179,6 +179,36 @@
                   ]
                  ]
          }
+        {
+         :des "Option + h/l to Delete Word."
+         :rules [
+                 [
+                  :!Oh
+                  :!Odelete_or_backspace
+                  ["superduper-mode" 0]
+                  ]
+                 [
+                  :!Ol
+                  :!Odelete_forward
+                  ["superduper-mode" 0]
+                  ]
+                 ]
+         }
+        {
+         :des "Shift/Option + Space to [ and ]."
+         :rules [
+                 [
+                  :!Sspacebar
+                  :open_bracket
+                  nil
+                  ]
+                 [
+                  :!Ospacebar
+                  :close_bracket
+                  nil
+                  ]
+                 ]
+         }
 
 
         ; ( ) !
@@ -275,14 +305,44 @@
                  [:!Rquote :page_up]
                  ]
          }
-        ; {:des "paren + backspace training wheels "
-         ; :rules [
-                  ; [:##open_bracket :delete_or_backspace]
-                  ; [:##close_bracket :delete_forward]
-                  ; [:!S9 :vk_none]
-                  ; [:!S0 :vk_none]
-                ; ]
-         ; }
+          ; SuperDuper Mode with S+D
+        {:des "SuperDuper <- S+D" :rules [
+                                          [
+                                           {:sim [:s :d]
+                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           {:set ["superduper-mode" 1]}
+                                           ]
+                                          [
+                                           {:sim [:d :f]
+                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           [{:set ["superduper-mode" 1]} :left_option]
+                                           ]
+                                          [
+                                           {:sim [:s :f]
+                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           [{:set ["superduper-mode" 1]} :left_command]
+                                           ]
+                                         [:##h :left_arrow ["superduper-mode" 1]]
+                                         [:##j :down_arrow ["superduper-mode" 1]]
+                                         [:##k :up_arrow ["superduper-mode" 1]]
+                                         [:##l :right_arrow ["superduper-mode" 1]]
+                                         [:##p :!Sleft_arrow ["superduper-mode" 1]]
+                                         [:##n :!Sright_arrow ["superduper-mode" 1]]
+                                         [:##i :!CSopen_bracket ["superduper-mode" 1]]
+                                         [:##o :!CSclose_bracket ["superduper-mode" 1]]
+                                         ]
+         }
+
+        {:des "brackets + arrow keys training wheels "
+         :rules [
+                  [:##open_bracket :vk_none]
+                  [:##close_bracket :vk_none]
+                  [:##left_arrow :vk_none]
+                  [:##down_arrow :vk_none]
+                  [:##up_arrow :vk_none]
+                  [:##right_arrow :vk_none]
+                ]
+         }
 
         ; {:des "a-mode for hjkl movement and ,. PageDn/Up"
          ; :rules [:a-mode
