@@ -20,11 +20,13 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
-Plug 'dracula/vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 " For airline
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 " Auto insert closing brackets
 " Plug 'jiangmiao/auto-pairs'
@@ -228,9 +230,11 @@ if has("autocmd")
 endif
 
 " Set the colorscheme
-colorscheme dracula
+colorscheme catppuccin_mocha
 
-" Makes transparentcy work idk how but it does
+set termguicolors
+
+" Makes transparency work idk how but it does
 highlight Normal guibg=NONE ctermbg=NONE
 
 " Unified color scheme (default: dark)
@@ -273,6 +277,8 @@ noremap <Leader>k :call ToggleSignColumn()<CR>
 " ----- bling/vim-airline settings -----
 " Always show statusbar
 set laststatus=2
+
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
 
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
