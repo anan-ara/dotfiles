@@ -137,6 +137,9 @@ let g:netrw_dirhistmax=0
 set showbreak=\\
 set list
 
+" interpret asdf-asdf as one word
+set iskeyword+=-
+
 if system('uname -s') == "Darwin\n"
   set clipboard=unnamed "OSX
 else
@@ -162,11 +165,6 @@ noremap Y y$
 " Auto Indent the entire file with =
 " nnoremap = gg=G<C-o><C-o>
 
-" Most controversial change in this whole vimrc file
-" But it makes sense visually
-" I'll try turning this off for a bit and see how this goes
-" inoremap <silent> <Esc> <C-O>:stopinsert<CR>
-
 " Make navigating wrapped lines the same as normal
 noremap <silent> k gk
 noremap <silent> j gj
@@ -187,6 +185,8 @@ noremap <silent> g_ _
 " Cycle through buffers
 noremap <silent> gl :bn<CR>
 noremap <silent> gh :bp<CR>
+noremap <silent> L :bn<CR>
+noremap <silent> H :bp<CR>
 
 " Jump to matching element faster, % is hard to reach
 noremap <silent> <Tab> %
@@ -195,8 +195,12 @@ noremap <silent> <Tab> %
 noremap <silent> <C-S> <C-6>
 
 " leader paste to paste without populating register
-" vnoremap <silent> <leader>p "_p
-" vnoremap <silent> <leader>P "_P
+vnoremap <silent> <leader>p "_dp
+vnoremap <silent> <leader>P "_dP
+
+" stay in indenting mode
+vnoremap <silent> < <gv
+vnoremap <silent> > >gv
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <silent> <CR> :noh<CR>

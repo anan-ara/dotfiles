@@ -152,16 +152,16 @@
                   ]
                  ]
          }
-        {
-         :des "Change Right Option to Caps Lock"
-         :rules [
-                 [
-                  :##right_option
-                  :caps_lock
-                  nil
-                  ]
-                 ]
-         }
+        ; {
+         ; :des "Change Right Option to Caps Lock"
+         ; :rules [
+                 ; [
+                  ; :##right_option
+                  ; :caps_lock
+                  ; nil
+                  ; ]
+                 ; ]
+         ; }
         {
          :des "Change Shifts to parentheses."
          :rules [
@@ -180,18 +180,16 @@
                  ]
          }
         {
-         :des "Option + h/l to Delete Word."
+         :des "Option to nav layer"
          :rules [
-                 [
-                  :!Oh
-                  :!Odelete_or_backspace
-                  ["superduper-mode" 0]
-                  ]
-                 [
-                  :!Ol
-                  :!Odelete_forward
-                  ["superduper-mode" 0]
-                  ]
+                 [:!Oh :!Oleft_arrow nil]
+                 [:!Oj :down_arrow nil]
+                 [:!Ok :up_arrow nil]
+                 [:!Ol :!Oright_arrow nil]
+                 [:!Op :left_arrow nil]
+                 [:!On :right_arrow nil]
+                 [:!Ou :!CSopen_bracket nil]
+                 [:!Oi :!CSclose_bracket nil]
                  ]
          }
         {
@@ -210,13 +208,8 @@
                  ]
          }
         {
-         :des "Shift/Option + Space to [ and ]."
+         :des "Option + Space to ]."
          :rules [
-                 [
-                  :!Sspacebar
-                  :open_bracket
-                  nil
-                  ]
                  [
                   :!Ospacebar
                   :close_bracket
@@ -309,55 +302,54 @@
                   ; [:!TOScomma :page_up]
                   ; ]
          ; }
-        {:des "Right Shift to Nav Mode"
-         :rules [
-                 [:!Rk :left_arrow]
-                 [:!Rl :down_arrow]
-                 [:!Rsemicolon :up_arrow]
-                 [:!Rcomma :open_bracket]
-                 [:!Rperiod :close_bracket]
-                 [:!Rslash :page_down]
-                 [:!Rquote :page_up]
-                 ]
-         }
+        ; {:des "Right Shift to Nav Mode"
+         ; :rules [
+                 ; [:!Rk :left_arrow]
+                 ; [:!Rl :down_arrow]
+                 ; [:!Rsemicolon :up_arrow]
+                 ; [:!Rcomma :open_bracket]
+                 ; [:!Rperiod :close_bracket]
+                 ; [:!Rslash :page_down]
+                 ; [:!Rquote :page_up]
+                 ; ]
+         ; }
           ; SuperDuper Mode with S+D
-        {:des "SuperDuper <- S+D" :rules [
-                                          [
-                                           {:sim [:s :d]
-                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           {:set ["superduper-mode" 1]}
-                                           ]
-                                          [
-                                           {:sim [:d :f]
-                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           [{:set ["superduper-mode" 1]} :left_option]
-                                           ]
-                                          [
-                                           {:sim [:s :f]
-                                            :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           [{:set ["superduper-mode" 1]} :left_command]
-                                           ]
-                                         [:##h :left_arrow ["superduper-mode" 1]]
-                                         [:##j :down_arrow ["superduper-mode" 1]]
-                                         [:##k :up_arrow ["superduper-mode" 1]]
-                                         [:##l :right_arrow ["superduper-mode" 1]]
-                                         [:##p :!Sleft_arrow ["superduper-mode" 1]]
-                                         [:##n :!Sright_arrow ["superduper-mode" 1]]
-                                         [:##i :!CSopen_bracket ["superduper-mode" 1]]
-                                         [:##o :!CSclose_bracket ["superduper-mode" 1]]
-                                         ]
-         }
+        ; {:des "SuperDuper <- S+D" :rules [
+                                          ; [
+                                           ; {:sim [:s :d]
+                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           ; {:set ["superduper-mode" 1]}
+                                           ; ]
+                                          ; [
+                                           ; {:sim [:d :f]
+                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           ; [{:set ["superduper-mode" 1]} :left_option]
+                                           ; ]
+                                          ; [
+                                           ; {:sim [:s :f]
+                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
+                                           ; [{:set ["superduper-mode" 1]} :left_command]
+                                           ; ]
+                                         ; [:##h :left_arrow ["superduper-mode" 1]]
+                                         ; [:##j :down_arrow ["superduper-mode" 1]]
+                                         ; [:##k :up_arrow ["superduper-mode" 1]]
+                                         ; [:##l :right_arrow ["superduper-mode" 1]]
+                                         ; [:##p :!Sleft_arrow ["superduper-mode" 1]]
+                                         ; [:##n :!Sright_arrow ["superduper-mode" 1]]
+                                         ; [:##u :!CSopen_bracket ["superduper-mode" 1]]
+                                         ; [:##i :!CSclose_bracket ["superduper-mode" 1]]
+                                         ; ]
+         ; }
 
-        {:des "brackets + arrow keys training wheels "
-         :rules [
-                  [:##open_bracket :vk_none]
-                  [:##close_bracket :vk_none]
-                  [:##left_arrow :vk_none]
-                  [:##down_arrow :vk_none]
-                  [:##up_arrow :vk_none]
-                  [:##right_arrow :vk_none]
-                ]
-         }
+        ; {:des "brackets + arrow keys training wheels "
+         ; :rules [
+                  ; [:##close_bracket :vk_none]
+                  ; [:##left_arrow :vk_none]
+                  ; [:##down_arrow :vk_none]
+                  ; [:##up_arrow :vk_none]
+                  ; [:##right_arrow :vk_none]
+                ; ]
+         ; }
 
         ; {:des "a-mode for hjkl movement and ,. PageDn/Up"
          ; :rules [:a-mode
