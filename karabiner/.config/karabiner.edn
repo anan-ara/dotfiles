@@ -188,8 +188,8 @@
                  [:!Ol :!Oright_arrow nil]
                  [:!Op :left_arrow nil]
                  [:!On :right_arrow nil]
-                 [:!Ou :!CSopen_bracket nil]
-                 [:!Oi :!CSclose_bracket nil]
+                 [:!Oi :!CSopen_bracket nil]
+                 [:!Oo :!CSclose_bracket nil]
                  ]
          }
         {
