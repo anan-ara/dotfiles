@@ -11,8 +11,8 @@
 
 set -gx fish_greeting # disable fish greeting
 set -Ux BAT_THEME Dracula # 'sharkdp/bat' cat clone
-set -Ux EDITOR nvim # 'neovim/neovim' text editor
-set -Ux VISUAL nvim
+set -Ux EDITOR lvim # 'neovim/neovim' text editor
+set -Ux VISUAL lvim
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
 set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --prompt='❯ ' --pointer='▶' --marker='✓' \
@@ -50,5 +50,6 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 		starship init fish | source # https://starship.rs/
     zoxide init fish | source # 'ajeetdsouza/zoxide'
+    fish_config theme choose Dracula
 end
 

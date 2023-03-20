@@ -8,17 +8,17 @@
 # The minimal, blazing-fast, and infinitely customizable prompt
 # https://starship.rs
 
-palette = "catppuccin_mocha"
+# palette = "catppuccin_mocha"
 
-# [cmd_duration]
-# style = "bold #8be9fd"
+[cmd_duration]
+style = "bold cyan"
 
-# [hostname]
-# style = "bold #bd93f9"
+[hostname]
+style = "bold blue"
 
-# [username]
-# format = "[$user]($style) on "
-# style_user = "bold #bd93f9"
+[username]
+format = "[$user]($style) on "
+style_user = "bold blue"
 
 [aws]
 symbol = "  "
@@ -37,8 +37,8 @@ symbol = " "
 
 [directory]
 read_only = " "
-# style = "bold purple"
-style = "bold lavender"
+style = "bold blue"
+# style = "bold lavender"
 
 [docker_context]
 symbol = " "
@@ -54,12 +54,12 @@ symbol = " "
 
 [git_branch]
 symbol = " "
-# style = "bold green"
-style = "bold pink"
+style = "bold green"
+# style = "bold pink"
 
 [git_status]
-# style = "bold yellow"
-style = "bold peach"
+style = "bold yellow"
+# style = "bold peach"
 
 [golang]
 symbol = " "
