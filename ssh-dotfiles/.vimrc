@@ -20,8 +20,8 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'junegunn/seoul256.vim'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
-" Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 " For airline
 " Plug 'vim-airline/vim-airline'
@@ -230,7 +230,7 @@ if has("autocmd")
 endif
 
 " Set the colorscheme
-colorscheme catppuccin_mocha
+colorscheme dracula
 
 set termguicolors
 
