@@ -278,7 +278,7 @@ noremap <Leader>k :call ToggleSignColumn()<CR>
 " Always show statusbar
 set laststatus=2
 
-let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+let g:lightline = {'colorscheme': 'dracula'}
 
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
