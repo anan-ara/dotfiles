@@ -11,8 +11,8 @@
 
 set -gx fish_greeting # disable fish greeting
 set -Ux BAT_THEME Dracula # 'sharkdp/bat' cat clone
-set -Ux EDITOR lvim # 'neovim/neovim' text editor
-set -Ux VISUAL lvim
+set -Ux EDITOR nvim # 'neovim/neovim' text editor
+set -Ux VISUAL nvim
 set -Ux FZF_DEFAULT_COMMAND "fd --hidden --exclude '.git'"
 
 set -Ux FZF_DEFAULT_OPTS "--reverse --no-info --prompt='❯ ' --pointer='▶' --marker='✓' \

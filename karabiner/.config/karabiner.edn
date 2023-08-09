@@ -1,5 +1,4 @@
-{
- ;; ----------------------------------
+{;; ----------------------------------
  ;; this is my goku file for karabiner
  ;; ----------------------------------
  ;; more info about goku: https://github.com/yqrashawn/GokuRakuJoudo
@@ -12,28 +11,36 @@
  ;; very well documented edn file by Kaushik Gopal: https://gist.github.com/kaushikgopal/ff7a92bbc887e59699c804b59074a126
  ;; key names: https://github.com/yqrashawn/GokuRakuJoudo/blob/master/src/karabiner_configurator/keys_info.clj
 
- :profiles {
-            :Goku {
-                   :default    true
+ :profiles {:Goku {:default    true
                    :sim        50      ;; if keydown event for two different keys are pressed within :sim ms, the keypresses are considered simultaneous
                    :delay      500     ;; after :delay ms, the key press is considered to be delayed
                    :alone      150    ;; if keyup event comes within :alone ms from keydown, the key is not just pressed but held
                    :held       500     ;; key is fired twice when :held ms is elapsed (otherwise seen as a hold command)
-                   }
-            } ;; profiles
+}} ;; profiles
 
  ;; you can create templates for running shell commands. These follow clojure string template syntax.
- :templates {
-             :echo "echo \"%s\""
+ :templates {:echo "echo \"%s\""
              :open "open \"%s\""
-             :open-app "open -a \"%s\""
-             } ;; templates
+             :open-app "open -a \"%s\""} ;; templates
 
  ; :modifiers {:meh [:left_control :left_option :left_shift]}
+    ;; !  | means mandatory
+    ;; #  | means optional
+    ;; C  | left_command
+    ;; T  | left_control
+    ;; O  | left_option
+    ;; S  | left_shift
+    ;; F  | fn
+    ;; Q  | right_command
+    ;; W  | right_control
+    ;; E  | right_option
+    ;; R  | right_shift
+    ;; P  | caps_lock
+    ;; !! | mandatory command + control + optional + shift (hyper)
+    ;; ## | optional any
 
  ;; layers are modifier keys
- :simlayers {
-             ; :f-mode {:key :f}    ; delimeters    ( ) [ ] and other symbols ! ` #
+ :simlayers {; :f-mode {:key :f}    ; delimeters    ( ) [ ] and other symbols ! ` #
              ; :d-mode {:key :d}    ; arithmetic and quotes    + - * ~ = % # ' "
              ; :s-mode {:key :s}    ; dragon ^ | \ _ / ? and @ & $
              ; :a-mode {:key :a}    ; navigation hjkl + page down/up
@@ -54,32 +61,28 @@
  ; the default value is 250
  :simlayer-threshold 1000
 
- :froms {
-       :mouse_upper {:pkey :button5}
-       :mouse_lower {:pkey :button4}
+ :froms {:mouse_upper {:pkey :button5}
+         :mouse_lower {:pkey :button4}
        ; :lock {:ckey :al_terminal_lock_or_screensaver}
-       }
+         }
  ;; with tos you can predefine 'to' keypresses to easily parse them
- :tos {
-       ;; in order for OSX to register a caps lock press, it has to be held for a little under 100ms
+ :tos {;; in order for OSX to register a caps lock press, it has to be held for a little under 100ms
        :toggle_caps {:key :caps_lock :hold_down_ms 100}
        ; :sleep {:ckey :eject :modi [:left_gui :left_alt]}
        }
  ;; This is where you define the modifications
- :main [
-
-        {
-         :des "Change Caps Lock to Esc when tapped and Ctrl when held."
-         :rules [
-                 [
-                  :##caps_lock           ;; FROM caps lock key with no or any modifiers
+ :main [; {:des "Disable Cmd-Tab (Training)"
+        ;  :rules [[:!Ctab
+        ;           :vk_none
+        ;           nil                    ;; with no conditionals
+        ;           ]]}
+        {:des "Change Caps Lock to Esc when tapped and Ctrl when held."
+         :rules [[:##caps_lock           ;; FROM caps lock key with no or any modifiers
                   :left_control          ;; TO left control with optional modifiers
                   nil                    ;; with no conditionals
-                  {:alone :escape}
-                  ]
-                 ]
-         }
-        ; {
+                  {:alone :escape}]]}
+
+; {
          ; :des "Change Lock to Sleep"
          ; :rules [
                  ; [
@@ -89,70 +92,40 @@
                   ; ]
                  ; ]
          ; }
-        {
-         :des "Change Upper Mouse Button to Meh."
-         :rules [
-                 [
-                  :mouse_upper
-                  :!TOleft_shift
-                  nil                    ;; with no conditionals
-                  ]
-                 ]
-         }
-        {
-         :des "Change Lower Mouse Button to Meh."
-         :rules [
-                 [
-                  :mouse_lower
-                  :!TOleft_shift
-                  nil                    ;; with no conditionals
-                  ]
-                 ]
-         }
-        {
-         :des "Change Tab to Tab when tapped and Option when held."
-         :rules [
-                 [
-                  :##tab
+        ; {:des "Change Upper Mouse Button to Meh."
+         ; :rules [[:mouse_upper
+                  ; :!TOleft_shift
+                  ; nil                    ;; with no conditionals
+                  ; ]]}
+        ; {:des "Change Lower Mouse Button to Meh."
+         ; :rules [[:mouse_lower
+                  ; :!TOleft_shift
+                  ; nil                    ;; with no conditionals
+                  ; ]]}
+        {:des "Change Tab to Tab when tapped and Option when held."
+         :rules [[:##tab
                   :left_option
                   nil
-                  {:alone :tab}
-                  ]
-                 ]
-         }
-        {
-         :des "Ctrl + Backspace to Option + Backspace."
-         :rules [
-                 [
-                  :!Tdelete_or_backspace
+                  {:alone :tab}]]}
+
+        {:des "Ctrl + Backspace to Option + Backspace."
+         :rules [[:!Tdelete_or_backspace
                   :!Odelete_or_backspace
-                  nil
-                  ]
-                 ]
-         }
-        {
-         :des "Change Left Command to { when tapped and Left Command when held."
-         :rules [
-                 [
-                  :##left_command
+                  nil]]}
+
+        {:des "Change Left Command to { when tapped and Left Command when held."
+         :rules [[:##left_command
                   :left_command
                   nil
-                  {:alone :!Sopen_bracket}
-                  ]
-                 ]
-         }
-        {
-         :des "Change Right Command to } when tapped and Meh when held."
-         :rules [
-                 [
-                  :##right_command
+                  {:alone :!Sopen_bracket}]]}
+
+        {:des "Change Right Command to } when tapped and Meh when held."
+         :rules [[:##right_command
                   :!TOleft_shift
                   nil
-                  {:alone :!Sclose_bracket}
-                  ]
-                 ]
-         }
-        ; {
+                  {:alone :!Sclose_bracket}]]}
+
+; {
          ; :des "Change Right Option to Caps Lock"
          ; :rules [
                  ; [
@@ -162,64 +135,45 @@
                   ; ]
                  ; ]
          ; }
-        {
-         :des "Change Shifts to parentheses."
-         :rules [
-                 [
-                  :##left_shift
+        {:des "Change Shifts to parentheses."
+         :rules [[:##left_shift
                   :left_shift
                   nil
-                  {:alone :!S9}
-                  ]
-                 [
-                  :##right_shift
+                  {:alone :!S9}]
+                 [:##right_shift
                   :right_shift
                   nil
-                  {:alone :!S0}
-                  ]
-                 ]
-         }
-        {
-         :des "Option to nav layer"
-         :rules [
-                 [:!Oh :!Oleft_arrow nil]
+                  {:alone :!S0}]]}
+
+        {:des "Option to nav layer"
+         :rules [[:!Oh :!Oleft_arrow nil]
                  [:!Oj :down_arrow nil]
                  [:!Ok :up_arrow nil]
                  [:!Ol :!Oright_arrow nil]
                  [:!Op :left_arrow nil]
                  [:!On :right_arrow nil]
-                 [:!Oi :!CSopen_bracket nil]
-                 [:!Oo :!CSclose_bracket nil]
-                 ]
-         }
-        {
-         :des "Ctrl/Option + ; to Delete Line"
-         :rules [
-                 [
-                  :!Tsemicolon
-                  :!Cdelete_or_backspace
-                  nil
-                  ]
-                 [
-                  :!Osemicolon
-                  :!Cdelete_forward
-                  nil
-                  ]
-                 ]
-         }
-        {
-         :des "Option + Space to ]."
-         :rules [
-                 [
-                  :!Ospacebar
-                  :close_bracket
-                  nil
-                  ]
-                 ]
-         }
+                 [:!Ou :!COleft_arrow nil]
+                 [:!Oi :!COright_arrow nil]
+                 [:!Oy :!Copen_bracket nil]
+                 [:!Oo :!Cclose_bracket nil]
+                 [:!Om :page_down nil]
+                 [:!Ocomma :page_up nil]
+                 ]}
 
+        ; {:des "Ctrl/Option + ; to Delete Line"
+         ; :rules [[:!Tsemicolon
+                  ; :!Cdelete_or_backspace
+                  ; nil]
+                 ; [:!Osemicolon
+                  ; :!Cdelete_forward
+                  ; nil]]}
 
-        ; ( ) !
+        ; {:des "Option + Space to ]."
+         ; :rules [[:!Ospacebar
+                  ; :close_bracket
+                  ; nil]]}
+
+; ( ) !
         ; dn up `
         ; [ ] #
         ; {:des "f-mode for delimeters and ! ` #"
@@ -445,9 +399,7 @@
                 ; ]
         ; }
 
-
-
-        ; {
+; {
          ; :des "launch mode: quick launch applications"
          ; :rules [
                  ; :launch-mode                                      ;; when open-mode is active (o is held)
@@ -456,5 +408,4 @@
                  ; [:d [:open "/users/anan/Desktop"]]         ;; and d is pressed, open the Desktop in finder
                  ; ]
          ; }
-        ]
- }
+        ]}
