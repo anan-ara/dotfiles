@@ -1,0 +1,95 @@
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn   lctl lalt lmet           spc       rmet ralt
+)
+
+(defalias
+  ;; shifted keys
+  { S-[
+  } S-]
+  ~ S-grv
+  : S-;
+  _ S--
+  + S-=
+  | S-\
+
+  meh (multi lsft lctl lalt)
+
+  msn C-up
+)
+
+(defvar
+  tap-hold-timeout   150
+  tht $tap-hold-timeout
+)
+
+(defalias
+  ;; toggle layer aliases
+  num (layer-toggle numbers)
+  arr (layer-toggle arrows)
+  msc (layer-toggle misc)
+  fun (layer-toggle function)
+
+  ;; tap-hold layers
+  spc (tap-hold-release $tht $tht spc @num)
+  q (tap-hold-release $tht $tht q @arr)
+  f (tap-hold-release $tht $tht f @msc)
+  fn (tap-hold-release $tht $tht fn @fun)
+
+  ;; tap-hold modifiers
+  cap (tap-hold-release $tht $tht esc lctl)
+  tab (tap-hold-release $tht $tht tab lalt)
+  lsh (tap-hold-press $tht $tht S-9 lsft)
+  rsh (tap-hold-press $tht $tht S-0 rsft)
+  lcm (tap-hold-release $tht $tht @{ lmet)
+  rcm (tap-hold-release $tht $tht @} @meh)
+)
+
+(deflayer base
+  esc  brdn brup @msn f14  f15  f16  prev pp   next mute vold volu
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  @tab @q   w    e    r    t    y    u    i    o    p    [    ]    \
+  @cap a    s    d    @f   g    h    j    k    l    ;    '    ret
+  @lsh z    x    c    v    b    n    m    ,    .    /    @rsh
+  @fn   lctl lalt @lcm      @spc           @rcm ralt
+)
+
+(deflayer numbers
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    S-1  S-2  S-3  S-4  S-5  S-6  S-7  S-8  [    ]    _    _    _
+  _    1    2    3    4    5    6    7    8    9    0    _    _
+  _    grv  @~   @_   -    _    @+   =    @|   \    _    _
+  _    _    _    _         _              _    _
+)
+
+(deflayer misc
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    bspc A-bspc M-bspc _ _   _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _         _              _    _
+)
+
+(deflayer arrows
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    lsft lalt _    _    _    home end  _    _    _    _    _
+  _    _    _    _    _    _    left down up   rght _    _    _
+  _    _    _    _    _    _    _    pgdn pgup _    _    _
+  _    _    _    _         _              _    _
+)
+
+(deflayer function
+  _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _         _              _    _
+)
