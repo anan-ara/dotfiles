@@ -40,71 +40,36 @@
     ;; ## | optional any
 
  ;; layers are modifier keys
- :simlayers {; :f-mode {:key :f}    ; delimeters    ( ) [ ] and other symbols ! ` #
-             ; :d-mode {:key :d}    ; arithmetic and quotes    + - * ~ = % # ' "
-             ; :s-mode {:key :s}    ; dragon ^ | \ _ / ? and @ & $
-             ; :a-mode {:key :a}    ; navigation hjkl + page down/up
-             ; :space-mode {:key :spacebar}
-             ;
-             ; :q-mode {:key :q}    ; General shortcuts (browser etc.) - not settled
-             ; :w-mode {:key :w}    ; Selection left and right (letter, word, line)
-             ; :e-mode {:key :e}    ; Movement left and right (letter, word, line)
-             ; :r-mode {:key :r}    ; Deletion left and right (letter, word, line)
-             ;
-             ; :g-mode {:key :g}    ; Mouse scroll, desktop left-right, zoom in-out, screenshot (not implemented)
-             ;
-             ; :v-mode {:key :v}    ; Number pad with + - BS ENTER as well
-             ; :c-mode {:key :c}    ; Slashes and lines  ^ | \ _ @
-             ; :x-mode {:key :x}    ; Some multi-character shortcuts like <= (not implemented)
+ :simlayers {;:f-mode {:key :f}    ; Deletion
+             ;:space-mode {:key :spacebar} ; Extra Symbols
+             ;:q-mode {:key :q}    ; Movement
              }
 
  ; the default value is 250
- :simlayer-threshold 1000
+ :simlayer-threshold 200
 
  :froms {:mouse_upper {:pkey :button5}
          :mouse_lower {:pkey :button4}
-       ; :lock {:ckey :al_terminal_lock_or_screensaver}
          }
+
  ;; with tos you can predefine 'to' keypresses to easily parse them
  :tos {;; in order for OSX to register a caps lock press, it has to be held for a little under 100ms
-       :toggle_caps {:key :caps_lock :hold_down_ms 100}
+       ; :toggle_caps {:key :caps_lock :hold_down_ms 100}
        ; :sleep {:ckey :eject :modi [:left_gui :left_alt]}
+       ; :lock {:ckey :al_terminal_lock_or_screensaver}
        }
+
  ;; This is where you define the modifications
- :main [; {:des "Disable Cmd-Tab (Training)"
-        ;  :rules [[:!Ctab
-        ;           :vk_none
-        ;           nil                    ;; with no conditionals
-        ;           ]]}
+ :main [
         {:des "Change Caps Lock to Esc when tapped and Ctrl when held."
          :rules [[:##caps_lock           ;; FROM caps lock key with no or any modifiers
                   :left_control          ;; TO left control with optional modifiers
                   nil                    ;; with no conditionals
                   {:alone :escape}]]}
 
-; {
-         ; :des "Change Lock to Sleep"
-         ; :rules [
-                 ; [
-                  ; :lock
-                  ; :sleep
-                  ; nil                    ;; with no conditionals
-                  ; ]
-                 ; ]
-         ; }
-        ; {:des "Change Upper Mouse Button to Meh."
-         ; :rules [[:mouse_upper
-                  ; :!TOleft_shift
-                  ; nil                    ;; with no conditionals
-                  ; ]]}
-        ; {:des "Change Lower Mouse Button to Meh."
-         ; :rules [[:mouse_lower
-                  ; :!TOleft_shift
-                  ; nil                    ;; with no conditionals
-                  ; ]]}
-        {:des "Change Tab to Tab when tapped and Option when held."
+        {:des "Change Tab to Right Option when held."
          :rules [[:##tab
-                  :left_option
+                  :right_option
                   nil
                   {:alone :tab}]]}
 
@@ -113,29 +78,13 @@
                   :!Odelete_or_backspace
                   nil]]}
 
-        {:des "Change Left Command to { when tapped and Left Command when held."
+        {:des "Change Left Command to { when tapped."
          :rules [[:##left_command
                   :left_command
                   nil
                   {:alone :!Sopen_bracket}]]}
 
-        {:des "Change Right Command to } when tapped and Meh when held."
-         :rules [[:##right_command
-                  :!TOleft_shift
-                  nil
-                  {:alone :!Sclose_bracket}]]}
-
-; {
-         ; :des "Change Right Option to Caps Lock"
-         ; :rules [
-                 ; [
-                  ; :##right_option
-                  ; :caps_lock
-                  ; nil
-                  ; ]
-                 ; ]
-         ; }
-        {:des "Change Shifts to parentheses."
+        {:des "Change Shifts to parentheses when tapped."
          :rules [[:##left_shift
                   :left_shift
                   nil
@@ -145,267 +94,88 @@
                   nil
                   {:alone :!S0}]]}
 
-        {:des "Option to nav layer"
-         :rules [[:!Oh :!Oleft_arrow nil]
-                 [:!Oj :down_arrow nil]
-                 [:!Ok :up_arrow nil]
-                 [:!Ol :!Oright_arrow nil]
-                 [:!Op :left_arrow nil]
-                 [:!On :right_arrow nil]
-                 [:!Ou :!COleft_arrow nil]
-                 [:!Oi :!COright_arrow nil]
-                 [:!Oy :!Copen_bracket nil]
-                 [:!Oo :!Cclose_bracket nil]
-                 [:!Om :page_down nil]
-                 [:!Ocomma :page_up nil]
+        {:des "Change Right Command to } when tapped and Meh when held."
+         :rules [[:##right_command
+                  :!TOleft_shift
+                  nil
+                  {:alone :!Sclose_bracket}]]}
+
+        {:des "Change Mouse Buttons to Meh when held."
+         :rules [[:mouse_upper
+                  :!TOleft_shift
+                  nil
+                  {:alone {:pkey :button5}}]
+                 [:mouse_lower
+                  :!TOleft_shift
+                  nil
+                  {:alone {:pkey :button4}}]]}
+
+        {:des "Right Option to Navigation layer."
+         :rules [[:!Eh :!Oleft_arrow nil]
+                 [:!Ej :down_arrow nil]
+                 [:!Ek :up_arrow nil]
+                 [:!El :!Oright_arrow nil]
+                 [:!Ep :left_arrow nil]
+                 [:!En :right_arrow nil]
+                 [:!Eu :!SOleft_arrow nil]
+                 [:!Ei :!SOright_arrow nil]
+                 [:!Em :page_down nil]
+                 [:!Ecomma :page_up nil]
                  ]}
 
-        ; {:des "Ctrl/Option + ; to Delete Line"
-         ; :rules [[:!Tsemicolon
-                  ; :!Cdelete_or_backspace
-                  ; nil]
-                 ; [:!Osemicolon
-                  ; :!Cdelete_forward
-                  ; nil]]}
-
-        ; {:des "Option + Space to ]."
-         ; :rules [[:!Ospacebar
-                  ; :close_bracket
-                  ; nil]]}
-
-; ( ) !
-        ; dn up `
-        ; [ ] #
-        ; {:des "f-mode for delimeters and ! ` #"
-         ; :rules [:f-mode
-                 ; [:##u :!S9]
-                 ; [:##i :!S0]
+        ; {:des "q-mode for movement"
+         ; :rules [:q-mode
+                 ; ; modifiers
+                 ; [:##w :left_shift]
+                 ; [:##e :left_option]
+                 ; ; arrows
+                 ; [:##h :left_arrow]
                  ; [:##j :down_arrow]
                  ; [:##k :up_arrow]
-                 ; [:##m :open_bracket]
-                 ; [:##comma :close_bracket]
-                 ; [:##o :!S1]
-                 ; [:##l :grave_accent_and_tilde]
-                 ; [:##period :!S3]
+                 ; [:##l :right_arrow]
+                 ; ; other
+                 ; [:##m :page_down]
+                 ; [:##comma :page_up]
                 ; ]
-         ; }
+        ; }
 
-        ;; # * -
-        ;; ' " +
-        ;; % ~ =
-        ; {:des "d-mode for arithmetic and quotes"
-         ; :rules [:d-mode
-                  ; [:##u         :!S3]             ; d -> o        #
-                  ; [:##i         :!S8]             ; d -> p        *
-                  ; [:##o         :hyphen]          ; d -> o        -
-
-                  ; [:##j         :quote]           ; d -> j        '
-                  ; [:##k         :!Squote]         ; d -> k        "
-                  ; [:##l         :!Sequal_sign]    ; d -> l        +
-
-                  ; [:##m         :!S5]             ; d -> m        %
-                  ; [:##comma     :!S3]             ; d -> ,
-                  ; [:##period    :equal_sign]      ; d -> .        =
+        ; {:des "f-mode for deletion"
+         ; :rules [:f-mode
+                 ; [:h :delete_or_backspace]
+                 ; [:j :!Odelete_or_backspace]
+                 ; [:k :!Cdelete_or_backspace]
                 ; ]
-         ; }
+        ; }
 
-        ;; ^ @ $
-        ;; | & ?
-        ;; \ _ /
-        ; {:des "s-mode for dragon and @ $ &"
-         ; :rules [:s-mode
-                 ; [:##u :!S6]
-                 ; [:##i :!S2]
-                 ; [:##o :!S4]
-                 ; [:##j :!Sbackslash]
-                 ; [:##k :!S7]
-                 ; [:##l :!Sslash]
-                 ; [:##m :backslash]
-                 ; [:##comma :!Shyphen]
-                 ; [:##period :slash]
-                ; ]
-         ; }
-
-        ; {:des "space-mode for [], `, \\, hjkl movement and PageDn/Up"
+        ; {:des "space-mode for symbols"
          ; :rules [:space-mode
-                  ; [:##d :open_bracket]
-                  ; [:##f :close_bracket]
-                  ; [:##u :!Oleft_arrow]
-                  ; [:##i :!Oright_arrow]
-                  ; [:##o :backslash]
-                  ; [:##p :grave_accent_and_tilde]
-                  ; [:##h :left_arrow]
-                  ; [:##j :down_arrow]
-                  ; [:##k :up_arrow]
-                  ; [:##l :right_arrow]
-                  ; [:##m :page_down]
-                  ; [:comma :page_up]
-                ; ]
-         ; }
-        ; {:des "nav-layer on right command."
-         ; :rules [
-                  ; [:!TOSd :open_bracket]
-                  ; [:!TOSf :close_bracket]
-                  ; [:!TOSi :left_arrow]
-                  ; [:!TOSo :right_arrow]
-                  ; [:!TOSh :left_arrow]
-                  ; [:!TOSj :down_arrow]
-                  ; [:!TOSk :up_arrow]
-                  ; [:!TOSl :right_arrow]
-                  ; [:!TOSm :page_down]
-                  ; [:!TOScomma :page_up]
-                  ; ]
-         ; }
-        ; {:des "Right Shift to Nav Mode"
-         ; :rules [
-                 ; [:!Rk :left_arrow]
-                 ; [:!Rl :down_arrow]
-                 ; [:!Rsemicolon :up_arrow]
-                 ; [:!Rcomma :open_bracket]
-                 ; [:!Rperiod :close_bracket]
-                 ; [:!Rslash :page_down]
-                 ; [:!Rquote :page_up]
-                 ; ]
-         ; }
-          ; SuperDuper Mode with S+D
-        ; {:des "SuperDuper <- S+D" :rules [
-                                          ; [
-                                           ; {:sim [:s :d]
-                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           ; {:set ["superduper-mode" 1]}
-                                           ; ]
-                                          ; [
-                                           ; {:sim [:d :f]
-                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           ; [{:set ["superduper-mode" 1]} :left_option]
-                                           ; ]
-                                          ; [
-                                           ; {:sim [:s :f]
-                                            ; :simo {:interrupt true :afterup {:set ["superduper-mode" 0]}}}
-                                           ; [{:set ["superduper-mode" 1]} :left_command]
-                                           ; ]
-                                         ; [:##h :left_arrow ["superduper-mode" 1]]
-                                         ; [:##j :down_arrow ["superduper-mode" 1]]
-                                         ; [:##k :up_arrow ["superduper-mode" 1]]
-                                         ; [:##l :right_arrow ["superduper-mode" 1]]
-                                         ; [:##p :!Sleft_arrow ["superduper-mode" 1]]
-                                         ; [:##n :!Sright_arrow ["superduper-mode" 1]]
-                                         ; [:##u :!CSopen_bracket ["superduper-mode" 1]]
-                                         ; [:##i :!CSclose_bracket ["superduper-mode" 1]]
-                                         ; ]
-         ; }
-
-        ; {:des "brackets + arrow keys training wheels "
-         ; :rules [
-                  ; [:##close_bracket :vk_none]
-                  ; [:##left_arrow :vk_none]
-                  ; [:##down_arrow :vk_none]
-                  ; [:##up_arrow :vk_none]
-                  ; [:##right_arrow :vk_none]
-                ; ]
-         ; }
-
-        ; {:des "a-mode for hjkl movement and ,. PageDn/Up"
-         ; :rules [:a-mode
-                  ; [:##h :left_arrow]
-                  ; [:##j :down_arrow]
-                  ; [:##k :up_arrow]
-                  ; [:##l :right_arrow]
-                  ; [:##n :return_or_enter]
-                  ; [:##m :page_down]
-                  ; [:comma :page_up]
-                ; ]
-         ; }
-
-        ; {:des "r-mode for deleting characters with ui, words with jk and lines with hl"
-         ; :rules [:r-mode
-                  ; [:##u :delete_or_backspace]   ; r -> u   Delete character backwards
-                  ; [:##i :delete_forward]        ; r -> i   Delete character forwards
-                  ; [:##j :!Odelete_or_backspace] ; r -> j   Delete word backwards
-                  ; [:##k :!Odelete_forward]      ; r -> k   Delete word forwards
-                  ; [:##h :!Cdelete_or_backspace] ; r -> h   Delete to beginning of line
-                  ; [:##l :!Cdelete_forward]      ; r -> l   Delete to end of line
-                  ; [:##m :delete_or_backspace]   ; r -> m   Delete character backwards
-                  ; [:##comma :delete_forward]    ; r -> ,   Delete character forwards
-                ; ]
-         ; }
-
-        ; {:des "e-mode allows for easy back and forth one character, word or line"
-         ; :rules [:e-mode
-                  ; [:##u         :left_arrow]          ; e -> u    Left
-                  ; [:##i         :right_arrow]         ; e -> i    Right
-                  ; [:##j         :!Oleft_arrow]        ; e -> j    Opt+Left
-                  ; [:##k         :!Oright_arrow]       ; e -> k    Opt+Right
-                  ; [:##h         :!Cleft_arrow]        ; e -> h    Cmd+Left
-                  ; [:##l         :!Cright_arrow]       ; e -> l    Cmd+Right
-                  ; [:##m         :left_arrow]          ; e -> m    Left
-                  ; [:##comma     :right_arrow]         ; e -> ,    Right
-                ; ]
-         ; }
-
-        ; {:des "w-mode = e-mode + SHIFT (i.e. selection, not just movement)"
-         ; :rules [:w-mode
-                  ; [:##u         :!Sleft_arrow]         ; w -> u    Shift+Left
-                  ; [:##i         :!Sright_arrow]        ; w -> i    Shift+Right
-                  ; [:##j         :!SOleft_arrow]        ; w -> j    Shift+Opt+Left
-                  ; [:##k         :!SOright_arrow]       ; w -> k    Shift+Opt+Right
-                  ; [:##h         :!SCleft_arrow]        ; w -> h    Shift+Cmd+Left
-                  ; [:##l         :!SCright_arrow]       ; w -> l    Shift+Cmd+Right
-                  ; [:##m         :!Sleft_arrow]         ; w -> m    Shift+Left
-                  ; [:##comma     :!Sright_arrow]        ; w -> ,    Shift+Right
-                ; ]
-         ; }
-
-        ; {:des "q-mode for general shortcuts like browser tab navigation"
-         ; :rules [:q-mode
-                  ; [:##j :!CSopen_bracket]  ; q -> j    tab to the left:  Cmd-{
-                  ; [:##k :!CSclose_bracket] ; q -> k    tab to the right: Cmd-}
-                  ; [:##l :!TCf           ]  ; q -> l    toggle full screen: ^⌘F
-                  ; [:##u :!Cclose_bracket]  ; q -> u    browser back:     Cmd-[
-                  ; [:##i :!Cclose_bracket]  ; q -> i    browser forward:  Cmd-]
-                  ; [:##o :f2             ]  ; q -> o    F2 (useful in Excel)
-                  ; [:##p :f4             ]  ; q -> p    F4 (useful in Excel)
-                ; ]
-         ; }
-
-        ; {:des "c-mode for number pad"
-         ; :rules [:c-mode
-                 ; [:u :7]
-                 ; [:i :8]
-                 ; [:o :9]
-                 ; [:j :4]
-                 ; [:k :5]
-                 ; [:l :6]
-                 ; [:m :1]
-                 ; [:comma :2]
-                 ; [:period :3]
-                 ; [:spacebar :0]
-                 ; [:p :!Sequal_sign]
-                 ; [:semicolon :hyphen]
-                 ; [:slash :return_or_enter]
-                 ; [:y :delete_or_backspace]
-                 ; [:h :period]
-                 ; [:n :0]
+                 ; [:q :!S1]
+                 ; [:w :!S2]
+                 ; [:e :!S3]
+                 ; [:r :!S4]
+                 ; [:t :!S5]
+                 ; [:y :!S6]
+                 ; [:u :!S7]
+                 ; [:i :!S8]
+                 ; [:a :1]
+                 ; [:s :2]
+                 ; [:d :3]
+                 ; [:f :4]
+                 ; [:g :5]
+                 ; [:h :6]
+                 ; [:j :7]
+                 ; [:k :8]
+                 ; [:l :9]
+                 ; [:semicolon :0]
+                 ; [:z :grave_accent_and_tilde]
+                 ; [:x :!Sgrave_accent_and_tilde]
+                 ; [:c :!Shyphen]
+                 ; [:v :hyphen]
+                 ; [:b :!CTq]
+                 ; [:n :!Sequal_sign]
+                 ; [:m :equal_sign]
+                 ; [:comma :!Sbackslash]
+                 ; [:period :backslash]
                 ; ]
         ; }
-
-        ; {:des "c-mode for remaining symbols ^ | \\ _ @"
-         ; :rules [:c-mode
-                 ; [:##u :!S6]
-                 ; [:##j :!Sbackslash]
-                 ; [:##k :!S2]
-                 ; [:##m :backslash]
-                 ; [:##comma :!Shyphen]
-                ; ]
-        ; }
-
-; {
-         ; :des "launch mode: quick launch applications"
-         ; :rules [
-                 ; :launch-mode                                      ;; when open-mode is active (o is held)
-                 ; [:t [:open-app "terminal"]]                   ;; and t is pressed, open Terminal
-                 ; [:f [:open-app "finder"]]                     ;; and f is pressed, open Finder
-                 ; [:d [:open "/users/anan/Desktop"]]         ;; and d is pressed, open the Desktop in finder
-                 ; ]
-         ; }
         ]}
