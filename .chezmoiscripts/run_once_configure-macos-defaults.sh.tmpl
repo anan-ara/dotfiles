@@ -1,0 +1,43 @@
+#!/bin/bash
+# Applies the settings declared in .chezmoidata/macos-defaults.yaml,
+# prompting for each one. Runs once per machine; editing this script (or
+# the settings list) makes it run again, since `defaults write` is
+# idempotent that's safe.
+{{ if eq .chezmoi.os "darwin" -}}
+set -euo pipefail
+
+__ask_mode=""  # "" = ask each time, "all" = accept rest, "none" = skip rest
+
+ask() {
+  local name="$1"
+  case "$__ask_mode" in
+    all) echo "==> $name"; return 0 ;;
+    none) return 1 ;;
+  esac
+  local reply
+  while true; do
+    printf '%s -- apply? [Y/n/a=all/q=skip rest] ' "$name"
+    read -r reply
+    case "$reply" in
+      ""|[Yy]*) return 0 ;;
+      [Nn]*) return 1 ;;
+      [Aa]*) __ask_mode="all"; echo "==> $name"; return 0 ;;
+      [Qq]*) __ask_mode="none"; return 1 ;;
+      *) echo "Please answer y, n, a, or q." >&2 ;;
+    esac
+  done
+}
+
+{{ range .macos_defaults }}
+if ask {{ .name | quote }}; then
+  {{ .command }}
+fi
+{{ end }}
+
+for app in Finder Dock SystemUIServer; do
+  killall "$app" &>/dev/null || true
+done
+
+echo "Log out and back in for scroll-direction/key-repeat changes to"
+echo "fully take effect everywhere."
+{{ end -}}
