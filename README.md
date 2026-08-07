@@ -225,6 +225,25 @@ Dracula colorscheme - manage it the same way you would any LazyVim install
 pre-installed; add extras (`clangd`, `pyright`, etc.) via the `spec` table in
 `lua/config/lazy.lua` as needed.
 
+**Adding language support:** `mason.nvim` (bundled with LazyVim) is the
+mechanism that installs LSP servers/formatters/linters, but it doesn't
+decide what to install for which filetype on its own - that's what a
+LazyVim extra does. Enable one per language with a line in
+`lua/config/lazy.lua`'s `spec` table:
+```lua
+{ import = "lazyvim.plugins.extras.lang.clangd" },
+{ import = "lazyvim.plugins.extras.lang.python" },
+```
+Confirm the exact extra name via `:LazyExtras` rather than assuming.
+Each extra usually bundles more than bare LSP (e.g. the Python one adds
+`nvim-dap-python` and a virtualenv picker, the Rust one swaps in
+`rustaceanvim`). Mason then auto-installs the actual server the first
+time you open a matching file - nothing to provision ahead of time.
+This only covers editor tooling (diagnostics/completion/formatting);
+actually running or debugging code still needs that language's own
+runtime on `$PATH` (a version manager, if you want one, is out of scope
+for this repo).
+
 On top of LazyVim's own defaults, `lua/config/keymaps.lua` adds only what
 LazyVim doesn't already provide: the same centered-search/`Ctrl-\`/`Tab`/`:W`
 remaps as `dot_vimrc`, kept in sync so muscle memory transfers between the two.
