@@ -1,8 +1,3 @@
-# Order matters: plugins.zsh (brew shellenv, bindkey, autosuggestions) must
-# run early; syntax-highlighting at the bottom of this file must run
-# strictly last (its own hard requirement) -- so it stays inline here
-# rather than in a file, since extracting it wouldn't change that
-# constraint, only add an extra hop for no benefit.
 source "${0:h}/plugins.zsh"
 
 # GNU coreutils ahead of the BSD ones on PATH -- needs brew shellenv from
@@ -21,14 +16,3 @@ source "${0:h}/prompt.zsh"
 source "${0:h}/completion.zsh"
 source "${0:h}/options.zsh"
 source "${0:h}/commands.zsh"
-
-# Syntax highlighting must be sourced last.
-_plugin_found=""
-for _plugin_path in \
-    "$(brew --prefix 2>/dev/null)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
-    /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-    /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
-  [[ -f "$_plugin_path" ]] && source "$_plugin_path" && _plugin_found=1 && break
-done
-[[ -z "$_plugin_found" ]] && echo "zsh: zsh-syntax-highlighting not found -- syntax highlighting disabled" >&2
-unset _plugin_path _plugin_found
