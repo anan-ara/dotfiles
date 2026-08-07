@@ -192,8 +192,7 @@ A couple of extra commands live in `dot_zsh/commands.zsh`:
 - `y` - wraps `yazi`; quitting it `cd`s your shell to wherever you navigated
   (unlike running `yazi` directly). Also bound to `Ctrl-o`.
 
-`$LS_COLORS` is a hardcoded Dracula palette (originally generated with `vivid
-generate dracula`, then pasted in directly to avoid a runtime dependency), and
+`$LS_COLORS` is generated at shell startup with `vivid generate dracula`, and
 on macOS, GNU coreutils take priority over the BSD ones on `$PATH`.
 
 ### git
@@ -314,10 +313,9 @@ the theme. Switching to a different colorscheme means editing all of these:
 
 - **Ghostty** - `dot_config/ghostty/config`: `theme = Dracula` (any
   Ghostty-bundled theme name works; `ghostty +list-themes` lists them).
-- **zsh `$LS_COLORS`** - `dot_zsh/base.zsh`: it's a hardcoded string, not
-  generated at runtime. Regenerate it with `vivid generate <theme>` (any name
-  from `vivid themes` - `vivid` itself doesn't need to stay installed
-  afterward) and paste the output back in.
+- **zsh `$LS_COLORS`** - `dot_zsh/base.zsh`: change the theme name passed to
+  `vivid generate <theme>` (any name from `vivid themes`) - generated fresh
+  at every shell startup, nothing to paste back in.
 - **Neovim** - `dot_config/nvim/lua/plugins/colorscheme.lua`: swap the
   `Mofiqul/dracula.nvim` plugin spec for a different colorscheme plugin, and
   update LazyVim's `opts.colorscheme` to match.

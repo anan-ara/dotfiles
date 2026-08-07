@@ -14,6 +14,7 @@ packages:
       - ripgrep
       - fd
       - herdr
+      - vivid
   darwin:
     brews:
       - coreutils
