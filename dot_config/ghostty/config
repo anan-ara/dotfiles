@@ -9,6 +9,10 @@ theme = Dracula
 macos-titlebar-style = hidden
 bell-features = no-system,no-audio,no-attention,no-title,no-border
 
+# No "are you sure?" prompt when closing a surface/quitting with a
+# process still running.
+confirm-close-surface = false
+
 # Make Option act as Alt/Meta for everything (readline word-jump, etc.)
 macos-option-as-alt = true
 

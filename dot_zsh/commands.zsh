@@ -1,4 +1,5 @@
 alias lg=lazygit
+alias h=herdr
 
 # Official yazi shell wrapper (https://yazi-rs.github.io/docs/quick-start),
 # so quitting yazi changes the shell's cwd to wherever you navigated.

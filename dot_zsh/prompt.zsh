@@ -4,7 +4,7 @@ setopt PROMPT_SUBST
 
 # SSH_CONNECTION can't change mid-session -- compute this once, not per-prompt.
 if [[ -n "$SSH_CONNECTION" ]]; then
-  _prompt_user_host='%F{magenta}%n@%m%f '
+  _prompt_user_host='%F{magenta}%n@%m%f%F{white}:%f'
 else
   _prompt_user_host=''
 fi

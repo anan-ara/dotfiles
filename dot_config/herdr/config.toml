@@ -1,5 +1,7 @@
 [ui]
 pane_gaps = false
+# Create tabs immediately with generated names, no name prompt.
+prompt_new_tab_name = false
 
 [keys]
 # tmux uses prefix+d for detach; herdr's own default is prefix+q. Keep both.
