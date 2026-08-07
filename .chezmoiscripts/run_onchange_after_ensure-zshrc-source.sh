@@ -1,0 +1,14 @@
+#!/bin/bash
+# create_dot_zshrc only writes ~/.zshrc if it doesn't already exist, so a
+# machine that already had one before chezmoi ever ran would never get
+# wired up. Runs after all target files are applied (so a freshly
+# create_d ~/.zshrc already exists by the time this checks it) and is
+# idempotent, so it's harmless whichever case applies.
+set -euo pipefail
+
+line='source ~/.zsh/base.zsh'
+zshrc="$HOME/.zshrc"
+
+if [[ -f "$zshrc" ]] && ! grep -qF "$line" "$zshrc"; then
+  printf '\n%s\n' "$line" >> "$zshrc"
+fi

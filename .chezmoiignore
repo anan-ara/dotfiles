@@ -1,5 +1,6 @@
 # Loose reference-only files, not managed by chezmoi
 *.md
+install.sh
 
 # Profile split: darwin = Mac (full GUI), linux = headless server (CLI-only)
 {{- if ne .chezmoi.os "darwin" }}
