@@ -1,0 +1,140 @@
+#!/bin/bash
+# Installs the packages declared in .chezmoidata/packages.yaml, prompting
+# for each one. Only re-runs when that file's content changes (chezmoi's
+# run_onchange_ hash), not on every `chezmoi apply`.
+set -euo pipefail
+
+__ask_mode=""  # "" = ask each time, "all" = accept rest, "none" = skip rest
+
+ask() {
+  local name="$1"
+  case "$__ask_mode" in
+    all) echo "==> $name"; return 0 ;;
+    none) return 1 ;;
+  esac
+  local reply
+  while true; do
+    printf '%s -- install? [Y/n/a=all/q=skip rest] ' "$name"
+    read -r reply
+    case "$reply" in
+      ""|[Yy]*) return 0 ;;
+      [Nn]*) return 1 ;;
+      [Aa]*) __ask_mode="all"; echo "==> $name"; return 0 ;;
+      [Qq]*) __ask_mode="none"; return 1 ;;
+      *) echo "Please answer y, n, a, or q." >&2 ;;
+    esac
+  done
+}
+
+common_brews=(
+{{ range .packages.common.brews -}}
+  "{{ . }}"
+{{ end -}}
+)
+
+{{ if eq .chezmoi.os "darwin" -}}
+# --- darwin: Homebrew is the norm here, no confirmation needed ---
+
+darwin_brews=(
+{{ range .packages.darwin.brews -}}
+  "{{ . }}"
+{{ end -}}
+)
+darwin_casks=(
+{{ range .packages.darwin.casks -}}
+  "{{ . }}"
+{{ end -}}
+)
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(brew shellenv)"
+
+if ! xcode-select -p >/dev/null 2>&1; then
+  echo "Installing Xcode Command Line Tools..."
+  xcode-select --install
+fi
+
+for formula in "${common_brews[@]}" "${darwin_brews[@]}"; do
+  if ask "$formula"; then
+    brew install "$formula"
+  fi
+done
+for cask in "${darwin_casks[@]}"; do
+  if ask "$cask"; then
+    brew install --cask "$cask"
+  fi
+done
+
+{{ else if eq .chezmoi.os "linux" -}}
+# --- linux ---
+
+# formula name -> binary name, for the few that differ
+bin_name() {
+  case "$1" in
+    git-delta) echo delta ;;
+    ripgrep) echo rg ;;
+    *) echo "$1" ;;
+  esac
+}
+
+install_common() {
+  for formula in "${common_brews[@]}"; do
+    if ask "$formula"; then
+      brew install "$formula"
+    fi
+  done
+}
+
+if command -v brew >/dev/null 2>&1; then
+  install_common
+elif [ -d /home/linuxbrew/.linuxbrew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  install_common
+else
+  echo "This will install Homebrew (Linuxbrew) to /home/linuxbrew/.linuxbrew,"
+  echo "using sudo once, to install: ${common_brews[*]}"
+  printf "Proceed? [y/N] "
+  read -r reply
+  if [[ "$reply" =~ ^[Yy]$ ]]; then
+    if command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get update
+      sudo apt-get install -y build-essential procps curl file git
+    elif command -v dnf >/dev/null 2>&1; then
+      sudo dnf group install -y development-tools
+      sudo dnf install -y procps-ng curl file git
+    elif command -v pacman >/dev/null 2>&1; then
+      sudo pacman -Sy --needed --noconfirm base-devel procps-ng curl file git
+    else
+      echo "Could not detect apt-get/dnf/pacman -- install Homebrew's" >&2
+      echo "build prerequisites manually (see docs.brew.sh/Homebrew-on-Linux)" >&2
+      echo "and re-run." >&2
+      exit 1
+    fi
+
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    install_common
+  else
+    echo "Skipping Homebrew. Checking what's already on \$PATH:"
+    echo
+    for formula in "${common_brews[@]}"; do
+      case "$formula" in
+        zsh-autosuggestions|zsh-syntax-highlighting) continue ;;
+      esac
+      bin="$(bin_name "$formula")"
+      if command -v "$bin" >/dev/null 2>&1; then
+        echo "  ok      $formula"
+      else
+        echo "  missing $formula"
+      fi
+    done
+    echo
+    echo "zsh-autosuggestions/zsh-syntax-highlighting aren't standalone"
+    echo "binaries -- dot_zsh/plugins.zsh and base.zsh already check the"
+    echo "common install paths for these directly."
+  fi
+fi
+{{ end -}}

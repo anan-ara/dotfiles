@@ -1,0 +1,25 @@
+packages:
+  common:
+    brews:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - lazygit
+      - git-delta
+      - yazi
+      - eza
+      - bat
+      - fzf
+      - zoxide
+      - neovim
+      - ripgrep
+      - fd
+      - herdr
+  darwin:
+    brews:
+      - coreutils
+    casks:
+      - font-hack-nerd-font
+      - ghostty
+      - karabiner-elements
+      - goku
+      - arc
