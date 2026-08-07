@@ -1,0 +1,10 @@
+# Default Apps
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+{{- if eq .chezmoi.os "darwin" }}
+export BROWSER="open -a Arc"
+{{- end }}
+
+# Add my scripts
+export PATH="$HOME/.local/bin:$PATH"

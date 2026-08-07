@@ -1,0 +1,10 @@
+# This file is chezmoi-managed with `create_` semantics: chezmoi writes it
+# once if ~/.zshrc doesn't exist yet, then never touches it again. That
+# means tool installers (nvm, pyenv, rbenv, homebrew, etc.) can freely
+# append their init lines below this without chezmoi ever overwriting them
+# and without any of that noise ending up tracked in git.
+#
+# The actual curated config lives in ~/.zsh/base.zsh (tracked, edited via
+# `chezmoi edit`). Keep this file itself minimal.
+
+source ~/.zsh/base.zsh
