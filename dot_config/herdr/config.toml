@@ -1,0 +1,18 @@
+[ui]
+pane_gaps = false
+
+[keys]
+# tmux uses prefix+d for detach; herdr's own default is prefix+q. Keep both.
+detach = ["prefix+q", "prefix+d"]
+# tmux's actual last-pane binding (select-pane -l), plus the Ctrl-\ this
+# used to be, matching dot_vimrc/keymaps.lua's own last-buffer binding.
+last_pane = ["prefix+;", "prefix+\\"]
+# herdr's own prefix+v/prefix+minus, alongside tmux's split bindings
+split_vertical = ["prefix+v", "prefix+%"]
+split_horizontal = ["prefix+minus", "prefix+quote"]
+# Cmd+1-9 sent directly (bypassing the prefix) -- see dot_config/ghostty/config
+# for why this needs a raw CSI u keybind instead of the usual prefix+key text.
+switch_tab = ["prefix+1..9", "cmd+1..9"]
+
+[theme]
+name = "dracula"
