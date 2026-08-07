@@ -1,0 +1,8 @@
+# Loose reference-only files, not managed by chezmoi
+*.md
+
+# Profile split: darwin = Mac (full GUI), linux = headless server (CLI-only)
+{{- if ne .chezmoi.os "darwin" }}
+.config/karabiner.edn
+.config/ghostty
+{{- end }}

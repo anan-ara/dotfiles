@@ -1,6 +1,6 @@
-shell/.config/zsh/.zinit
 *conda.zsh
-fcitx/*
 .zcompdump*
 fish_variables
-lazy-lock.json
+.DS_Store
+NOTES.md
+TODO.md
