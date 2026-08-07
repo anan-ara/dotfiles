@@ -1,0 +1,13 @@
+[user]
+    name  = {{ .name }}
+    email = {{ .email }}
+[core]
+    excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+    pager = delta
+[init]
+    defaultBranch = main
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+    line-numbers = true
