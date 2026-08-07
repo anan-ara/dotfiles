@@ -1,0 +1,67 @@
+# Appearance
+font-family = "Hack Nerd Font"
+font-size = 12
+cursor-style-blink = true
+window-padding-x = 5
+window-padding-y = 5
+theme = Dracula
+# Hide the titlebar (and its tab bar) while keeping native window borders.
+macos-titlebar-style = hidden
+bell-features = no-system,no-audio,no-attention,no-title,no-border
+
+# Make Option act as Alt/Meta for everything (readline word-jump, etc.)
+macos-option-as-alt = true
+
+# --- herdr integration: Cmd+key sends herdr's prefix (Ctrl-b, \x02) + key,
+# so herdr can be driven without pressing the prefix key first. ---
+
+# Pane navigation (fills the gap left by dropping vim-tmux-navigator)
+keybind = cmd+h=text:\x02h
+keybind = cmd+j=text:\x02j
+keybind = cmd+k=text:\x02k
+keybind = cmd+l=text:\x02l
+
+# Pane swapping (herdr default: prefix+shift+h/j/k/l)
+keybind = cmd+shift+h=text:\x02H
+keybind = cmd+shift+j=text:\x02J
+keybind = cmd+shift+k=text:\x02K
+keybind = cmd+shift+l=text:\x02L
+
+# Last-focused pane (herdr: prefix+\, bound via dot_config/herdr/config.toml
+# since it has no default key)
+keybind = cmd+backslash=text:\x02\\
+
+# Splits
+keybind = cmd+d=text:\x02v
+keybind = cmd+shift+d=text:\x02-
+
+# Tabs
+keybind = cmd+t=text:\x02c
+keybind = cmd+w=text:\x02x
+keybind = cmd+shift+]=text:\x02n
+keybind = cmd+shift+[=text:\x02p
+keybind = cmd+,=text:\x02T
+
+# Misc.
+keybind = cmd+z=text:\x02z           # Zoom
+keybind = cmd+g=text:\x02g           # Goto picker
+keybind = cmd+shift+w=text:\x02w     # Workspace nav
+keybind = cmd+[=text:\x02[           # Copy mode
+
+# Jump to tab 1-9 -- Ghostty has a hardcoded Cmd+1-9 default (switch its own
+# native tab N) that wins over a plain `text:` keybind override whenever
+# there's only one real Ghostty tab (herdr owns tabs here instead), so a
+# `text:` override here would silently no-op. Sending a raw CSI u sequence
+# instead (modifier 9 = Cmd/Super) bypasses Ghostty's own action dispatch
+# entirely; herdr's own `switch_tab` binding is extended (see
+# dot_config/herdr/config.toml) to recognize "cmd+1..9" directly.
+keybind = command+digit_1=csi:49;9u
+keybind = command+digit_2=csi:50;9u
+keybind = command+digit_3=csi:51;9u
+keybind = command+digit_4=csi:52;9u
+keybind = command+digit_5=csi:53;9u
+keybind = command+digit_6=csi:54;9u
+keybind = command+digit_7=csi:55;9u
+keybind = command+digit_8=csi:56;9u
+keybind = command+digit_9=csi:57;9u
+keybind = command+digit_0=csi:48;9u
