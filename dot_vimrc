@@ -1,0 +1,223 @@
+" --- DEFAULTS.VIM ---
+" Everything below mirrors a line from vim's own bundled defaults.vim
+" (share/vim/vim91/defaults.vim), which only loads automatically when NO
+" vimrc is found -- once this file exists, defaults.vim never runs, so
+" anything from it worth keeping has to be repeated here. ('compatible'
+" itself needs no line -- vim unsets it automatically the moment any vimrc,
+" including this one, is found.)
+
+set ttimeout        " Time out on terminal key codes (e.g. Esc-prefixed escape sequences) separately from mappings
+set ttimeoutlen=100 " Milliseconds to wait for a terminal key code to complete -- pairs with tm=500 under Timing
+
+set display=truncate " Show "@@@" on a truncated last line instead of filling the screen with @
+
+set scrolloff=5 " Keep 5 lines of context above/below the cursor
+
+set incsearch " Jump to the first match as you type a search
+
+set nrformats-=octal " Ctrl-A/Ctrl-X treat a zero-padded number like 007 as decimal, not octal
+
+" Redirect the rarely-wanted Ex mode (Q) to text formatting (gq) instead
+map Q gq
+sunmap Q
+
+" Let Ctrl-U in insert mode (delete to start of line) be undone on its own,
+" instead of merging with whatever was typed before it
+inoremap <C-U> <C-G>u<C-U>
+
+" Full mouse support (click/scroll/resize) needs the terminal to speak the
+" xterm mouse-reporting protocol -- assume that's true for anything
+" xterm-like ($TERM check), fall back to excluding command-line mode
+" (mouse=nvi) on an unfamiliar terminal that might not handle it correctly
+if &term =~ 'xterm'
+  set mouse=a
+else
+  set mouse=nvi
+endif
+
+" Highlight syntax and load per-filetype indent/plugin settings
+syntax on
+filetype plugin indent on
+
+" Jump to the last cursor position when reopening a file -- unlike the
+" simpler version this replaced, this skips commit messages, xxd/gitrebase/
+" tutor buffers, and diff mode, and restores the exact column, not just the
+" line
+augroup vimStartup
+  autocmd!
+  autocmd BufReadPost *
+    \ let line = line("'\"")
+    \ | if line >= 1 && line <= line("$") && &filetype !~# 'commit'
+    \      && index(['xxd', 'gitrebase', 'tutor'], &filetype) == -1
+    \      && !&diff
+    \ |   execute "normal! g`\""
+    \ | endif
+augroup END
+
+" :DiffOrig compares the buffer against the on-disk version it was loaded from
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+endif
+
+" -- APPEARANCE --
+set background=dark " (vim's own default is "light", which fights a dark terminal)
+set termguicolors " Enable 24-bit RGB color in the terminal
+
+" Make sure cursor shape is always correct
+" This is a problem on some terminals
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+
+" -- DISPLAY --
+set number        " Show current line number
+set showcmd       " Show partially-typed commands in the bottom right
+set laststatus=2  " Always show the statusbar
+set showmatch     " Show matching brackets when text indicator is over them
+set mat=2         " How many tenths of a second to blink when matching brackets
+
+" -- SEARCH --
+set hlsearch    " Highlight all matches of the last search
+set ignorecase  " Case insensitive searching (specify lower with \c)
+set smartcase   " If upper case in string, case sensitive
+
+" -- EDITING --
+set linebreak     " Wrap long lines at word boundaries, not mid-word
+set hidden        " Hide unused buffers
+set confirm       " Prompt to save instead of erroring on :q with unsaved changes
+set iskeyword+=-  " Interpret asdf-asdf as one word
+
+" Use the system clipboard for unnamed-register yank/paste, per-OS register name
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed " OSX
+else
+  set clipboard=unnamedplus " Linux
+endif
+
+" -- INDENT --
+set expandtab       " Tab key inserts spaces, not a literal tab character
+set tabstop=4       " A tab character displays as 4 columns
+set shiftwidth=4    " >>/<</autoindent use 4 columns per step
+set softtabstop=4   " Tab/Backspace also act on 4 columns at a time
+
+" Detect whether the file being opened already uses tabs or spaces for
+" indentation and follow that instead of the expandtab default above -- a
+" small plugin-free stand-in for tpope/vim-sleuth (used on the nvim side,
+" dot_config/nvim/init.lua). Width isn't detected, only tabs-vs-spaces.
+function! DetectIndentStyle()
+  let l:tabs = 0
+  let l:spaces = 0
+  for l:lnum in range(1, min([line('$'), 500]))
+    let l:line = getline(l:lnum)
+    if l:line =~ '^\t'
+      let l:tabs += 1
+    elseif l:line =~ '^ '
+      let l:spaces += 1
+    endif
+  endfor
+  if l:tabs > l:spaces
+    setlocal noexpandtab
+  elseif l:spaces > l:tabs
+    setlocal expandtab
+  endif
+endfunction
+
+autocmd BufReadPost * call DetectIndentStyle()
+
+" -- PROSE WRAPPING --
+" Wrap prose at 79 columns as you type, with a highlighted column marking
+" the limit -- scoped to filetypes where hard-wrapping text is wanted.
+" Left off everywhere else, since auto-breaking a line while typing code
+" is almost never wanted.
+augroup proseWrap
+  autocmd!
+  autocmd FileType markdown,text,gitcommit setlocal textwidth=79 colorcolumn=+1
+augroup END
+
+" -- FOLDING --
+set foldmethod=indent  " Fold based on indentation level
+set foldlevel=99       " Start with all folds open
+
+" -- WINDOWS --
+set splitright  " Vertical splits open to the right
+set splitbelow  " Horizontal splits open below
+
+" -- COMPLETION --
+set wildignorecase              " Command-line completion ignores case (e.g. :e READ<Tab>)
+set wildmode=list:longest,full  " List all matches, complete to longest common prefix, then cycle
+set path+=**                    " recursive :find completion -- a no-plugin stand-in for fuzzy file finding
+
+" -- FILES --
+
+" Turn backup off, since most stuff is in SVN, git etc. anyway...
+set nobackup       " Don't keep a backup file after overwriting a file
+set noswapfile     " Don't create a swap file (no crash recovery, but no clutter on machines you don't own)
+set nowritebackup  " Don't make a backup before overwriting a file during a write
+
+let g:netrw_dirhistmax=0 " stop netrwhist from getting generated
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * checktime
+
+" -- TIMING --
+set lazyredraw  " Don't redraw while executing macros (good performance config)
+set belloff=all " No annoying sound on errors
+
+" Milliseconds to wait for a multi-key mapping (e.g. leader sequences) to
+" complete -- pairs with ttimeout/ttimeoutlen under DEFAULTS.VIM, which
+" governs terminal key codes separately so Esc doesn't share this delay
+set tm=500
+
+" --- STANDARD REMAPS ---
+" Widely-recommended fixes for known vim quirks/gaps -- the kind of thing
+" you'd find in most "essential vimrc" write-ups, not specific to how I work.
+
+" make Y effect to end of line instead of whole line
+noremap Y y$
+
+" Make navigating wrapped lines the same as normal
+noremap <silent> k gk
+noremap <silent> j gj
+noremap <silent> gk k
+noremap <silent> gj j
+
+" Move between splits without the <C-w> prefix
+noremap <silent> <C-h> <C-w>h
+noremap <silent> <C-j> <C-w>j
+noremap <silent> <C-k> <C-w>k
+noremap <silent> <C-l> <C-w>l
+
+" Keep search matches and half-page jumps centered on screen
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Move the selected lines up/down, reselecting and re-indenting afterward
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" stay in indenting mode
+vnoremap <silent> < <gv
+vnoremap <silent> > >gv
+
+" This unsets the "last search pattern" register by hitting escape (matches
+" LazyVim's own default -- also un-shadows <CR>'s real behavior, which Esc
+" has no meaningful default to lose in Normal mode)
+nnoremap <silent> <Esc> :noh<CR>
+
+" :W to save a file that needs root, without leaving vim or losing changes
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+" --- PERSONAL REMAPS ---
+" My own workflow/ergonomic preferences -- less universal, specific to me.
+
+" Tab to jump to matching element
+noremap <silent> <Tab> %
+
+" Ctrl + \ to switch to last buffer (not Ctrl-S -- that's Save File on the
+" nvim/LazyVim side now, keeping both configs consistent on this one)
+noremap <silent> <C-\> <C-6>
