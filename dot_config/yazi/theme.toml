@@ -1,0 +1,21 @@
+# Default theme uses rounded Nerd Font glyphs as separator caps around the
+# bottom status bar / mode indicator ("yazi-rs.github.io/docs/faq/#dont-like-nerd-fonts").
+# Empty them out for plain rectangular segments instead.
+[status]
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+# Same rounded-cap pattern applied to the tab bar's active/selected tab
+# (renders even with a single tab open) -- not covered by the FAQ's fix
+# above, but structurally identical, so the same treatment applies.
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+# This one wraps the hovered/current-row indicator (the actually
+# "selected item" in the file list) with the same open/close cap
+# pattern as the two above -- most likely culprit for rounded corners
+# on the selected row itself, since [indicator].current/parent are
+# otherwise just plain reversed-video with no glyphs of their own.
+[indicator]
+padding = { open = "▐", close = "▌" }

@@ -1,0 +1,12 @@
+# Default (wrap = "no") truncates long lines in the text previewer instead
+# of wrapping them. Only really noticeable when the preview pane has less
+# width to work with, e.g. inside a herdr pane rather than a full-width
+# standalone terminal -- long lines were getting cut off mid-line.
+[preview]
+wrap = "yes"
+
+# Parent:current:preview column widths. Filenames are rarely longer than
+# ~20 characters, so the current column doesn't need much room -- shift
+# more of it to the preview pane instead (yazi's own default is [1, 4, 3]).
+[mgr]
+ratio = [1, 2, 4]

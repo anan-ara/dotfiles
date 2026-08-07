@@ -1,0 +1,7 @@
+# "o" opens the hovered/selected file(s) with plain vim -- Enter still uses
+# the default opener ($EDITOR, nvim). --block hands the terminal over to
+# vim until it exits, same as any other blocking TUI opener.
+[[mgr.prepend_keymap]]
+on = "o"
+run = "shell --block -- vim %s"
+desc = "Open selected files with vim"
