@@ -6,9 +6,6 @@
 " itself needs no line -- vim unsets it automatically the moment any vimrc,
 " including this one, is found.)
 
-set ttimeout        " Time out on terminal key codes (e.g. Esc-prefixed escape sequences) separately from mappings
-set ttimeoutlen=100 " Milliseconds to wait for a terminal key code to complete -- pairs with tm=500 under Timing
-
 set display=truncate " Show "@@@" on a truncated last line instead of filling the screen with @
 
 set scrolloff=5 " Keep 5 lines of context above/below the cursor
@@ -165,11 +162,6 @@ au FocusGained,BufEnter * checktime
 " -- TIMING --
 set lazyredraw  " Don't redraw while executing macros (good performance config)
 set belloff=all " No annoying sound on errors
-
-" Milliseconds to wait for a multi-key mapping (e.g. leader sequences) to
-" complete -- pairs with ttimeout/ttimeoutlen under DEFAULTS.VIM, which
-" governs terminal key codes separately so Esc doesn't share this delay
-set tm=500
 
 " --- STANDARD REMAPS ---
 " Widely-recommended fixes for known vim quirks/gaps -- the kind of thing
