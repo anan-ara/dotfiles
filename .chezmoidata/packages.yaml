@@ -43,4 +43,5 @@ packages:
   karabiner:
     darwin_casks:
       - karabiner-elements
-      - goku
+    darwin_brews:
+      - yqrashawn/goku/goku
