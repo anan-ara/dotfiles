@@ -2,7 +2,9 @@
 
 Personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/). Covers zsh,
 git, vim/Neovim, Ghostty, herdr, Karabiner, lazygit, and yazi across a Mac (the
-primary machine) and a headless Linux server you SSH into.
+primary machine) and a headless Linux server you SSH into. Each app is
+individually opt-in, chosen with a yes/no prompt per app at setup time - see
+[Bootstrapping a new machine](#bootstrapping-a-new-machine).
 
 ## Contents
 
@@ -71,6 +73,13 @@ What's always fine, regardless of the above:
 
 If either answer is no, the config needs to get cut.
 
+Opting an app out entirely (see [Machine profiles](#repo-layout)) isn't a
+departure from this philosophy - it's the most literal version of it: an
+undeployed app is 100% stock, zero deviation. It does sharpen what "the SSH
+test" (question 1, above) means in practice - it's no longer guaranteed the
+full curated set is even present to fall back from, since a machine can now
+deliberately have none of it applied at all.
+
 ## Bootstrapping a new machine
 
 ```sh
@@ -86,19 +95,28 @@ installer, so it's covered by the same `brew upgrade` that covers everything
 else. On Linux, installing Homebrew needs `sudo` once, so `install.sh` asks
 for confirmation first, same as the package installer below - decline it and
 chezmoi falls back to its own self-contained installer (`~/.local/bin`,
-no `sudo`) instead. You'll be prompted once for your git name/email. Answers
-are written to `~/.config/chezmoi/chezmoi.toml`, outside this repo, so
-nothing personal ends up tracked in git.
+no `sudo`) instead. You'll be prompted once for your git name/email, then once
+per app (zsh, git, vim, Neovim, lazygit, yazi, herdr, general CLI tools, and -
+on darwin only - Ghostty and Karabiner) for whether to deploy its config and
+install its packages. Answers are written to `~/.config/chezmoi/chezmoi.toml`,
+outside this repo, so nothing personal ends up tracked in git, and re-running
+`chezmoi apply` later never re-prompts.
 
-On the Linux server, chezmoi's built-in `.chezmoi.os` detection handles the
-profile split automatically (see [Repo layout](#repo-layout)) - no extra flag
-or prompt needed.
+Declining an app skips both its dotfiles (via `.chezmoiignore`) and its
+packages (via `.chezmoidata/packages.yaml`) - see
+[Machine profiles](#repo-layout) and [Dependencies](#dependencies).
+
+On the Linux server, chezmoi's built-in `.chezmoi.os` detection still handles
+one layer of this automatically: Ghostty and Karabiner are only ever offered
+on darwin (Karabiner has no Linux build; Ghostty is darwin-only by policy
+here) - no extra flag or prompt needed for that part.
 
 If `~/.zshrc` already exists on the machine, `create_dot_zshrc`'s create-once
 semantics leave it alone rather than overwrite it - but a separate script
-(`run_onchange_after_ensure-zshrc-source.sh`) appends `source
+(`run_onchange_after_ensure-zshrc-source.sh.tmpl`) appends `source
 ~/.zsh/base.zsh` to it automatically if that line isn't already there, so the
-curated config still loads either way.
+curated config still loads either way. This only runs at all if the `zsh` app
+was selected; if you declined it, your existing `~/.zshrc` is left untouched.
 
 The tools each config assumes are present install automatically as part of
 `chezmoi apply` - see [Dependencies](#dependencies) (on Linux, this prompts
@@ -121,15 +139,15 @@ one tree; a file's name encodes where it ends up:
 
 ```
 ~/dotfiles/
-├── .chezmoiignore              # profile split logic (darwin vs linux), see below
-├── .chezmoi.toml.tmpl          # prompts that seed local, uncommitted machine data
+├── .chezmoiignore              # per-app opt-out, see Machine profiles below
+├── .chezmoi.toml.tmpl          # git name/email + per-app yes/no prompts
 ├── .chezmoidata/
-│   ├── packages.yaml           # declared external tools, see Dependencies below
+│   ├── packages.yaml           # declared external tools, keyed by app, see Dependencies below
 │   └── macos-defaults.yaml     # declared `defaults write` settings, see macOS defaults below
 ├── .chezmoiscripts/
-│   ├── run_onchange_install-packages.sh.tmpl        # installs packages.yaml's list
-│   ├── run_once_configure-macos-defaults.sh.tmpl    # applies macos-defaults.yaml, darwin only
-│   └── run_onchange_after_ensure-zshrc-source.sh    # wires up a pre-existing ~/.zshrc
+│   ├── run_onchange_install-packages.sh.tmpl          # installs packages.yaml's list for selected apps
+│   ├── run_once_configure-macos-defaults.sh.tmpl      # applies macos-defaults.yaml, darwin only
+│   └── run_onchange_after_ensure-zshrc-source.sh.tmpl # wires up a pre-existing ~/.zshrc, if zsh selected
 ├── install.sh                  # bootstrap wrapper, see above
 ├── create_dot_zshrc            → ~/.zshrc   (create-once; sources dot_zsh/base.zsh)
 ├── dot_zshenv.tmpl             → ~/.zshenv
@@ -148,10 +166,19 @@ one tree; a file's name encodes where it ends up:
 Anything listed in `.chezmoiignore` (`*.md` docs, `install.sh`) is inert -
 chezmoi never writes it anywhere.
 
-**Machine profiles.** There's no custom "machine type" prompt; chezmoi's
-built-in `.chezmoi.os` variable (`"darwin"` on the Mac, `"linux"` on the
-server) drives `.chezmoiignore` directly, currently gating `karabiner.edn` and
-the Ghostty config to darwin only. Everything else applies to both profiles.
+**Machine profiles.** Every app (zsh, git, vim, Neovim, lazygit, yazi, herdr,
+Ghostty, Karabiner, plus a packages-only `cli_tools` bucket for `eza`/`bat`/
+`fzf`/`zoxide`) gets its own yes/no prompt at `chezmoi init`, persisted under
+`.apps.*` in `~/.config/chezmoi/chezmoi.toml`; declining one makes
+`.chezmoiignore` skip its dotfiles and makes the package installer skip its
+packages. `.chezmoi.os` (`"darwin"`/`"linux"`, auto-detected) still sits
+underneath that as a hard constraint: Ghostty and Karabiner are only ever
+*offered* on darwin (Karabiner has no Linux build; Ghostty is darwin-only by
+this repo's policy, not a software limitation), so their prompts don't even
+fire on Linux. Two couplings worth knowing about: the Arc browser cask rides
+along with `zsh`'s darwin package list (it has no independent prompt, since
+its only use is `dot_zshenv.tmpl`'s `$BROWSER`), and `cli_tools` has no
+dotfile of its own - it's just a packages-only opt-in.
 
 ## Day-to-day workflow
 
@@ -182,6 +209,8 @@ else.
 
 ### zsh
 
+*Only deployed/installed if `zsh` was selected at `chezmoi init`.*
+
 Tab-completion opens an arrow-key-navigable, colorized menu (`menu-select`) and
 is case-insensitive. History is shared across all open sessions and
 deduplicated.
@@ -189,20 +218,37 @@ deduplicated.
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 
 - `lg` - alias for `lazygit`.
+- `h` - alias for `herdr`.
 - `y` - wraps `yazi`; quitting it `cd`s your shell to wherever you navigated
   (unlike running `yazi` directly). Also bound to `Ctrl-o`.
 
-`$LS_COLORS` is generated at shell startup with `vivid generate dracula`, and
-on macOS, GNU coreutils take priority over the BSD ones on `$PATH`.
+These aliases are unconditional - if you keep `zsh` but decline `lazygit`,
+`herdr`, or `yazi`, the corresponding alias/function stays defined but points
+at a binary that isn't installed. It only breaks when you actually invoke it
+(not at shell startup), so it's left as-is rather than templated per app.
+
+`$LS_COLORS` is generated at shell startup with `vivid generate dracula`
+(installed as part of the `zsh` app). On macOS, GNU coreutils taking priority
+over the BSD ones on `$PATH` is instead gated by the `cli_tools` app - see
+[CLI tools](#cli-tools-eza-bat-fzf-zoxide) below.
+
+`$EDITOR`/`$VISUAL` (set in `dot_zshenv.tmpl`) cascade with what's actually
+selected: `nvim` if `neovim` is enabled, else `vim` if `vim` is enabled, else
+the system `vi` - so they never point at a binary this repo didn't install.
 
 ### git
+
+*Only deployed/installed if `git` was selected at `chezmoi init`.*
 
 `~/.gitconfig` is templated (`dot_gitconfig.tmpl`) from the name/email given at
 `chezmoi init`. `core.excludesfile` points at `~/.gitignore_global`, which you
 bring yourself; it isn't tracked in this repo. Diffs (`git diff`/`log -p`/`add
--p`) render through `delta`.
+-p`) render through `delta`, which is also installed alongside `lazygit` if
+you select that app instead (or as well).
 
 ### vim (`dot_vimrc`)
+
+*Only deployed if `vim` was selected at `chezmoi init`.*
 
 Deliberately minimal and plugin-free - this is for a quick edit or an
 unfamiliar machine you've SSH'd into, not full-time editing (that's Neovim's
@@ -217,6 +263,8 @@ Personal remaps: `Tab` jumps to the matching bracket (`%`); `Ctrl-\` switches
 to the last buffer.
 
 ### Neovim (LazyVim)
+
+*Only deployed/installed if `neovim` was selected at `chezmoi init`.*
 
 Runs the stock [LazyVim](https://www.lazyvim.org/) distribution with the
 Dracula colorscheme - manage it the same way you would any LazyVim install
@@ -249,6 +297,9 @@ remaps as `dot_vimrc`, kept in sync so muscle memory transfers between the two.
 
 ### Ghostty (darwin only)
 
+*Only deployed/installed if `ghostty` was selected at `chezmoi init` (only
+offered on darwin - see [Machine profiles](#repo-layout)).*
+
 Dracula theme, Hack Nerd Font, hidden titlebar. `Cmd`+key sends herdr's prefix
 (`Ctrl-b`) followed by that key, so herdr can be driven without pressing the
 prefix first:
@@ -260,6 +311,8 @@ prefix first:
 - `Cmd-\` - jump to last pane
 
 ### herdr
+
+*Only deployed/installed if `herdr` was selected at `chezmoi init`.*
 
 Replaces tmux. `dot_config/herdr/config.toml` adds a handful of
 tmux-compatible keybindings alongside herdr's own defaults, rather than
@@ -275,6 +328,10 @@ Everything else is herdr's own defaults, driven with its `Ctrl-b` prefix
 directly or the Ghostty shortcuts above. Theme is herdr's built-in `dracula`.
 
 ### Karabiner (`dot_config/karabiner.edn`, darwin only)
+
+*Only deployed/installed if `karabiner` was selected at `chezmoi init` (only
+offered on darwin - Karabiner has no Linux build, see
+[Machine profiles](#repo-layout)).*
 
 Written in [goku](https://github.com/yqrashawn/GokuRakuJoudo)'s edn DSL, not
 raw Karabiner JSON. `goku` needs to be running to watch the file and recompile
@@ -296,14 +353,28 @@ for checking a change before it takes effect.
 
 ### lazygit
 
+*Only deployed/installed if `lazygit` was selected at `chezmoi init`.*
+
 Launch with the `lg` alias. Diffs render through `delta` instead of lazygit's
-plain built-in pager.
+plain built-in pager - `git-delta` installs alongside `lazygit` even if the
+`git` app itself is declined, since lazygit needs it independently.
 
 ### yazi
+
+*Only deployed/installed if `yazi` was selected at `chezmoi init`.*
 
 Launch with the `y` shell function (or `Ctrl-o`) rather than the bare `yazi`
 binary, so quitting it changes your shell's directory to wherever you
 navigated.
+
+### CLI tools (`eza`, `bat`, `fzf`, `zoxide`)
+
+*Installed only if `cli_tools` was selected at `chezmoi init`.*
+
+General-purpose interactive-shell upgrades with no dedicated config of their
+own, so there's no dotfile to opt in/out of - just the packages. On darwin,
+GNU `coreutils` installs alongside them so the GNU versions of standard
+utilities take priority over BSD's on `$PATH` (see the zsh section above).
 
 ## Changing the colorscheme
 
@@ -333,11 +404,14 @@ Ghostty's `theme` changes.
 
 ## Dependencies
 
-External tools are declared in `.chezmoidata/packages.yaml` and actually
-installed by `.chezmoiscripts/run_onchange_install-packages.sh.tmpl` as part of
-`chezmoi apply` - it only re-runs when the package list itself changes, not on
-every apply. It prompts once per package (`git add -p`-style: enter/y, n,
-a=accept the rest, q=skip the rest).
+External tools are declared in `.chezmoidata/packages.yaml`, keyed by app, and
+actually installed by `.chezmoiscripts/run_onchange_install-packages.sh.tmpl`
+as part of `chezmoi apply` - it only re-runs when the package list itself
+changes, not on every apply. Consent happens once, per app, at `chezmoi init`
+(see [Bootstrapping a new machine](#bootstrapping-a-new-machine)); a selected
+app's packages then install without any further per-package prompt. A package
+needed by more than one app (`git-delta`, needed by both `git` and `lazygit`)
+is deduplicated automatically, so selecting both doesn't install it twice.
 
 Both platforms install everything through Homebrew:
 
@@ -359,7 +433,8 @@ Both platforms install everything through Homebrew:
 `.chezmoidata/macos-defaults.yaml` declares a short list of `defaults write`
 system settings, applied once per machine by
 `.chezmoiscripts/run_once_configure-macos-defaults.sh.tmpl` (darwin only, no-op
-on linux) - same per-item interactive prompt as the package installer above.
+on linux) - unrelated to the per-app selection above, so it keeps its own
+per-item interactive prompt (enter/y, n, a=accept the rest, q=skip the rest).
 
 - Natural trackpad scroll direction off
 - No auto-rearranging Spaces

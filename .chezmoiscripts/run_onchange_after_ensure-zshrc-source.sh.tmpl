@@ -6,9 +6,11 @@
 # idempotent, so it's harmless whichever case applies.
 set -euo pipefail
 
+{{ if .apps.zsh -}}
 line='source ~/.zsh/base.zsh'
 zshrc="$HOME/.zshrc"
 
 if [[ -f "$zshrc" ]] && ! grep -qF "$line" "$zshrc"; then
   printf '\n%s\n' "$line" >> "$zshrc"
 fi
+{{ end -}}

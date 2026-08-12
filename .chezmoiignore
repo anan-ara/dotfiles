@@ -2,8 +2,36 @@
 *.md
 install.sh
 
-# Profile split: darwin = Mac (full GUI), linux = headless server (CLI-only)
-{{- if ne .chezmoi.os "darwin" }}
-.config/karabiner.edn
+# Per-app opt-out -- each app's dotfiles are skipped unless selected during
+# `chezmoi init` (see .chezmoi.toml.tmpl / .apps.*). Ghostty and Karabiner
+# prompts only fire on darwin, so .apps.ghostty/.apps.karabiner are always
+# false on Linux and those two blocks apply there unconditionally.
+{{- if not .apps.zsh }}
+.zsh
+.zshrc
+.zshenv
+{{- end }}
+{{- if not .apps.git }}
+.gitconfig
+{{- end }}
+{{- if not .apps.vim }}
+.vimrc
+{{- end }}
+{{- if not .apps.neovim }}
+.config/nvim
+{{- end }}
+{{- if not .apps.lazygit }}
+.config/lazygit
+{{- end }}
+{{- if not .apps.yazi }}
+.config/yazi
+{{- end }}
+{{- if not .apps.herdr }}
+.config/herdr
+{{- end }}
+{{- if not .apps.ghostty }}
 .config/ghostty
+{{- end }}
+{{- if not .apps.karabiner }}
+.config/karabiner.edn
 {{- end }}

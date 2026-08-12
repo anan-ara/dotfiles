@@ -1,6 +1,14 @@
 # Default Apps
+{{- if .apps.neovim }}
 export EDITOR="nvim"
 export VISUAL="nvim"
+{{- else if .apps.vim }}
+export EDITOR="vim"
+export VISUAL="vim"
+{{- else }}
+export EDITOR="vi"
+export VISUAL="vi"
+{{- end }}
 
 {{- if eq .chezmoi.os "darwin" }}
 export BROWSER="open -a Arc"

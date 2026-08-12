@@ -1,49 +1,43 @@
 #!/bin/bash
-# Installs the packages declared in .chezmoidata/packages.yaml, prompting
-# for each one. Only re-runs when that file's content changes (chezmoi's
-# run_onchange_ hash), not on every `chezmoi apply`.
+# Installs the packages declared in .chezmoidata/packages.yaml for whichever
+# apps were selected during `chezmoi init` (see .chezmoi.toml.tmpl / .apps.*).
+# Only re-runs when that file's content changes (chezmoi's run_onchange_
+# hash), not on every `chezmoi apply`.
 set -euo pipefail
 
-__ask_mode=""  # "" = ask each time, "all" = accept rest, "none" = skip rest
-
-ask() {
-  local name="$1"
-  case "$__ask_mode" in
-    all) echo "==> $name"; return 0 ;;
-    none) return 1 ;;
-  esac
-  local reply
-  while true; do
-    printf '%s -- install? [Y/n/a=all/q=skip rest] ' "$name"
-    read -r reply
-    case "$reply" in
-      ""|[Yy]*) return 0 ;;
-      [Nn]*) return 1 ;;
-      [Aa]*) __ask_mode="all"; echo "==> $name"; return 0 ;;
-      [Qq]*) __ask_mode="none"; return 1 ;;
-      *) echo "Please answer y, n, a, or q." >&2 ;;
-    esac
-  done
-}
-
-common_brews=(
-{{ range .packages.common.brews -}}
+{{ $brews := list -}}
+{{- $darwinBrews := list -}}
+{{- $darwinCasks := list -}}
+{{- range $app, $pkgs := .packages -}}
+{{- if index $.apps $app -}}
+{{/* index (not dot-access) so apps with no brews/darwin_brews/darwin_casks
+     key at all (e.g. vim: {}) don't trip chezmoi's missingkey=error */}}
+{{- range index $pkgs "brews" -}}{{- $brews = append $brews . -}}{{- end -}}
+{{- range index $pkgs "darwin_brews" -}}{{- $darwinBrews = append $darwinBrews . -}}{{- end -}}
+{{- range index $pkgs "darwin_casks" -}}{{- $darwinCasks = append $darwinCasks . -}}{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- $brews = $brews | uniq -}}
+{{- $darwinBrews = $darwinBrews | uniq -}}
+{{- $darwinCasks = $darwinCasks | uniq }}
+brews=(
+{{- range $brews }}
   "{{ . }}"
-{{ end -}}
+{{- end }}
 )
 
 {{ if eq .chezmoi.os "darwin" -}}
 # --- darwin: Homebrew is the norm here, no confirmation needed ---
 
 darwin_brews=(
-{{ range .packages.darwin.brews -}}
+{{- range $darwinBrews }}
   "{{ . }}"
-{{ end -}}
+{{- end }}
 )
 darwin_casks=(
-{{ range .packages.darwin.casks -}}
+{{- range $darwinCasks }}
   "{{ . }}"
-{{ end -}}
+{{- end }}
 )
 
 if ! command -v brew >/dev/null 2>&1; then
@@ -57,16 +51,19 @@ if ! xcode-select -p >/dev/null 2>&1; then
   xcode-select --install
 fi
 
-for formula in "${common_brews[@]}" "${darwin_brews[@]}"; do
-  if ask "$formula"; then
-    brew install "$formula"
-  fi
-done
-for cask in "${darwin_casks[@]}"; do
-  if ask "$cask"; then
-    brew install --cask "$cask"
-  fi
-done
+if [ "${#brews[@]}" -gt 0 ] || [ "${#darwin_brews[@]}" -gt 0 ]; then
+  # Either array alone can still be empty here (e.g. only a darwin-only app
+  # selected) -- the ${arr[@]+"${arr[@]}"} form expands to nothing for a
+  # genuinely empty array under `set -u`, unlike bare "${arr[@]}" which
+  # trips "unbound variable" on bash < 4.4 (macOS's stock /bin/bash).
+  brew install "${brews[@]+"${brews[@]}"}" "${darwin_brews[@]+"${darwin_brews[@]}"}"
+fi
+if [ "${#darwin_casks[@]}" -gt 0 ]; then
+  brew install --cask "${darwin_casks[@]}"
+fi
+if [ "${#brews[@]}" -eq 0 ] && [ "${#darwin_brews[@]}" -eq 0 ] && [ "${#darwin_casks[@]}" -eq 0 ]; then
+  echo "No apps selected with packages to install."
+fi
 
 {{ else if eq .chezmoi.os "linux" -}}
 # --- linux ---
@@ -81,11 +78,11 @@ bin_name() {
 }
 
 install_common() {
-  for formula in "${common_brews[@]}"; do
-    if ask "$formula"; then
-      brew install "$formula"
-    fi
-  done
+  if [ "${#brews[@]}" -gt 0 ]; then
+    brew install "${brews[@]}"
+  else
+    echo "No apps selected with packages to install."
+  fi
 }
 
 if command -v brew >/dev/null 2>&1; then
@@ -93,9 +90,11 @@ if command -v brew >/dev/null 2>&1; then
 elif [ -d /home/linuxbrew/.linuxbrew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   install_common
+elif [ "${#brews[@]}" -eq 0 ]; then
+  echo "No apps selected with packages to install."
 else
   echo "This will install Homebrew (Linuxbrew) to /home/linuxbrew/.linuxbrew,"
-  echo "using sudo once, to install: ${common_brews[*]}"
+  echo "using sudo once, to install: ${brews[*]}"
   printf "Proceed? [y/N] "
   read -r reply
   if [[ "$reply" =~ ^[Yy]$ ]]; then
@@ -120,7 +119,7 @@ else
   else
     echo "Skipping Homebrew. Checking what's already on \$PATH:"
     echo
-    for formula in "${common_brews[@]}"; do
+    for formula in "${brews[@]}"; do
       case "$formula" in
         zsh-autosuggestions|zsh-syntax-highlighting) continue ;;
       esac

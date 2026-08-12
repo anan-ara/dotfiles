@@ -1,26 +1,46 @@
+# Keyed by app -- each top-level key here must exactly match an `apps.*`
+# key prompted for in .chezmoi.toml.tmpl, since the install script matches
+# them by string equality with no validation.
 packages:
-  common:
+  zsh:
     brews:
       - zsh-autosuggestions
       - zsh-syntax-highlighting
-      - lazygit
+      - vivid
+    darwin_casks:
+      - arc # dot_zshenv.tmpl sets $BROWSER to Arc, darwin only
+  git:
+    brews:
       - git-delta
+  vim: {}
+  neovim:
+    brews:
+      - neovim
+      - ripgrep
+      - fd
+  lazygit:
+    brews:
+      - lazygit
+      - git-delta # shared with git, used as lazygit's diff pager too
+  yazi:
+    brews:
       - yazi
+  herdr:
+    brews:
+      - herdr
+  cli_tools:
+    brews:
       - eza
       - bat
       - fzf
       - zoxide
-      - neovim
-      - ripgrep
-      - fd
-      - herdr
-      - vivid
-  darwin:
-    brews:
+    darwin_brews:
       - coreutils
-    casks:
-      - font-hack-nerd-font
+  ghostty:
+    darwin_casks:
       - ghostty
+      - font-hack-nerd-font
+  karabiner:
+    darwin_casks:
       - karabiner-elements
       - goku
-      - arc
