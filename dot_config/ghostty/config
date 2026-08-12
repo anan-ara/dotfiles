@@ -46,11 +46,16 @@ keybind = cmd+shift+]=text:\x02n
 keybind = cmd+shift+[=text:\x02p
 keybind = cmd+,=text:\x02T
 
-# Misc.
-keybind = cmd+z=text:\x02z           # Zoom
-keybind = cmd+g=text:\x02g           # Goto picker
-keybind = cmd+shift+w=text:\x02w     # Workspace nav
-keybind = cmd+[=text:\x02[           # Copy mode
+# Misc. Comments must stay on their own line above, not trailing -- Ghostty's
+# config parser takes everything after `=` literally, trailing `#` included.
+# Zoom
+keybind = cmd+z=text:\x02z
+# Goto picker
+keybind = cmd+g=text:\x02g
+# Workspace nav
+keybind = cmd+shift+w=text:\x02w
+# Copy mode
+keybind = cmd+[=text:\x02[
 
 # Jump to tab 1-9 -- Ghostty has a hardcoded Cmd+1-9 default (switch its own
 # native tab N) that wins over a plain `text:` keybind override whenever
