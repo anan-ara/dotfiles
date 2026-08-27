@@ -2,11 +2,10 @@
 # highlighting instead of lazygit's plain default. Requires `delta`
 # (brew: git-delta) on PATH.
 git:
-  pagers:
+  diffRenderers:
     - name: delta
-      pager: delta --dark --paging=never
+      command: delta --dark --paging=never
       colorArg: always
-
 # Official Dracula theme (draculatheme.com/lazygit)
 gui:
   theme:
