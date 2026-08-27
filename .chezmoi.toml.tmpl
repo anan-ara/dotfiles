@@ -1,5 +1,5 @@
-{{- $email := promptStringOnce . "email" "Git commit email" "anan.ara2001@gmail.com" -}}
-{{- $name := promptStringOnce . "name" "Git commit name" "Anan A" -}}
+{{- $email := promptStringOnce . "email" "Git commit email" "" -}}
+{{- $name := promptStringOnce . "name" "Git commit name" "" -}}
 
 {{- $zsh      := promptBoolOnce . "apps.zsh"       "Deploy zsh config + zsh-autosuggestions/zsh-syntax-highlighting/vivid" true -}}
 {{- $git      := promptBoolOnce . "apps.git"       "Deploy git config + git-delta" true -}}
