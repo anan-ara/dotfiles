@@ -35,3 +35,7 @@ install.sh
 {{- if not .apps.karabiner }}
 .config/karabiner.edn
 {{- end }}
+{{- if not .apps.cli_tools }}
+.config/bat
+.config/eza
+{{- end }}

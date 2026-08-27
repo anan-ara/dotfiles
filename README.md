@@ -371,10 +371,12 @@ navigated.
 
 *Installed only if `cli_tools` was selected at `chezmoi init`.*
 
-General-purpose interactive-shell upgrades with no dedicated config of their
-own, so there's no dotfile to opt in/out of - just the packages. On darwin,
-GNU `coreutils` installs alongside them so the GNU versions of standard
-utilities take priority over BSD's on `$PATH` (see the zsh section above).
+General-purpose interactive-shell upgrades. `fzf` and `zoxide` have no
+dedicated config of their own; `bat` (`dot_config/bat/config`) and `eza`
+(`dot_config/eza/theme.yml`) are themed to Dracula to match the rest of the
+setup. On darwin, GNU `coreutils` installs alongside them so the GNU
+versions of standard utilities take priority over BSD's on `$PATH` (see the
+zsh section above).
 
 ## Changing the colorscheme
 
@@ -396,6 +398,11 @@ the theme. Switching to a different colorscheme means editing all of these:
   `vesper`; run `herdr --default-config` to see the current list).
 - **lazygit** - `dot_config/lazygit/config.yml`: the `gui.theme` block
   (official values from draculatheme.com/lazygit).
+- **bat** - `dot_config/bat/config`: the `--theme` line (any theme from
+  `bat --list-themes`).
+- **eza** - `dot_config/eza/theme.yml`: swap in a different theme's YAML
+  (official values from draculatheme.com/eza; more at
+  github.com/eza-community/eza-themes).
 
 One thing that doesn't need touching: **plain vim** has no Dracula-specific
 config of its own - it just inherits whatever ANSI palette the terminal
