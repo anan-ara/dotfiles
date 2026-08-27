@@ -1,3 +1,4 @@
+onboarding = false
 [ui]
 pane_gaps = false
 # Create tabs immediately with generated names, no name prompt.
