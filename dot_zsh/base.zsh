@@ -16,6 +16,13 @@ else
   echo "zsh: vivid not found -- \$LS_COLORS not set" >&2
 fi
 
+# GNU ls (unlike BSD/macOS's native ls) needs --color explicitly --
+# $LS_COLORS alone does nothing without it. Guarded on GNU specifically
+# (rather than assumed from darwin+coreutils) so this stays correct if
+# coreutils/cli_tools is ever deselected and ls falls back to the system
+# BSD one, which doesn't understand --color at all.
+ls --version 2>/dev/null | grep -q GNU && alias ls='ls --color=auto'
+
 source "${0:h}/prompt.zsh"
 source "${0:h}/completion.zsh"
 source "${0:h}/options.zsh"
