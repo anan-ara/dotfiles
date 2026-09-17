@@ -7,8 +7,14 @@ packages:
       - zsh-autosuggestions
       - zsh-syntax-highlighting
       - vivid
+      - starship
     darwin_casks:
       - arc
+  fish:
+    brews:
+      - fish
+      - vivid
+      - starship
   git:
     brews:
       - git-delta

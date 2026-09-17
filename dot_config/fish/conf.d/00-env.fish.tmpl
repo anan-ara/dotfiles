@@ -1,0 +1,45 @@
+# fish's PATH model persists custom entries into a universal variable
+# ($fish_user_paths) rather than recomputing from scratch every session
+# like zsh does
+
+# Add my scripts
+fish_add_path -p ~/.local/bin
+
+if test (uname) = Darwin
+    if test -x /opt/homebrew/bin/brew
+        eval (/opt/homebrew/bin/brew shellenv fish)
+    else if test -x /usr/local/bin/brew
+        eval (/usr/local/bin/brew shellenv fish)
+    end
+else if test -x /home/linuxbrew/.linuxbrew/bin/brew
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv fish)
+end
+
+# GNU coreutils ahead of the BSD ones on PATH.
+if test (uname) = Darwin
+    fish_add_path -p (brew --prefix)/opt/coreutils/libexec/gnubin
+end
+
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+
+if command -v vivid >/dev/null 2>&1
+    set -gx LS_COLORS (vivid generate dracula)
+end
+
+# Default Apps
+{{- if .apps.neovim }}
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+{{- else if .apps.vim }}
+set -gx EDITOR vim
+set -gx VISUAL vim
+{{- else }}
+set -gx EDITOR vi
+set -gx VISUAL vi
+{{- end }}
+
+{{- if eq .chezmoi.os "darwin" }}
+set -gx BROWSER "open -a Arc"
+{{- end }}
+
+set -g fish_greeting ''

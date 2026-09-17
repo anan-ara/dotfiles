@@ -96,9 +96,9 @@ else. On Linux, installing Homebrew needs `sudo` once, so `install.sh` asks
 for confirmation first, same as the package installer below - decline it and
 chezmoi falls back to its own self-contained installer (`~/.local/bin`,
 no `sudo`) instead. You'll be prompted once for your git name/email, then once
-per app (zsh, git, vim, Neovim, lazygit, yazi, herdr, general CLI tools, and -
-on darwin only - Ghostty and Karabiner) for whether to deploy its config and
-install its packages. Answers are written to `~/.config/chezmoi/chezmoi.toml`,
+per app (zsh, fish, git, vim, Neovim, lazygit, yazi, herdr, general CLI
+tools, and - on darwin only - Ghostty and Karabiner) for whether to deploy
+its config and install its packages. Answers are written to `~/.config/chezmoi/chezmoi.toml`,
 outside this repo, so nothing personal ends up tracked in git, and re-running
 `chezmoi apply` later never re-prompts.
 
@@ -160,25 +160,28 @@ one tree; a file's name encodes where it ends up:
     ├── herdr/
     ├── lazygit/
     ├── yazi/
+    ├── fish/                    # conf.d/ split: env, prompt, commands (secondary shell, not $SHELL)
     └── nvim/                    # LazyVim distro config
 ```
 
 Anything listed in `.chezmoiignore` (`*.md` docs, `install.sh`) is inert -
 chezmoi never writes it anywhere.
 
-**Machine profiles.** Every app (zsh, git, vim, Neovim, lazygit, yazi, herdr,
-Ghostty, Karabiner, plus a packages-only `cli_tools` bucket for `eza`/`bat`/
-`fzf`/`zoxide`) gets its own yes/no prompt at `chezmoi init`, persisted under
-`.apps.*` in `~/.config/chezmoi/chezmoi.toml`; declining one makes
-`.chezmoiignore` skip its dotfiles and makes the package installer skip its
-packages. `.chezmoi.os` (`"darwin"`/`"linux"`, auto-detected) still sits
-underneath that as a hard constraint: Ghostty and Karabiner are only ever
-*offered* on darwin (Karabiner has no Linux build; Ghostty is darwin-only by
-this repo's policy, not a software limitation), so their prompts don't even
-fire on Linux. Two couplings worth knowing about: the Arc browser cask rides
-along with `zsh`'s darwin package list (it has no independent prompt, since
-its only use is `dot_zshenv.tmpl`'s `$BROWSER`), and `cli_tools` has no
-dotfile of its own - it's just a packages-only opt-in.
+**Machine profiles.** Every app (zsh, fish, git, vim, Neovim, lazygit, yazi,
+herdr, Ghostty, Karabiner, plus a packages-only `cli_tools` bucket for
+`eza`/`bat`/`fzf`) gets its own yes/no prompt at `chezmoi init`,
+persisted under `.apps.*` in `~/.config/chezmoi/chezmoi.toml`; declining one
+makes `.chezmoiignore` skip its dotfiles and makes the package installer
+skip its packages. `.chezmoi.os` (`"darwin"`/`"linux"`, auto-detected) still
+sits underneath that as a hard constraint: Ghostty and Karabiner are only
+ever *offered* on darwin (Karabiner has no Linux build; Ghostty is
+darwin-only by this repo's policy, not a software limitation), so their
+prompts don't even fire on Linux. Couplings worth knowing about: the Arc
+browser cask rides along with `zsh`'s darwin package list (it has no
+independent prompt, since its only use is `dot_zshenv.tmpl`'s `$BROWSER`);
+`cli_tools` has no dotfile of its own - it's just a packages-only opt-in;
+and `fish` defaults to **false** (every other app defaults true) since it's
+a secondary shell you opt into deliberately, not a replacement for zsh.
 
 ## Day-to-day workflow
 
@@ -226,6 +229,12 @@ skipping unrelated ones in between - common in most curated zsh setups
 (oh-my-zsh, prezto) but not a stock zsh default, so also additive (both key
 variants some terminals send, `^[[A`/`^[OA` etc., are bound).
 
+The prompt is [starship](https://starship.rs) (`dot_config/starship.toml`,
+shared with fish below), not hand-coded: blue cwd truncated to 3 path
+components, green git branch with a yellow `*` for dirty tracked files,
+cyan venv name, a colored arrow that turns red on a nonzero exit status,
+and a magenta `user@host:` shown only when connected over SSH.
+
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 
 - `lg` - alias for `lazygit`.
@@ -269,6 +278,58 @@ the system `vi` - so they never point at a binary this repo didn't install.
   glyph, Dracula colors. A preview pane (`bat` for files, `eza --tree` for
   directories) is bound too, hidden by default and toggled with `?`.
   Ctrl-R gets its own bordered `History` label via `$FZF_CTRL_R_OPTS`.
+
+### fish
+
+*Only deployed/installed if `fish` was selected at `chezmoi init` - defaults
+to off.*
+
+A secondary shell, not a replacement for zsh: nothing here changes `$SHELL`
+or how Ghostty/herdr/SSH launch a shell, so this is purely "available to run
+manually when you want it." Config lives under `dot_config/fish/conf.d/`,
+auto-sourced by fish itself in alphabetical order (`00-env`, `10-prompt`,
+`15-fzf`, `20-commands`) - no orchestrator file needed the way zsh's
+`base.zsh` sources its pieces explicitly.
+
+It's a smaller config than zsh's for the same result, since fish natively
+does several things zsh needs a plugin or `setopt` for: autosuggestions,
+syntax highlighting, a colorized case-insensitive completion menu, and
+shared/deduplicated history all come for free. What's actually ported:
+Homebrew/coreutils/`~/.local/bin` on `$PATH` (same paths as zsh, same
+priority over the BSD system paths - relative order between coreutils and
+plain brew binaries can differ slightly since `brew shellenv fish` always
+claims the front, but there's no name collision between them so nothing
+actually resolves differently), `$LS_COLORS` via `vivid`, the
+`$XDG_CONFIG_HOME`/`$EDITOR`/`$VISUAL`/
+`$BROWSER` env vars from `dot_zshenv.tmpl`. The prompt is the same starship
+config as zsh's, above (`dot_config/starship.toml`). The `lg`/`h`/`y`
+aliases from the zsh section above are also ported here and are just as
+unconditional - the same "stays defined but points at a missing binary if
+you decline its app" caveat applies.
+
+`dot_config/fish/conf.d/15-fzf.fish` (same `cli_tools`-gated fallback to
+fish's own Ctrl-T/Ctrl-R if `fzf` isn't installed):
+
+- **Ctrl-T** is the fish equivalent of the same dedicated-completion-key
+  idea as the zsh section above - rebound from fzf's plain file-picker
+  widget to `fzf_complete`, the same context-aware completion Shift-Tab
+  normally triggers (falls back to fish's own native `complete -C`
+  completion for anything without a per-command handler). Shift-Tab is
+  unbound afterward to consolidate onto the one dedicated key - fish ships
+  no default Shift-Tab binding of its own, so nothing is lost. Unlike the
+  zsh side, there's no `fd`-backed override here: `fzf_complete`'s main
+  path defers entirely to fish's own native completion engine rather than
+  shelling out to `find`/`fd`, so there's no equivalent hook to point at
+  `fd`. Doesn't shadow anything (fish has no default Ctrl-T binding
+  either), so this is additive, not a personal remap.
+- **PERSONAL REMAP**: same Ctrl-R fuzzy-history remap as the zsh section
+  above. Alt-C is suppressed too.
+- **Window styling**: same as the zsh section above, except the preview
+  command has to be written in real fish syntax (`if`/`else if`/`end`)
+  rather than the zsh side's `[[ ]] && (...) || (...)` one-liner - fzf's
+  fish integration runs `--preview` through fish itself, where `(...)`
+  means command substitution, not subshell grouping, so the zsh one-liner
+  is invalid syntax here.
 
 ### git
 
@@ -429,9 +490,10 @@ the theme. Switching to a different colorscheme means editing all of these:
 
 - **Ghostty** - `dot_config/ghostty/config`: `theme = Dracula` (any
   Ghostty-bundled theme name works; `ghostty +list-themes` lists them).
-- **zsh `$LS_COLORS`** - `dot_zsh/base.zsh`: change the theme name passed to
-  `vivid generate <theme>` (any name from `vivid themes`) - generated fresh
-  at every shell startup, nothing to paste back in.
+- **`$LS_COLORS`** - `dot_zsh/base.zsh` (zsh) and
+  `dot_config/fish/conf.d/00-env.fish.tmpl` (fish): change the theme name
+  passed to `vivid generate <theme>` in both (any name from `vivid themes`)
+  - generated fresh at every shell startup, nothing to paste back in.
 - **Neovim** - `dot_config/nvim/lua/plugins/colorscheme.lua`: swap the
   `Mofiqul/dracula.nvim` plugin spec for a different colorscheme plugin, and
   update LazyVim's `opts.colorscheme` to match.
@@ -446,6 +508,14 @@ the theme. Switching to a different colorscheme means editing all of these:
 - **eza** - `dot_config/eza/theme.yml`: swap in a different theme's YAML
   (official values from draculatheme.com/eza; more at
   github.com/eza-community/eza-themes).
+- **starship** (zsh's and fish's prompt) - `dot_config/starship.toml`: no
+  named preset, each module's `style`/color is set individually to match
+  the palette used elsewhere - update those to match a different theme by
+  hand.
+- **fzf**'s Ctrl-R widget - `$FZF_DEFAULT_OPTS` in `dot_zsh/fzf.zsh` (zsh)
+  and `dot_config/fish/conf.d/15-fzf.fish` (fish): the `--color` list
+  (official values from draculatheme.com/fzf) - keep both in sync if you
+  change it.
 
 One thing that doesn't need touching: **plain vim** has no Dracula-specific
 config of its own - it just inherits whatever ANSI palette the terminal
@@ -460,9 +530,10 @@ as part of `chezmoi apply` - it only re-runs when the package list itself
 changes, not on every apply. Consent happens once, per app, at `chezmoi init`
 (see [Bootstrapping a new machine](#bootstrapping-a-new-machine)); a selected
 app's packages then install without any further per-package prompt. A package
-needed by more than one app (`git-delta` for `git`/`lazygit`, `fd` for
-`neovim`/`cli_tools` - the latter also backs fzf's Ctrl-T path completion)
-is deduplicated automatically, so selecting both doesn't install it twice.
+needed by more than one app (`git-delta` for `git`/`lazygit`, `vivid` and
+`starship` for `zsh`/`fish`, `fd` for `neovim`/`cli_tools` - the latter also
+backs fzf's Ctrl-T path completion) is deduplicated automatically, so
+selecting both doesn't install it twice.
 
 Both platforms install everything through Homebrew:
 

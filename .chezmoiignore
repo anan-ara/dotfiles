@@ -11,6 +11,12 @@ install.sh
 .zshrc
 .zshenv
 {{- end }}
+{{- if not .apps.fish }}
+.config/fish
+{{- end }}
+{{- if and (not .apps.zsh) (not .apps.fish) }}
+.config/starship.toml
+{{- end }}
 {{- if not .apps.git }}
 .gitconfig
 {{- end }}

@@ -1,0 +1,53 @@
+# Dracula-ish styling to match the rest of this repo (Ghostty/zsh/herdr/
+# lazygit/bat/eza) -- no named starship preset, colors set to match
+# dot_zsh/prompt.zsh's look instead.
+add_newline = true
+
+format = """
+$username$hostname$directory$git_branch$git_status$python
+$character"""
+
+[username]
+style_user = "purple"
+style_root = "purple"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = true
+format = "[@$hostname]($style)[:](white)"
+style = "purple"
+
+[directory]
+style = "blue"
+truncation_length = 3
+truncate_to_repo = false
+format = "[$path]($style)"
+
+[git_branch]
+format = " [$branch]($style)"
+style = "green"
+
+# Staged or unstaged changes to tracked files only, collapsed to a single
+# `*` -- matches dot_zsh/prompt.zsh's dirty marker, not starship's default
+# per-state symbol set. Untracked files deliberately don't trigger it.
+[git_status]
+format = " [$all_status]($style)"
+style = "yellow"
+conflicted = ""
+ahead = ""
+behind = ""
+diverged = ""
+untracked = ""
+stashed = ""
+modified = "*"
+staged = "*"
+renamed = "*"
+deleted = "*"
+
+[python]
+format = " [($virtualenv)]($style)"
+style = "cyan"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"

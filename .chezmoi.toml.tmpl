@@ -2,6 +2,7 @@
 {{- $name := promptStringOnce . "name" "Git commit name" "" -}}
 
 {{- $zsh      := promptBoolOnce . "apps.zsh"       "Deploy zsh config + zsh-autosuggestions/zsh-syntax-highlighting/vivid" true -}}
+{{- $fish     := promptBoolOnce . "apps.fish"      "Deploy fish config + fish (secondary shell, not $SHELL)" false -}}
 {{- $git      := promptBoolOnce . "apps.git"       "Deploy git config + git-delta" true -}}
 {{- $vim      := promptBoolOnce . "apps.vim"       "Deploy vim config (no packages)" true -}}
 {{- $neovim   := promptBoolOnce . "apps.neovim"    "Deploy Neovim (LazyVim) config + neovim/ripgrep/fd" true -}}
@@ -28,6 +29,7 @@ sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
 
 [data.apps]
     zsh       = {{ $zsh }}
+    fish      = {{ $fish }}
     git       = {{ $git }}
     vim       = {{ $vim }}
     neovim    = {{ $neovim }}
