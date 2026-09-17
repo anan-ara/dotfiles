@@ -230,10 +230,12 @@ skipping unrelated ones in between - common in most curated zsh setups
 variants some terminals send, `^[[A`/`^[OA` etc., are bound).
 
 The prompt is [starship](https://starship.rs) (`dot_config/starship.toml`,
-shared with fish below), not hand-coded: blue cwd truncated to 3 path
-components, green git branch with a yellow `*` for dirty tracked files,
-cyan venv name, a colored arrow that turns red on a nonzero exit status,
-and a magenta `user@host:` shown only when connected over SSH.
+shared with fish below), not hand-coded: starship's own ["Pure
+Prompt"](https://starship.rs/presets/pure-preset) preset (blue cwd, a
+rebase/merge indicator, git status, venv, a colored arrow that turns red
+on a nonzero exit status), with each module's `style` recolored to this
+repo's palette instead of Pure's own colors - everything else (format
+strings, symbols, module behavior) is unmodified Pure.
 
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 
@@ -508,10 +510,10 @@ the theme. Switching to a different colorscheme means editing all of these:
 - **eza** - `dot_config/eza/theme.yml`: swap in a different theme's YAML
   (official values from draculatheme.com/eza; more at
   github.com/eza-community/eza-themes).
-- **starship** (zsh's and fish's prompt) - `dot_config/starship.toml`: no
-  named preset, each module's `style`/color is set individually to match
-  the palette used elsewhere - update those to match a different theme by
-  hand.
+- **starship** (zsh's and fish's prompt) - `dot_config/starship.toml`: based
+  on the "Pure Prompt" preset, but each module's `style`/color is
+  overridden individually to match the palette used elsewhere - update
+  those to match a different theme by hand.
 - **fzf**'s Ctrl-R widget - `$FZF_DEFAULT_OPTS` in `dot_zsh/fzf.zsh` (zsh)
   and `dot_config/fish/conf.d/15-fzf.fish` (fish): the `--color` list
   (official values from draculatheme.com/fzf) - keep both in sync if you
