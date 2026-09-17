@@ -8,7 +8,7 @@ packages:
       - zsh-syntax-highlighting
       - vivid
     darwin_casks:
-      - arc # dot_zshenv.tmpl sets $BROWSER to Arc, darwin only
+      - arc
   git:
     brews:
       - git-delta
@@ -21,7 +21,7 @@ packages:
   lazygit:
     brews:
       - lazygit
-      - git-delta # shared with git, used as lazygit's diff pager too
+      - git-delta
   yazi:
     brews:
       - yazi
