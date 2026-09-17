@@ -212,8 +212,19 @@ else.
 *Only deployed/installed if `zsh` was selected at `chezmoi init`.*
 
 Tab-completion opens an arrow-key-navigable, colorized menu (`menu-select`) and
-is case-insensitive. History is shared across all open sessions and
-deduplicated.
+is case-insensitive. Shift-Tab cycles backward through it, symmetric to Tab
+cycling forward - unbound by default in stock zsh, so this is additive, not a
+remap.
+
+History is shared across all open sessions and deduplicated - both against
+the immediately preceding command (`hist_ignore_dups`) and against any
+earlier occurrence anywhere in history (`hist_ignore_all_dups`/
+`hist_save_no_dups`), so re-running an old command doesn't leave a stale
+duplicate sitting further back. Up/Down are prefix-aware: typing `git ` then
+pressing Up only cycles through previous commands starting with `git `,
+skipping unrelated ones in between - common in most curated zsh setups
+(oh-my-zsh, prezto) but not a stock zsh default, so also additive (both key
+variants some terminals send, `^[[A`/`^[OA` etc., are bound).
 
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 

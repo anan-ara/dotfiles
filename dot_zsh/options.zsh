@@ -11,6 +11,19 @@ export LESSHISTFILE=-
 # the shell's keybinding scheme.
 bindkey -e
 
+# Up/Down only cycle through history entries that start with whatever's
+# already typed -- e.g. typing "git " then pressing Up only surfaces
+# previous git commands. Both key sequence variants (^[[A/^[OA etc.) are
+# bound since terminals differ in which one they send depending on
+# cursor-key/application mode.
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
+
 setopt complete_in_word       # complete from both ends of the word if the cursor is in the middle
 setopt always_to_end          # move the cursor to the end of the word after a full completion
 
@@ -23,6 +36,8 @@ setopt extended_history       # record timestamp of command in HISTFILE
 
 setopt hist_find_no_dups      # do not show duplicates when pressing up in history
 setopt hist_ignore_dups       # do not save a command if it's the same as the previous one
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it

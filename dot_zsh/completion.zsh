@@ -12,3 +12,8 @@ zmodload zsh/complist
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# Shift-Tab cycles backward through the menu-select listing, symmetric to
+# Tab cycling forward. Unbound by default in stock zsh (no shadowing here
+# -- purely additive), unlike reverse-menu-complete's forward counterpart.
+bindkey '^[[Z' reverse-menu-complete
