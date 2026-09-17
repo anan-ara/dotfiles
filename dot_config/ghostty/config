@@ -57,6 +57,12 @@ keybind = cmd+shift+w=text:\x02w
 # Copy mode
 keybind = cmd+[=text:\x02[
 
+# Close this Ghostty window only, leaving other open windows alone. Bound to
+# Cmd-Opt-W rather than Ghostty's own default for that combo (close_tab) --
+# Cmd-W already closes tabs via herdr above, so this frees up a dedicated key
+# for closing the whole window instead.
+keybind = cmd+alt+w=close_window
+
 # Jump to tab 1-9 -- Ghostty has a hardcoded Cmd+1-9 default (switch its own
 # native tab N) that wins over a plain `text:` keybind override whenever
 # there's only one real Ghostty tab (herdr owns tabs here instead), so a

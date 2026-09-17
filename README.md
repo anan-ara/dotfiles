@@ -310,6 +310,12 @@ prefix first:
 - `Cmd-[1-9]` - jump to tab N
 - `Cmd-\` - jump to last pane
 
+`Cmd-opt-w` is the one exception - a native Ghostty `close_window` action,
+not a herdr passthrough, bound in place of Ghostty's own default for that
+combo (`close_tab`, redundant with `Cmd-w` above). It closes only the
+current Ghostty window, leaving any other open Ghostty windows alone
+(unlike `Cmd-q`, which quits the whole app).
+
 ### herdr
 
 *Only deployed/installed if `herdr` was selected at `chezmoi init`.*
