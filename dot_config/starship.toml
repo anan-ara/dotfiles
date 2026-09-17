@@ -2,7 +2,8 @@
 
 # Starship's "Pure Prompt" preset, with each module's `style` recolored to
 # this repo's Dracula-ish palette -- format strings, symbols, and module
-# behavior are otherwise unmodified Pure.
+# behavior are otherwise unmodified Pure, except directory's
+# truncate_to_repo below.
 
 format = """
 $directory\
@@ -15,6 +16,7 @@ $character"""
 
 [directory]
 style = "blue"
+truncate_to_repo = false
 
 [character]
 success_symbol = "[❯](green)"

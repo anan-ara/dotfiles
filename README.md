@@ -234,8 +234,10 @@ shared with fish below), not hand-coded: starship's own ["Pure
 Prompt"](https://starship.rs/presets/pure-preset) preset (blue cwd, a
 rebase/merge indicator, git status, venv, a colored arrow that turns red
 on a nonzero exit status), with each module's `style` recolored to this
-repo's palette instead of Pure's own colors - everything else (format
-strings, symbols, module behavior) is unmodified Pure.
+repo's palette instead of Pure's own colors - format strings, symbols, and
+module behavior are otherwise unmodified Pure, except `directory`'s
+`truncate_to_repo` is turned off so the path always shows its last 3
+components instead of collapsing to just the repo name near a repo root.
 
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 
