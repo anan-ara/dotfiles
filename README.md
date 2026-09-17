@@ -241,11 +241,34 @@ at a binary that isn't installed. It only breaks when you actually invoke it
 `$LS_COLORS` is generated at shell startup with `vivid generate dracula`
 (installed as part of the `zsh` app). On macOS, GNU coreutils taking priority
 over the BSD ones on `$PATH` is instead gated by the `cli_tools` app - see
-[CLI tools](#cli-tools-eza-bat-fzf-zoxide) below.
+[CLI tools](#cli-tools-eza-bat-fzf) below.
 
 `$EDITOR`/`$VISUAL` (set in `dot_zshenv.tmpl`) cascade with what's actually
 selected: `nvim` if `neovim` is enabled, else `vim` if `vim` is enabled, else
 the system `vi` - so they never point at a binary this repo didn't install.
+
+`dot_zsh/fzf.zsh` (only takes effect if `fzf` is actually installed - the
+`cli_tools` app - otherwise zsh's own Ctrl-T/Ctrl-R are untouched):
+
+- **Ctrl-T** is fzf's official ["dedicated completion key
+  binding"](https://github.com/junegunn/fzf/wiki/Configuring-fuzzy-completion)
+  pattern - the same context-aware fuzzy completion `**<Tab>` normally
+  triggers (ssh hosts, PIDs, env vars, generic path completion, etc.),
+  invoked directly instead of needing the `**` trigger typed first. Tab
+  itself is restored to plain zsh completion right after, so nothing about
+  Tab changes. Path/dir completion is backed by `fd` (`cli_tools`'s other
+  reason for depending on it) for a faster, full-`.gitignore`-aware walk
+  instead of the default `find`-based one. Doesn't shadow anything (zsh's
+  own Ctrl-T default is `transpose-chars`), so this is additive, not a
+  personal remap.
+- **PERSONAL REMAP**: Ctrl-R is fzf's fuzzy, full-history search widget
+  instead of zsh's own substring-anchored incremental search. Alt-C (fzf's
+  cd widget) is suppressed, since it wasn't asked for.
+- **Window styling** (cosmetic, `$FZF_DEFAULT_OPTS`): reverse layout, 80%
+  height, inline match counter, multi-select on, a custom `❯` prompt
+  glyph, Dracula colors. A preview pane (`bat` for files, `eza --tree` for
+  directories) is bound too, hidden by default and toggled with `?`.
+  Ctrl-R gets its own bordered `History` label via `$FZF_CTRL_R_OPTS`.
 
 ### git
 
@@ -384,16 +407,19 @@ Launch with the `y` shell function (or `Ctrl-o`) rather than the bare `yazi`
 binary, so quitting it changes your shell's directory to wherever you
 navigated.
 
-### CLI tools (`eza`, `bat`, `fzf`, `zoxide`)
+### CLI tools (`eza`, `bat`, `fzf`)
 
 *Installed only if `cli_tools` was selected at `chezmoi init`.*
 
-General-purpose interactive-shell upgrades. `fzf` and `zoxide` have no
-dedicated config of their own; `bat` (`dot_config/bat/config`) and `eza`
+General-purpose interactive-shell upgrades. `fzf` has no dedicated config
+of its own; `bat` (`dot_config/bat/config`) and `eza`
 (`dot_config/eza/theme.yml`) are themed to Dracula to match the rest of the
 setup. On darwin, GNU `coreutils` installs alongside them so the GNU
 versions of standard utilities take priority over BSD's on `$PATH` (see the
 zsh section above).
+
+`zoxide` is commented out in `.chezmoidata/packages.yaml` (TODO) - not
+currently used, and its shell init was never wired up either way.
 
 ## Changing the colorscheme
 
@@ -434,7 +460,8 @@ as part of `chezmoi apply` - it only re-runs when the package list itself
 changes, not on every apply. Consent happens once, per app, at `chezmoi init`
 (see [Bootstrapping a new machine](#bootstrapping-a-new-machine)); a selected
 app's packages then install without any further per-package prompt. A package
-needed by more than one app (`git-delta`, needed by both `git` and `lazygit`)
+needed by more than one app (`git-delta` for `git`/`lazygit`, `fd` for
+`neovim`/`cli_tools` - the latter also backs fzf's Ctrl-T path completion)
 is deduplicated automatically, so selecting both doesn't install it twice.
 
 Both platforms install everything through Homebrew:

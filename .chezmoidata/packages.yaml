@@ -33,7 +33,8 @@ packages:
       - eza
       - bat
       - fzf
-      - zoxide
+      - fd
+      # - zoxide # TODO: not currently used, and its shell init was never wired up either way
     darwin_brews:
       - coreutils
   ghostty:
