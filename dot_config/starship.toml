@@ -45,10 +45,9 @@ format = "[$branch]($style)"
 style = "green"
 
 [git_status]
-format = "[(*$conflicted$untracked$modified$staged$renamed$deleted) ($ahead_behind$stashed)]($style)"
+format = " [(×$conflicted)](red)[(∗$modified$staged$renamed$deleted)($ahead_behind$stashed)]($style)"
 style = "yellow"
 conflicted = "​"
-untracked = "​"
 modified = "​"
 staged = "​"
 renamed = "​"
