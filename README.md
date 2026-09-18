@@ -343,7 +343,11 @@ fish's own Ctrl-T/Ctrl-R if `fzf` isn't installed):
 `chezmoi init`. `core.excludesfile` points at `~/.gitignore_global`, which you
 bring yourself; it isn't tracked in this repo. Diffs (`git diff`/`log -p`/`add
 -p`) render through `delta`, which is also installed alongside `lazygit` if
-you select that app instead (or as well).
+you select that app instead (or as well). `diff.algorithm` is `histogram`
+(finds unique matching lines as anchors, giving more semantically meaningful
+hunks than the default `myers`) and `merge.conflictStyle` is `zdiff3` (shows
+the common-ancestor version alongside both sides of a conflict, trimmed to
+just the lines that actually differ).
 
 ### vim (`dot_vimrc`)
 
