@@ -17,6 +17,7 @@ $git_branch\
 $git_state\
 $git_status\
 $fill\
+$jobs\
 $status\
 $cmd_duration\
 $python\
@@ -69,7 +70,11 @@ format = " [$duration]($style)"
 style = "yellow"
 min_time = 3000
 
+[jobs]
+format = "[$symbol$number]($style)"
+style = "purple"
+
 [status]
 disabled = false
-format = " [$status]($style)"
+format = " [($signal_name )$status]($style)"
 style = "red"
