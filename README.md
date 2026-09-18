@@ -230,14 +230,15 @@ skipping unrelated ones in between - common in most curated zsh setups
 variants some terminals send, `^[[A`/`^[OA` etc., are bound).
 
 The prompt is [starship](https://starship.rs) (`dot_config/starship.toml`,
-shared with fish below), not hand-coded: starship's own ["Pure
-Prompt"](https://starship.rs/presets/pure-preset) preset (blue cwd, a
-rebase/merge indicator, git status, venv, a colored arrow that turns red
-on a nonzero exit status), with each module's `style` recolored to this
-repo's palette instead of Pure's own colors - format strings, symbols, and
-module behavior are otherwise unmodified Pure, except `directory`'s
-`truncate_to_repo` is turned off so the path always shows its last 3
-components instead of collapsing to just the repo name near a repo root.
+shared with fish below), not hand-coded: modeled on p10k's "Lean" preset
+(also similar to starship's own ["Pure
+Prompt"](https://starship.rs/presets/pure-preset) preset) - blue cwd
+(full path, every folder but the last abbreviated to 1 character), green
+git branch, a rebase/merge indicator, a dirty-file marker, and an arrow
+that turns red on a nonzero exit status. Python venv, command duration
+(past 3s), and a nonzero exit code render on the right instead of inline.
+Colors use starship's named ANSI colors (not hex/256 codes) so they
+follow the terminal's own colorscheme, matching p10k's "8 colors" option.
 
 A couple of extra commands live in `dot_zsh/commands.zsh`:
 
@@ -517,9 +518,9 @@ the theme. Switching to a different colorscheme means editing all of these:
   (official values from draculatheme.com/eza; more at
   github.com/eza-community/eza-themes).
 - **starship** (zsh's and fish's prompt) - `dot_config/starship.toml`: based
-  on the "Pure Prompt" preset, but each module's `style`/color is
-  overridden individually to match the palette used elsewhere - update
-  those to match a different theme by hand.
+  on p10k's "Lean" preset, but each module's `style`/color is overridden
+  individually to match the palette used elsewhere - update those to
+  match a different theme by hand.
 - **fzf**'s Ctrl-R widget - `$FZF_DEFAULT_OPTS` in `dot_zsh/fzf.zsh` (zsh)
   and `dot_config/fish/conf.d/15-fzf.fish` (fish): the `--color` list
   (official values from draculatheme.com/fzf) - keep both in sync if you
