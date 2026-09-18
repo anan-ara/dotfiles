@@ -5,27 +5,16 @@
 # starship's named ANSI colors (not hex/256 codes) so they follow whatever
 # the terminal's colorscheme defines those slots as, matching p10k's own
 # "8 colors" (terminal-native) option: blue dir, green branch/clean,
-# yellow modified, cyan venv, no bold anywhere. venv, cmd duration, and a
-# nonzero exit status render right-aligned on the first line via $fill,
-# matching p10k Lean's own right-prompt placement for those three -- not
-# right_format, which zsh always ties to the line the cursor sits on
-# (the second line here) rather than an earlier line of the prompt.
+# yellow modified, cyan venv, no bold anywhere.
 
 format = """
 $directory\
 $git_branch\
 $git_state\
 $git_status\
-$fill\
-$jobs\
-$status\
-$cmd_duration\
 $python\
 $line_break\
 $character"""
-
-[fill]
-symbol = " "
 
 [directory]
 style = "blue"
@@ -64,17 +53,3 @@ format = " [$virtualenv]($style)"
 style = "cyan"
 detect_extensions = []
 detect_files = []
-
-[cmd_duration]
-format = " [$duration]($style)"
-style = "yellow"
-min_time = 3000
-
-[jobs]
-format = "[$symbol$number]($style)"
-style = "purple"
-
-[status]
-disabled = false
-format = " [($signal_name )$status]($style)"
-style = "red"
