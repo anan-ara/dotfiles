@@ -29,3 +29,15 @@ previous_workspace = "prefix+i"
 
 [theme]
 name = "dracula"
+{{- if .apps.fish }}
+
+[terminal]
+# fish is a secondary shell: used inside herdr panes, while $SHELL stays
+# zsh/bash for scripts and `ssh host 'cmd'`. Homebrew's fixed path, since fish
+# may not be installed yet when this is first applied.
+{{- if eq .chezmoi.os "darwin" }}
+default_shell = "{{ if eq .chezmoi.arch "arm64" }}/opt/homebrew{{ else }}/usr/local{{ end }}/bin/fish"
+{{- else }}
+default_shell = "/home/linuxbrew/.linuxbrew/bin/fish"
+{{- end }}
+{{- end }}

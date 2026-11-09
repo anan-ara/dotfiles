@@ -18,6 +18,10 @@ claude_global
 {{- if not .apps.fish }}
 .config/fish
 {{- end }}
+{{- if not .apps.bash }}
+.bash
+.bashrc
+{{- end }}
 {{- if and (not .apps.zsh) (not .apps.fish) }}
 .config/starship.toml
 {{- end }}

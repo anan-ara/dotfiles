@@ -134,6 +134,7 @@ one tree; a file's name encodes where it ends up:
 | `dot_`                   | becomes a leading `.` in the target path (`dot_vimrc` → `~/.vimrc`) |
 | `symlink_`               | target is a symlink; its content is the link destination (templated) |
 | `create_`                | only written if the target doesn't already exist             |
+| `modify_`                | edits the existing target in place (here: a modify-template) |
 | `run_onchange_`          | a script, re-run only when its rendered content changes      |
 | `run_once_`               | a script, run once ever per machine                          |
 | `.tmpl`                  | rendered as a Go template before being written                |
@@ -156,6 +157,8 @@ one tree; a file's name encodes where it ends up:
 ├── dot_gitconfig.tmpl          → ~/.gitconfig   (templated: name/email)
 ├── dot_vimrc                   → ~/.vimrc
 ├── dot_zsh/                    → ~/.zsh/     (base.zsh + prompt/completion/options/plugins/commands.zsh)
+├── modify_dot_bashrc           → ~/.bashrc   (prepends one line sourcing ~/.bash/env.bash)
+├── dot_bash/                   → ~/.bash/    (env.bash: Homebrew/PATH/editor for bash)
 ├── dot_claude/
 │   └── symlink_settings.json.tmpl → ~/.claude/settings.json (symlink, see Claude Code below)
 ├── claude_global/
@@ -174,7 +177,7 @@ one tree; a file's name encodes where it ends up:
 Anything listed in `.chezmoiignore` (`*.md` docs, `install.sh`) is inert -
 chezmoi never writes it anywhere.
 
-**Machine profiles.** Every app (zsh, fish, git, vim, Neovim, lazygit, yazi,
+**Machine profiles.** Every app (zsh, fish, bash, git, vim, Neovim, lazygit, yazi,
 herdr, Ghostty, Karabiner, Claude Code, plus a packages-only `cli_tools`
 bucket for `eza`/`bat`/`fzf`) gets its own yes/no prompt at `chezmoi init`,
 persisted under `.apps.*` in `~/.config/chezmoi/chezmoi.toml`; declining one
@@ -187,8 +190,9 @@ prompts don't even fire on Linux. Couplings worth knowing about: the Arc
 browser cask rides along with `zsh`'s darwin package list (it has no
 independent prompt, since its only use is `dot_zshenv.tmpl`'s `$BROWSER`);
 `cli_tools` has no dotfile of its own - it's just a packages-only opt-in;
-and `fish` defaults to **false** (every other app defaults true) since it's
-a secondary shell you opt into deliberately, not a replacement for zsh.
+`fish` defaults to **false** since it's a secondary shell you opt into
+deliberately, not a replacement for zsh; `bash` defaults to true on linux
+and false on darwin; every other app defaults true.
 
 ## Day-to-day workflow
 
@@ -291,14 +295,31 @@ the system `vi` - so they never point at a binary this repo didn't install.
   directories) is bound too, hidden by default and toggled with `?`.
   Ctrl-R gets its own bordered `History` label via `$FZF_CTRL_R_OPTS`.
 
+### bash
+
+*Only deployed if `bash` was selected at `chezmoi init` - defaults to on for
+linux, off for darwin.*
+
+For machines where bash stays the login shell (a server where fish runs only
+inside herdr). `dot_bash/env.bash.tmpl` puts Homebrew and `~/.local/bin` on
+`$PATH` and sets `$XDG_CONFIG_HOME`/`$EDITOR`/`$VISUAL`, the same values as
+`dot_zshenv.tmpl`. No prompt, aliases or other interactive config.
+
+`~/.bashrc` itself stays the distro's: `modify_dot_bashrc` only prepends
+`[ -f ~/.bash/env.bash ] && . ~/.bash/env.bash` if it's missing. It goes at
+the top because Ubuntu's `.bashrc` returns early for non-interactive shells,
+and `ssh host 'cmd'` (e.g. `herdr --remote`) runs one. `env.bash` must stay
+silent, since any output breaks scp/rsync.
+
 ### fish
 
 *Only deployed/installed if `fish` was selected at `chezmoi init` - defaults
 to off.*
 
 A secondary shell, not a replacement for zsh: nothing here changes `$SHELL`
-or how Ghostty/herdr/SSH launch a shell, so this is purely "available to run
-manually when you want it." Config lives under `dot_config/fish/conf.d/`,
+or how Ghostty/SSH launch a shell. The one exception is herdr: with fish
+selected, herdr's `terminal.default_shell` points at fish, so herdr panes
+open fish (see herdr below). Config lives under `dot_config/fish/conf.d/`,
 auto-sourced by fish itself in alphabetical order (`00-env`, `10-prompt`,
 `15-fzf`, `20-commands`) - no orchestrator file needed the way zsh's
 `base.zsh` sources its pieces explicitly.
@@ -449,6 +470,12 @@ replacing them - both work:
 
 The agent panel is sorted by attention priority (`ui.agent_panel_sort`),
 replacing herdr's own default of grouping by space.
+
+`config.toml.tmpl` is templated for one setting: if `fish` was selected,
+`terminal.default_shell` is Homebrew's fish, so new panes open fish while
+`$SHELL` stays zsh/bash. The path is fixed per platform (`/opt/homebrew`,
+`/usr/local` on Intel Macs, `/home/linuxbrew/.linuxbrew`), since fish may not
+be installed yet on first apply.
 
 Everything else is herdr's own defaults, driven with its `Ctrl-b` prefix
 directly or the Ghostty shortcuts above. Theme is herdr's built-in `dracula`.

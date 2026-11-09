@@ -15,6 +15,7 @@ packages:
       - fish
       - vivid
       - starship
+  bash: {}
   git:
     brews:
       - git-delta

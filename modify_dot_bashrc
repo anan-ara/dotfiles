@@ -1,0 +1,16 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /*
+Edits the machine's existing ~/.bashrc in place; it's the distro's
+skeleton, not ours. Prepends one line if it's missing, otherwise passes the
+file through unchanged. The line goes at the top because Ubuntu's .bashrc
+returns early for non-interactive shells.
+*/ -}}
+{{- $line := "[ -f ~/.bash/env.bash ] && . ~/.bash/env.bash" -}}
+{{- if contains $line .chezmoi.stdin -}}
+{{ .chezmoi.stdin }}
+{{- else -}}
+# Managed by chezmoi (dotfiles: bash app)
+{{ $line }}
+
+{{ .chezmoi.stdin }}
+{{- end -}}

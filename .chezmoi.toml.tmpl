@@ -3,6 +3,7 @@
 
 {{- $zsh      := promptBoolOnce . "apps.zsh"       "Deploy zsh config + zsh-autosuggestions/zsh-syntax-highlighting/vivid" true -}}
 {{- $fish     := promptBoolOnce . "apps.fish"      "Deploy fish config + fish (secondary shell, not $SHELL)" false -}}
+{{- $bash     := promptBoolOnce . "apps.bash"      "Deploy bash config (Homebrew/env for bash, for machines where bash stays $SHELL)" (eq .chezmoi.os "linux") -}}
 {{- $git      := promptBoolOnce . "apps.git"       "Deploy git config + git-delta" true -}}
 {{- $vim      := promptBoolOnce . "apps.vim"       "Deploy vim config (no packages)" true -}}
 {{- $neovim   := promptBoolOnce . "apps.neovim"    "Deploy Neovim (LazyVim) config + neovim/ripgrep/fd" true -}}
@@ -31,6 +32,7 @@ sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
 [data.apps]
     zsh       = {{ $zsh }}
     fish      = {{ $fish }}
+    bash      = {{ $bash }}
     git       = {{ $git }}
     vim       = {{ $vim }}
     neovim    = {{ $neovim }}
