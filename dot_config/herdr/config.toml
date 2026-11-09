@@ -16,6 +16,12 @@ split_horizontal = ["prefix+minus", "prefix+quote"]
 # Cmd+1-9 sent directly (bypassing the prefix) -- see dot_config/ghostty/config
 # for why this needs a raw CSI u keybind instead of the usual prefix+key text.
 switch_tab = ["prefix+1..9", "cmd+1..9"]
+# Direct (no-prefix) shortcut -- doesn't collide with any Ghostty hardcoded
+# binding, so no CSI workaround is needed here (contrast switch_tab above).
+switch_workspace = "ctrl+alt+shift+1..9"
+# herdr has no default binding for either of these.
+next_workspace = "prefix+u"
+previous_workspace = "prefix+i"
 
 [theme]
 name = "dracula"

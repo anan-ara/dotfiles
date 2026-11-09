@@ -413,6 +413,8 @@ prefix first:
 - `Cmd-t` / `Cmd-w` - new tab / close tab
 - `Cmd-[1-9]` - jump to tab N
 - `Cmd-\` - jump to last pane
+- `Cmd-.` - rename workspace
+- `Cmd-u` / `Cmd-i` - next/previous workspace
 
 `Cmd-opt-w` is the one exception - a native Ghostty `close_window` action,
 not a herdr passthrough, bound in place of Ghostty's own default for that
@@ -433,6 +435,10 @@ replacing them - both work:
   also still works, mirrored by Ghostty's `Cmd-\` above)
 - `prefix+%` / `prefix+"` - split vertical/horizontal (herdr's own defaults,
   `prefix+v` / `prefix+minus`, still work too)
+- `Ctrl-Opt-Shift-[1-9]` - jump to workspace N, no prefix needed (herdr has
+  no default binding for this)
+- `prefix+u` / `prefix+i` - next/previous workspace, mirrored by Ghostty's
+  `Cmd-u`/`Cmd-i` above (herdr has no default binding for either)
 
 Everything else is herdr's own defaults, driven with its `Ctrl-b` prefix
 directly or the Ghostty shortcuts above. Theme is herdr's built-in `dracula`.

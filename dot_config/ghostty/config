@@ -54,6 +54,11 @@ keybind = cmd+z=text:\x02z
 keybind = cmd+g=text:\x02g
 # Workspace nav
 keybind = cmd+shift+w=text:\x02w
+# Rename workspace
+keybind = cmd+.=text:\x02W
+# Next/previous workspace
+keybind = cmd+u=text:\x02u
+keybind = cmd+i=text:\x02i
 # Copy mode
 keybind = cmd+[=text:\x02[
 
