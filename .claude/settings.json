@@ -1,0 +1,54 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Bash(git commit*)",
+            "prompt": "About to run a git commit. Run `git diff --cached` to see the staged changes. Examine every ADDED comment line (a line starting with `+` that is a code comment, in whatever comment syntax the file uses): a comment must not explain or defend a config value that is simply the tool's own out-of-the-box default behavior. Comments should mark genuine deviations from a default, or explain genuinely non-obvious mechanics (e.g. a cross-tool syntax incompatibility) - not restate or justify \"this is just what it already does\".\n\nIf there are no staged changes, or none of the added comments violate this rule, allow the commit to proceed with no output. If you find a violation, block the commit: quote the exact offending comment, name the rule it breaks, and say it should be removed or rewritten before committing.",
+            "timeout": 90
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "About to apply a file edit. Hook input JSON: $ARGUMENTS\n\nFirst determine which lines are actually being newly written or changed by this specific tool call - never flag a line that already existed in the file, even if it's included in the tool call as surrounding context:\n\n- tool_name \"Edit\": compare tool_input.old_string against tool_input.new_string. A line only counts as newly written if it appears in new_string but not (verbatim) in old_string.\n- tool_name \"Write\": use the Read tool to check the CURRENT on-disk content of tool_input.file_path. If it exists, compare it against tool_input.content the same way - a line only counts as newly written if it doesn't already exist in the current file. If the file doesn't exist yet, every line in tool_input.content is newly written.\n\nAmong only the newly-written lines, look at comment lines (using whatever syntax fits the file's extension: #, //, /* */, --, ;, <!-- -->, etc.) and check: a comment must not explain or defend a config value that is simply the tool's own out-of-the-box default behavior. Comments should mark genuine deviations from a default, or explain genuinely non-obvious mechanics - not restate or justify \"this is just what it already does\".\n\nIf there are no newly-written comment lines, or none violate this rule, allow with no output. If you find a violation in a newly-written line, block the edit: quote the exact offending line, name the rule it breaks, and say it should be removed or rewritten before the edit is applied.",
+            "timeout": 45
+          }
+        ]
+      }
+    ]
+  },
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: assume private unless the remote host and repo name indicate otherwise, or a visibility check in the transcript shows public (gh visibility check was not queryable here)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: master (default branch; protection status not queryable here)",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo (github.com:anan-ara/dotfiles.git) and its remote(s) only (no additional orgs configured)",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited)",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: personal dotfiles management (chezmoi-managed configuration for zsh, git, vim/Neovim, Ghostty, herdr, Karabiner, lazygit, yazi) across a personal Mac and a headless Linux server",
+      "**Trusted repo**: /Users/anan/dotfiles (working directory) and its remote github.com:anan-ara/dotfiles.git — visibility unconfirmed, treat as private by default; confidential/secret material still never cleared into it regardless of visibility",
+      "**Org-specific CLIs**: None configured — routine tools observed in this project: chezmoi, herdr, goku, lazygit, yazi, ghostty, vivid, ya, tmpbin"
+    ]
+  }
+}
