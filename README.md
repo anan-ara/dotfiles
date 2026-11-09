@@ -440,6 +440,9 @@ replacing them - both work:
 - `prefix+u` / `prefix+i` - next/previous workspace, mirrored by Ghostty's
   `Cmd-u`/`Cmd-i` above (herdr has no default binding for either)
 
+The agent panel is sorted by attention priority (`ui.agent_panel_sort`),
+replacing herdr's own default of grouping by space.
+
 Everything else is herdr's own defaults, driven with its `Ctrl-b` prefix
 directly or the Ghostty shortcuts above. Theme is herdr's built-in `dracula`.
 
