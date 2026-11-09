@@ -2,6 +2,10 @@
 *.md
 install.sh
 
+# Backing file for dot_claude/symlink_settings.json.tmpl -- holds the
+# tracked content; never applied as a target in its own right.
+claude_global
+
 # Per-app opt-out -- each app's dotfiles are skipped unless selected during
 # `chezmoi init` (see .chezmoi.toml.tmpl / .apps.*). Ghostty and Karabiner
 # prompts only fire on darwin, so .apps.ghostty/.apps.karabiner are always
@@ -44,4 +48,7 @@ install.sh
 {{- if not .apps.cli_tools }}
 .config/bat
 .config/eza
+{{- end }}
+{{- if not .apps.claude }}
+.claude
 {{- end }}

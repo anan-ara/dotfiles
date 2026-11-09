@@ -1,0 +1,40 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/herdr-agent-state.sh session",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Bash(git commit*)",
+            "prompt": "About to run a git commit. Run `git diff --cached` to see the staged changes. Examine every ADDED comment line (a line starting with `+` that is a code comment, in whatever comment syntax the file uses): a comment must explain the current state only, never phrases like \"changed from\", \"used to be\", \"previously\", \"no longer\", \"instead of X\", \"unlike the old/previous Y\".\n\nIf there are no staged changes, or none of the added comments violate this rule, allow the commit to proceed with no output. If you find a violation, block the commit: quote the exact offending comment, name the rule it breaks, and say it should be removed or rewritten before committing.",
+            "timeout": 90
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "About to apply a file edit. Hook input JSON: $ARGUMENTS\n\nFirst determine which lines are actually being newly written or changed by this specific tool call - never flag a line that already existed in the file, even if it's included in the tool call as surrounding context:\n\n- tool_name \"Edit\": compare tool_input.old_string against tool_input.new_string. A line only counts as newly written if it appears in new_string but not (verbatim) in old_string.\n- tool_name \"Write\": use the Read tool to check the CURRENT on-disk content of tool_input.file_path. If it exists, compare it against tool_input.content the same way - a line only counts as newly written if it doesn't already exist in the current file. If the file doesn't exist yet, every line in tool_input.content is newly written.\n\nAmong only the newly-written lines, look at comment lines (using whatever syntax fits the file's extension: #, //, /* */, --, ;, <!-- -->, etc.) and check: a comment must explain the current state only, never phrases like \"changed from\", \"used to be\", \"previously\", \"no longer\", \"instead of X\", \"unlike the old/previous Y\", or references to specific past commits, old configs, or prior versions of this file.\n\nIf there are no newly-written comment lines, or none violate this rule, allow with no output. If you find a violation in a newly-written line, block the edit: quote the exact offending line, name the rule it breaks, and say it should be removed or rewritten before the edit is applied.",
+            "timeout": 45
+          }
+        ]
+      }
+    ]
+  },
+  "theme": "auto"
+}

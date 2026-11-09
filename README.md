@@ -97,9 +97,10 @@ for confirmation first, same as the package installer below - decline it and
 chezmoi falls back to its own self-contained installer (`~/.local/bin`,
 no `sudo`) instead. You'll be prompted once for your git name/email, then once
 per app (zsh, fish, git, vim, Neovim, lazygit, yazi, herdr, general CLI
-tools, and - on darwin only - Ghostty and Karabiner) for whether to deploy
-its config and install its packages. Answers are written to `~/.config/chezmoi/chezmoi.toml`,
-outside this repo, so nothing personal ends up tracked in git, and re-running
+tools, Claude Code, and - on darwin only - Ghostty and Karabiner) for
+whether to deploy its config and install its packages. Answers are written
+to `~/.config/chezmoi/chezmoi.toml`, outside this repo, so nothing personal
+ends up tracked in git, and re-running
 `chezmoi apply` later never re-prompts.
 
 Declining an app skips both its dotfiles (via `.chezmoiignore`) and its
@@ -131,6 +132,7 @@ one tree; a file's name encodes where it ends up:
 | Prefix/suffix           | Meaning                                                      |
 | ------------------------ | ------------------------------------------------------------ |
 | `dot_`                   | becomes a leading `.` in the target path (`dot_vimrc` → `~/.vimrc`) |
+| `symlink_`               | target is a symlink; its content is the link destination (templated) |
 | `create_`                | only written if the target doesn't already exist             |
 | `run_onchange_`          | a script, re-run only when its rendered content changes      |
 | `run_once_`               | a script, run once ever per machine                          |
@@ -154,6 +156,11 @@ one tree; a file's name encodes where it ends up:
 ├── dot_gitconfig.tmpl          → ~/.gitconfig   (templated: name/email)
 ├── dot_vimrc                   → ~/.vimrc
 ├── dot_zsh/                    → ~/.zsh/     (base.zsh + prompt/completion/options/plugins/commands.zsh)
+├── dot_claude/
+│   └── symlink_settings.json.tmpl → ~/.claude/settings.json (symlink, see Claude Code below)
+├── claude_global/
+│   └── settings.json           # backing file for the symlink above; chezmoi never applies it directly
+├── .claude/settings.json       # this repo's OWN project-scoped Claude Code config, not deployed anywhere
 └── dot_config/                  → ~/.config/
     ├── karabiner.edn            # darwin-only
     ├── ghostty/                 # darwin-only
@@ -168,8 +175,8 @@ Anything listed in `.chezmoiignore` (`*.md` docs, `install.sh`) is inert -
 chezmoi never writes it anywhere.
 
 **Machine profiles.** Every app (zsh, fish, git, vim, Neovim, lazygit, yazi,
-herdr, Ghostty, Karabiner, plus a packages-only `cli_tools` bucket for
-`eza`/`bat`/`fzf`) gets its own yes/no prompt at `chezmoi init`,
+herdr, Ghostty, Karabiner, Claude Code, plus a packages-only `cli_tools`
+bucket for `eza`/`bat`/`fzf`) gets its own yes/no prompt at `chezmoi init`,
 persisted under `.apps.*` in `~/.config/chezmoi/chezmoi.toml`; declining one
 makes `.chezmoiignore` skip its dotfiles and makes the package installer
 skip its packages. `.chezmoi.os` (`"darwin"`/`"linux"`, auto-detected) still
@@ -499,6 +506,29 @@ priority over BSD's on `$PATH` (see the zsh section above).
 
 `zoxide` is commented out in `.chezmoidata/packages.yaml` (TODO) - not
 currently used, and its shell init was never wired up either way.
+
+### Claude Code
+
+*Deployed only if `claude` was selected at `chezmoi init`.*
+
+`dot_claude/symlink_settings.json.tmpl` makes `~/.claude/settings.json` an
+actual symlink into this repo (target: `claude_global/settings.json`,
+resolved via `{{ .chezmoi.sourceDir }}` so it works regardless of where the
+repo is cloned) rather than a chezmoi-managed copy - edits made to the live
+file (by hand, or by Claude Code itself, e.g. via `/config`) land directly
+in the tracked file, with no separate `chezmoi apply`/`re-add` step to
+remember. It currently carries a `SessionStart` hook (herdr's Claude
+integration, auto-installed per-machine by herdr itself - only the
+reference to it is tracked here, not the script) and a pair of
+`PreToolUse` hooks enforcing this repo's no-historical-narration comment
+rule globally, across every project, not just this one.
+
+This repo's own `.claude/settings.json` (at the repo root, not under
+`dot_claude/`) is a separate, ordinary tracked file - it's project-scoped
+Claude Code config that only applies while working in this repo, holding
+the no-default-justification comment rule and the dotfiles-specific
+`autoMode` trust context. It isn't deployed anywhere by chezmoi; Claude
+Code reads it directly from the repo.
 
 ## Changing the colorscheme
 

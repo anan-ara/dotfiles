@@ -10,6 +10,7 @@
 {{- $yazi     := promptBoolOnce . "apps.yazi"      "Deploy yazi config + yazi" true -}}
 {{- $herdr    := promptBoolOnce . "apps.herdr"     "Deploy herdr config + herdr" true -}}
 {{- $cliTools := promptBoolOnce . "apps.cli_tools" "Install general CLI tools (eza, bat, fzf, zoxide)" true -}}
+{{- $claude   := promptBoolOnce . "apps.claude"    "Deploy global Claude Code settings (~/.claude/settings.json)" true -}}
 {{- $ghostty := false -}}
 {{- $karabiner := false -}}
 {{- if eq .chezmoi.os "darwin" -}}
@@ -39,3 +40,4 @@ sourceDir = "{{ .chezmoi.homeDir }}/dotfiles"
     cli_tools = {{ $cliTools }}
     ghostty   = {{ $ghostty }}
     karabiner = {{ $karabiner }}
+    claude    = {{ $claude }}
