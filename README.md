@@ -509,7 +509,9 @@ currently used, and its shell init was never wired up either way.
 
 ### Claude Code
 
-*Deployed only if `claude` was selected at `chezmoi init`.*
+*Only deployed/installed if `claude` was selected at `chezmoi init` - installs
+the `claude-code` cask (plain `brew install`, which resolves to the cask on
+its own; it ships Linux binaries too, unlike this repo's other casks).*
 
 `dot_claude/symlink_settings.json.tmpl` makes `~/.claude/settings.json` an
 actual symlink into this repo (target: `claude_global/settings.json`,
