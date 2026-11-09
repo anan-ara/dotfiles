@@ -40,6 +40,7 @@ packages:
       - bat
       - fzf
       - fd
+      - glow
       # - zoxide # TODO: not currently used, and its shell init was never wired up either way
     darwin_brews:
       - coreutils
